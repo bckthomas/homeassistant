@@ -1,0 +1,65 @@
+sensor:
+  - platform: rest
+    name: "PV Power" # puissance produite par les panneaux (la valeur est mise a jour toute les 5 min)
+    device_class: "power"
+    state_class: "measurement"
+    unit_of_measurement: "W"
+    resource: http://192.168.1.138/index.php/meter/old_meter_power_graph
+    scan_interval: 60
+    value_template: >
+      {% if value_json is defined %}
+          {{ value_json.power1[-1].powerA }}
+      {% else %}
+          {{ "None" }}
+      {% endif %}
+     
+  - platform: integration
+    name: "PV Energy" # energie totale produite par les panneaux (depuis le debut)
+    source: sensor.pv_power
+    unit_prefix: "k"
+    unit_time: "h"
+    method: "left"
+     
+  - platform: rest
+    name: "Import Export Power" # puissance importé si + ou exporté si -
+    device_class: "power"
+    state_class: "measurement"
+    unit_of_measurement: "W"
+    resource: http://192.168.1.138/index.php/meter/old_meter_power_graph
+    scan_interval: 60
+    value_template: >
+      {% if value_json is defined %}
+          {{ value_json.power2[-1].powerA }}
+      {% else %}
+          {{ "None" }}
+      {% endif %}
+     
+  - platform: template
+    sensors:
+        export_power: # il est judicieux de separer la puissance exporté de importé
+            friendly_name: "Export Power"
+            unit_of_measurement: "W"
+            device_class: "power"
+            value_template: >
+              {% set p = states('sensor.import_export_power') | float(0) %}
+              {{ ((p | abs) - p) / 2 }}
+               
+  - platform: integration
+    name: "Export Energy" # energie totale exporté (depuis le debut)
+    source: sensor.export_power
+    unit_prefix: "k"
+    unit_time: "h"
+    method: "left"
+
+utility_meter:
+  pv_energy_daily: # production PV du jour
+      name: "PV Energy Daily"
+      unique_id: pv_energy_daily
+      source: sensor.pv_energy
+      cycle: daily
+  export_energy_daily: # energie exporté du jour
+      name: "Export Energy Daily"
+      unique_id: export_energy_daily
+      source: sensor.export_energy
+      cycle: daily
+      

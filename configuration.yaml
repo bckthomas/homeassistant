@@ -1,0 +1,89 @@
+# Loads default set of integrations. Do not remove.
+homeassistant:
+  name: Maison
+  latitude: !secret homeassistant_latitude
+  longitude: !secret homeassistant_longitude
+  elevation: !secret homeassistant_elevation
+  unit_system: metric
+  temperature_unit: C
+  time_zone: Europe/Paris
+  external_url: !secret homeassistant_external_url
+  internal_url: "http://192.168.1.114:8123"
+  language: fr
+  country: FR
+  currency: EUR
+  packages: !include_dir_named packages
+  customize_domain:
+    automation:
+      initial_state: true
+  allowlist_external_dirs:
+    - /config
+
+default_config:
+
+# Load frontend themes from the themes folder
+frontend:
+  themes: !include_dir_merge_named themes
+  extra_module_url:
+    - /hacsfiles/lovelace-card-mod/card-mod.js
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 192.168.1.127
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+template: !include sidebar.yaml
+zone: !include zone.yaml
+
+lovelace:
+  mode: yaml
+  resources:
+    [
+      { url: /hacsfiles/button-card/button-card.js, type: module },
+      { url: /hacsfiles/lovelace-layout-card/layout-card.js, type: module },
+      { url: /hacsfiles/swipe-card/swipe-card.js, type: module },
+      { url: /hacsfiles/lovelace-more-info-card/more-info-card.js, type: module },
+      { url: /hacsfiles/bar-card/bar-card.js, type: module },
+      { url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js, type: module },
+      { url: /hacsfiles/pool-monitor-card/pool_monitor_card.js, type: module },
+      { url: /hacsfiles/apexcharts-card/apexcharts-card.js, type: module },
+      { url: /hacsfiles/custom-icons/custom-icons.js, type: module },
+      { url: /hacsfiles/atomic-calendar-revive/atomic-calendar-revive.js, type: module },
+      { url: /hacsfiles/upcoming-media-card/upcoming-media-card.js, type: module },
+      { url: /hacsfiles/ha-teamtracker-card/ha-teamtracker-card.js, type: module },
+      { url: /hacsfiles/lovelace-meteofrance-weather-card/meteofrance-weather-card.js, type: module },
+      { url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js, type: module },
+      { url: /hacsfiles/lovelace-time-picker-card/time-picker-card.js, type: module },
+
+      { url: "/local/marked.min.js?v=4.3.0", type: module },
+      { url: "/local/vanilla-tilt.min.js?v=1.8.0", type: module },
+      { url: "/local/browser_mod_icon.js?v=0.5", type: module },
+      { url: "/local/fonts.css?v=2.1", type: css },
+    ]
+
+sensor:
+  - platform: time_date
+    display_options:
+      - "time"
+      - "date"
+      - "date_time"
+
+calendar:
+  - platform: caldav
+    username: !secret caldav_user_thomas
+    password: !secret caldav_password_thomas
+    url: !secret caldav_url
+  - platform: caldav
+    username: !secret caldav_user_benedicte
+    password: !secret caldav_password_benedicte
+    url: !secret caldav_url
+
+recorder:
+  purge_keep_days: 2
+  exclude:
+    entity_globs:
+      - sensor.browser_*
+  db_url: !secret recorder_db_url

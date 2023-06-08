@@ -1,0 +1,109 @@
+2023-06-02 11:14:16.702314 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-02 12:04:02.020494 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-02 12:13:03.096750 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-03 06:03:11.334718 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-03 06:11:14.137266 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-03 06:13:05.220484 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-03 06:56:58.932376 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-03 06:58:39.598139 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-03 07:23:58.475096 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-03 07:25:15.194323 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-03 07:25:15.195633 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-03 07:27:16.404582 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-03 07:27:16.405870 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-03 07:41:24.559082 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-03 07:41:24.560413 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-04 07:50:42.863360 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-04 07:50:42.919423 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-04 08:12:36.566812 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-04 08:12:36.568533 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-06 07:52:12.254283 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-06 07:52:12.256146 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-06 08:52:37.799289 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-06 08:52:37.800548 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-06 09:30:36.152140 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-06 09:30:36.153390 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-06 11:02:52.317297 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-06 11:02:52.318637 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-06 11:20:20.416164 ERROR notifier: User defined log notifier not found
+2023-06-06 14:46:13.872373 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-06 14:46:26.932970 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-06 14:46:45.019008 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-06 15:16:53.143583 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-06 15:17:44.014727 ERROR notifier: User defined log notifier not found
+2023-06-06 15:17:44.016629 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-06 15:17:44.018536 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-06 15:17:44.020152 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-06 15:21:28.722859 WARNING notifier: ------------------------------------------------------------
+2023-06-06 15:21:28.723077 WARNING notifier: Unexpected error in worker for App notifier:
+2023-06-06 15:21:28.723396 WARNING notifier: Worker Ags: {'id': '54761c5a3f3c47cbab759b564e5ab0e9', 'name': 'notifier', 'objectid': 'ac8de38dcb75451bbfeb88c711968cb3', 'type': 'event', 'event': 'NOTIFIER', 'function': <bound method notifier.callback_notifier_event_received of <notifier.notifier object at 0x7f93c9510910>>, 'data': {'action': 'send_when_present', 'title': '🫧 Machine à laver', 'message': 'Cycle de lavage terminé !', 'icon': 'mdi:washing-machine', 'color': 'green', 'tag': 'washing_mashine_over', 'metadata': {'origin': 'REMOTE', 'time_fired': '2023-06-06T13:21:28.695372+00:00', 'context': {'id': '01H28DX7KQ344RMJEE3NE5B7CX', 'parent_id': None, 'user_id': '0e73b89d4ae449e79022647489d4426b'}}}, 'pin_app': True, 'pin_thread': 2, 'kwargs': {'__thread_id': 'thread-2'}}
+2023-06-06 15:21:28.724395 WARNING notifier: ------------------------------------------------------------
+2023-06-06 15:21:28.725156 WARNING notifier: Traceback (most recent call last):
+  File "/usr/lib/python3.11/site-packages/appdaemon/threading.py", line 1095, in worker
+    funcref(args["event"], data, self.AD.events.sanitize_event_kwargs(app, args["kwargs"]))
+  File "/config/appdaemon/apps/notifier.py", line 152, in callback_notifier_event_received
+    self.send_when_present(data)
+  File "/config/appdaemon/apps/notifier.py", line 249, in send_when_present
+    self.send_to_present(data)
+  File "/config/appdaemon/apps/notifier.py", line 227, in send_to_present
+    if self.get_state(person["id"]) == "home" or float(self.get_state(person["proximity_id"])) <= self.args["proximity_threshold"]:
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: could not convert string to float: 'not set'
+
+2023-06-06 15:21:28.725398 WARNING notifier: ------------------------------------------------------------
+2023-06-06 15:22:12.937721 ERROR notifier: User defined log notifier not found
+2023-06-06 15:22:12.939053 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-06 15:22:12.940260 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-06 15:22:12.941531 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-06 15:23:40.945146 WARNING notifier: ------------------------------------------------------------
+2023-06-06 15:23:40.945348 WARNING notifier: Unexpected error in worker for App notifier:
+2023-06-06 15:23:40.945590 WARNING notifier: Worker Ags: {'id': 'f85dda8771d442268faa93ba97c3a46c', 'name': 'notifier', 'objectid': 'bda9ebfe55e44e72a48be9f6de2e1308', 'type': 'event', 'event': 'NOTIFIER', 'function': <bound method notifier.callback_notifier_event_received of <notifier.notifier object at 0x7f93c9e70d10>>, 'data': {'action': 'send_when_present', 'title': '🫧 Machine à laver', 'message': 'Cycle de lavage terminé !', 'icon': 'mdi:washing-machine', 'color': 'green', 'tag': 'washing_mashine_over', 'metadata': {'origin': 'REMOTE', 'time_fired': '2023-06-06T13:23:40.916138+00:00', 'context': {'id': '01H28E18QMBV8HCWCQSWAHWAJS', 'parent_id': None, 'user_id': '0e73b89d4ae449e79022647489d4426b'}}}, 'pin_app': True, 'pin_thread': 2, 'kwargs': {'__thread_id': 'thread-2'}}
+2023-06-06 15:23:40.945842 WARNING notifier: ------------------------------------------------------------
+2023-06-06 15:23:40.946610 WARNING notifier: Traceback (most recent call last):
+  File "/usr/lib/python3.11/site-packages/appdaemon/threading.py", line 1095, in worker
+    funcref(args["event"], data, self.AD.events.sanitize_event_kwargs(app, args["kwargs"]))
+  File "/config/appdaemon/apps/notifier.py", line 152, in callback_notifier_event_received
+    self.send_when_present(data)
+  File "/config/appdaemon/apps/notifier.py", line 249, in send_when_present
+    self.send_to_present(data)
+  File "/config/appdaemon/apps/notifier.py", line 227, in send_to_present
+    if self.get_state(person["id"]) == "home" or float(self.get_state(person["proximity_id"])) <= self.args["proximity_threshold"]:
+                                                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: could not convert string to float: 'not set'
+
+2023-06-06 15:23:40.946803 WARNING notifier: ------------------------------------------------------------
+2023-06-06 15:25:57.861168 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-06 15:26:37.056713 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-07 00:03:04.309785 ERROR notifier: User defined log notifier not found
+2023-06-07 00:03:04.313309 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-07 00:03:04.316138 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-07 00:03:04.318840 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-07 09:30:46.297985 ERROR notifier: User defined log notifier not found
+2023-06-07 09:30:46.299224 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-07 09:30:46.300399 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-07 09:30:46.301610 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-07 09:42:44.277115 ERROR notifier: User defined log notifier not found
+2023-06-07 09:42:44.278364 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-07 09:42:44.279564 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-07 09:42:44.280749 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-07 09:48:19.402502 ERROR notifier: User defined log notifier not found
+2023-06-07 09:48:19.403868 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-07 09:48:19.405111 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-07 09:48:19.406404 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-07 09:53:46.049892 ERROR notifier: User defined log notifier not found
+2023-06-07 09:53:46.051323 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-07 09:53:46.052655 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-07 09:53:46.054060 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-07 09:58:36.041812 ERROR notifier: User defined log notifier not found
+2023-06-07 09:58:36.043111 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-07 09:58:36.044380 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-07 09:58:36.045746 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-07 10:10:08.414836 ERROR notifier: User defined log notifier not found
+2023-06-07 10:10:08.416342 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-07 10:10:08.417729 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-07 10:10:08.419059 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-07 10:14:43.522198 ERROR notifier: User defined log notifier not found
+2023-06-07 10:14:43.523614 ERROR monitor_washing_machine: User defined log monitor_washing_machine not found
+2023-06-07 10:14:43.524825 ERROR take_out_trash: User defined log take_out_trash not found
+2023-06-07 10:14:43.526385 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-07 18:13:22.189624 ERROR notifier: User defined log notifier not found

@@ -1,0 +1,29 @@
+automation:
+  - alias: Notification poubelles
+    description: ""
+    trigger:
+      - platform: calendar
+        event: start
+        offset: -05:00:0
+        entity_id: calendar.poubelles
+    condition: []
+    action:
+      - service: notify.mobile_app_mi_a2_lite
+        data:
+          message: "{{ state_attr('calendar.poubelles', 'message')}} demain (new)!"
+    mode: single
+
+  - alias: Notification tri
+    description: ""
+    trigger:
+      - platform: calendar
+        event: start
+        offset: "-05:00:0"
+        entity_id: calendar.tri
+    condition: []
+    action:
+      - service: notify.mobile_app_mi_a2_lite
+        data:
+          message: |
+            {{ state_attr('calendar.tri', 'message')}} demain (new)!
+    mode: single

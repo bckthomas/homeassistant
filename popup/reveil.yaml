@@ -1,0 +1,67 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Réveil
+    hide_header: true
+    style:
+      .: |
+        :host .content {
+          width: calc(385px);
+          max-width: 90vw;
+        }
+    content:
+      type: vertical-stack
+      cards:
+        - type: custom:time-picker-card
+          entity: input_datetime.wake_time
+          hide:
+            name: true
+            icon: true
+          hour_step: 1
+          layout:
+            align_controls: center
+            name: inside
+          link_values: true
+          minute_step: 1
+          name: ''
+          style:
+            .: |
+              ha-card {
+                box-shadow: none;
+                background-color: rgba(0,0,0,0);
+              }
+              .time-picker-row{
+                margin-left: 5px !important;
+              }
+            .time-picker-row:
+              .time-picker-content:
+                .: |
+                  .time-separator {
+                    display: none;
+                  }
+                time-unit:
+                  $: |
+                    .time-unit {
+                      padding: 2px !important;
+                    }
+                    .time-input {
+                      border: 2px solid var(--primary-color) !important;
+                      background-color: rgba(0,0,0,0) !important;
+                      color: var(--primary-color) !important;
+                      border-radius: 5px;
+                    }     
+                    .time-picker-icon {
+                      color: var(--primary-color) !important;
+                      z-index: 100;
+                    }
+        - type: entities
+          entities:
+            - entity: input_boolean.wakestatus
+            - entity: input_boolean.wakeweekday_mon
+            - entity: input_boolean.wakeweekday_tue
+            - entity: input_boolean.wakeweekday_wed
+            - entity: input_boolean.wakeweekday_thu
+            - entity: input_boolean.wakeweekday_fri
+            - entity: input_boolean.wakeweekday_sat
+            - entity: input_boolean.wakeweekday_sun

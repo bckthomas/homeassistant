@@ -1,0 +1,45 @@
+homeassistant:
+  customize:
+    vacuum.wall_e:
+      icon: cil:roborock-vacuum
+    sensor.wall_e_last_clean_end:
+      friendly_name: Dernier nettoyage
+      icon: mdi:calendar-clock
+
+template:
+  - sensor:
+      - unique_id: vacuum_filter
+        state: >
+          {% set entity_id = 'sensor.wall_e_filtre' %}
+          {{ (states(entity_id) | int(default=0) / 5400) | int(default=0) }}
+        attributes:
+          friendly_name: Filtre
+          icon: cil:roborock-filter
+          unit_of_measurement: "%"
+
+      - unique_id: vacuum_mainbrush
+        state: >
+          {% set entity_id = 'sensor.wall_e_brosse_principale' %}
+          {{ (states(entity_id) | int(default=0) / 10800) | int(default=0) }}
+        attributes:
+          friendly_name: Brosse
+          icon: cil:roborock-mainbrush
+          unit_of_measurement: "%"
+
+      - unique_id: vacuum_sensors
+        state: >
+          {% set entity_id = 'sensor.wall_e_capteurs' %}
+          {{ (states(entity_id) | int(default=0) / 1080) | int(default=0) }}
+        attributes:
+          friendly_name: Capteurs
+          icon: cil:roborock-sensor
+          unit_of_measurement: "%"
+
+      - unique_id: vacuum_sidebrush
+        state: >
+          {% set entity_id = 'sensor.wall_e_brosse_laterale' %}
+          {{ (states(entity_id) | int(default=0) / 7200) | int(default=0) }}
+        attributes:
+          friendly_name: Brosse latérale
+          icon: cil:roborock-sidebrush
+          unit_of_measurement: "%"

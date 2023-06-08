@@ -1,0 +1,89 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Météo
+    style: >
+      --popup-max-width: calc(385px + 385px);
+      --ha-card-border-radius: 0;
+    card_mod:
+      style:
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+              #root {
+                  margin: -24px 0 !important;
+              }
+            hui-entities-card:
+              $: |
+                .card-content {
+                  padding: var(--tablet-popup-content-padding);
+                  padding-bottom: 0.8em;
+                }
+                ha-card {
+                  border-right: 1.5px solid rgba(0, 0, 0, 0.2);
+                  border-radius: 0;
+                  transition: none;
+                }
+                /* portrait */
+                @media screen and (max-width: 1200px) {
+                  ha-card {
+                    border-right: none;
+                    border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
+                  }
+                }
+              $hui-horizontal-stack-card:
+                # horizontal bottom buttons
+                $: |
+                  #root {
+                    justify-content: space-evenly;
+                    margin-top: 1.7em;
+                    max-width: 82vw; /* iphonex */
+                  }
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        grid-template-columns: 385px 385px
+        grid-template-rows: 1fr
+        grid-template-areas: |
+          "previsions pluie"
+        mediaquery:
+          #phone
+          "(max-width: 800px)":
+            grid-template-columns: 1fr
+            grid-template-areas: |
+              "previsions"
+              "pluie"
+      cards:
+        - type: entities
+          view_layout:
+            grid-area: previsions
+          show_header_toggle: false
+          entities:
+            - type: custom:meteofrance-weather-card
+              entity: weather.anse
+              number_of_forecasts: '6'
+              uvEntity: sensor.anse_uv
+              rainChanceEntity: sensor.anse_rain_chance
+              snowChanceEntity: sensor.anse_snow_chance
+              alertEntity: sensor.69_weather_alert
+              rainForecastEntity: sensor.anse_next_rain
+              cloudCoverEntity: sensor.anse_cloud_cover
+              freezeChanceEntity: sensor.anse_freeze_chance
+              current: true
+              # details: false
+              one_hour_forecast: true
+              # alert_forecast: false
+              forecast: true
+              hide_alertAvalanches: true
+              hide_alertVaguesSubmersion: true
+              name: Anse 
+
+        - type: iframe
+          view_layout:
+            grid-area: pluie
+          url:
+            https://www.meteo-lyon.net/rain-map?zoom=9&lat=45.75&lon=4.85&showTitle=1
+          aspect_ratio: 120%

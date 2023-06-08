@@ -1,0 +1,97 @@
+homeassistant:
+  customize:
+    input_boolean.wakestatus:
+      templates:
+        icon_color: if (state === 'on') return 'green'; else return 'red';
+        icon: if (state === 'on') return 'mdi:alarm-check'; else return 'mdi:alarm-off';
+
+automation:
+  - alias: Wake 1
+    trigger:
+      platform: template
+      value_template: "{{states('sensor.time') == (state_attr('input_datetime.wake_time','timestamp') | int | timestamp_custom('%H:%M', False))}}"
+    condition:  
+     condition: template
+     value_template: >
+        {% set today = 'input_boolean.wakeweekday_' ~ now().strftime("%a") | lower ~ '' %}
+        {{ is_state('input_boolean.wakestatus', 'on') and is_state(today, 'on') }}
+    action:
+      service: input_boolean.turn_on
+      entity_id: input_boolean.wakeactivated
+
+  - alias: 'Wake 1 Activated'
+    trigger:
+      platform: state
+      entity_id: input_boolean.wakeactivated
+      from: 'off'
+      to: 'on'
+    action:   
+      - service: script.wake_up
+      - service: input_boolean.turn_off
+        entity_id: input_boolean.wakeactivated
+
+script:
+  wake_up:
+    alias :  Réveil matin
+    sequence:
+      - service: alarm_control_panel.alarm_disarm
+        target:
+          entity_id: alarm_control_panel.maison    
+      - service: cover.set_cover_position
+        target:
+          entity_id: cover.volet_chambre_parents
+        data:
+          position: 50
+      - delay:
+          minutes: 2
+      - service: cover.open_cover
+        target:
+          entity_id: cover.cuisine, cover.salon, cover.volet_bureau, cover.volet_salle_a_manger, cover.volet_chambre_d_amis
+      - delay:
+          minutes: 2
+      - service: cover.set_cover_position
+        target:
+          entity_id: cover.volet_chambre_romain, cover.volet_chambre_valentine
+        data:
+          position: 50
+      - delay:
+          minutes: 3
+      - service: cover.open_cover
+        target:
+          entity_id: cover.volet_chambre_romain, cover.volet_chambre_valentine, cover.volet_chambre_parents
+
+input_datetime:
+  wake_time:
+    name: wake_time
+    has_date: false
+    has_time: true
+
+input_boolean:
+  wakeactivated:
+    name: Alarm 1 Activated
+    icon: mdi:alarm
+    initial: off
+  wakestatus:
+    name: Réveil
+    icon: mdi:alarm
+  wakeweekday_sun:
+    name: Dimanche
+    icon: mdi:calendar
+  wakeweekday_mon:
+    name: Lundi
+    icon: mdi:calendar
+  wakeweekday_tue:
+    name: Mardi
+    icon: mdi:calendar
+  wakeweekday_wed:
+    name: Mercredi
+    icon: mdi:calendar
+  wakeweekday_thu:
+    name: Jeudi
+    icon: mdi:calendar
+  wakeweekday_fri:
+    name: Vendredi
+    icon: mdi:calendar
+  wakeweekday_sat:
+    name: Samedi
+    icon: mdi:calendar

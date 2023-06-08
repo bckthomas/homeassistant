@@ -1,0 +1,53 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Agenda
+    card_mod:
+      style:
+        #popup header
+        .:
+    content:
+      type: "custom:atomic-calendar-revive"
+      enableModeChange: true
+      firstDayOfWeek: 1
+      maxDaysToShow: 21
+      entities:
+        - entity: calendar.thomas
+          name: Thomas
+        - entity: calendar.musique
+          icon: mdi:album
+        - entity: calendar.anniversaires_des_contacts
+          icon: mdi:cake-variant
+        - entity: calendar.benedicte
+          name: Bénédicte
+      showLoader: true
+      hideDeclined: true
+      hideFinishedEvents: true
+      showRelativeTime: false
+      showDate: false
+      sortByStartTime: true
+      showLocation: true
+      showHiddenText: false
+      disableLocationLink: false
+      showNoEventsForToday: false
+      showEventIcon: true
+      showFullDayProgress: true
+      calShowDescription: true
+      showLastCalendarWeek: true
+      disableCalEventLink: false
+      disableCalLocationLink: false
+      disableCalLink: false
+      untilText: jusqu'au
+      fullDayEventText: Toute la journée
+      noEventsForNextDaysText: Pas d'événements à venir
+      noEventText: Rien pour aujourd'hui
+      showCurrentEventLine: false
+      showMonth: true
+      showDescription: true
+      showProgressB: true
+      showWeekDay: false
+      hideDuplicates: true
+      showMultiDay: true
+      showProgressBar: true
+      showCalendarName: true                

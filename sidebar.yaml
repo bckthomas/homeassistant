@@ -1,0 +1,148 @@
+- sensor:
+    - unique_id: sidebar
+      state: template
+      attributes:
+        time: >
+          {% set hours = now().strftime('%H') %}
+          {% set minutes = now().strftime('%M') %}
+          <span class="time">
+            {{ hours }}<span class="time-colon">:</span>{{ minutes }}
+          </span>
+        date: >
+          <font color='#6a7377'><b>
+          {% if strptime(states('sensor.date'), '%Y-%m-%d').day != None %}
+          {% set days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'] %}
+          {% set months = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+          'Julliet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'] %}
+            {{ days[now().weekday()] }}
+            {{ strptime(states('sensor.date'), '%Y-%m-%d').day }} {{ months[now().month-1] }}
+          {% endif %}
+          </b>
+          </font>
+
+        active: >
+          
+          {% set lights = [
+            states.switch.lumiere_salle_a_manger,
+            states.switch.guirlande
+          ] %}
+
+          {% set devices = [
+            states.switch.ampli,
+            states.media_player.fire_tv,
+            states.media_player.tv_ambilight
+          ] %}
+
+          {% set lights_on = lights | selectattr('state','eq','on') | list %}
+          {% set lights_name = lights | selectattr('state','eq','on') | map(attribute='name') | join(', ') %}
+
+          {% set devices_on = devices | selectattr('state','search','(on|cool|fan_only|playing)') | list %}
+          {% set devices_name = devices_on | map(attribute='name') | join(', ') %}
+
+          {% if (lights_on | length == 0) and (devices_on | length == 1) %}
+            {{ devices_name | regex_replace(',([^,]*)$',' et\\1') }} est allumé
+
+          {% elif (lights_on | length == 0) and (devices_on | length > 1) %}
+            {{ devices_name | regex_replace(',([^,]*)$',' et\\1') }} sont allumés
+
+          {% elif (lights_on | length == 1) and (devices_on | length == 1) %}
+            {{ lights_name }} et {{devices_name }} sont allumés
+
+          {% elif (lights_on | length == 1) and (devices_on | length > 1) %}
+            {{ lights_name }}, {{ devices_name | regex_replace(',([^,]*)$',' et\\1') }} sont allumés
+
+          {% elif (lights_on | length > 1) and (devices_on | length == 1) %}
+            {{ lights_on | length }} lumières et {{ devices_name }} sont allumés
+
+          {% elif (lights_on | length > 1) and (devices_on | length > 1) %}
+            {{ lights_on | length }} lumières, {{ devices_name | regex_replace(',([^,]*)$',' et\\1') }} sont allumés
+
+          {% elif (lights_on | length == 1) and (devices_on | length == 0) %}
+            {{ lights_name }} est allumée
+
+          {% elif (lights_on | length > 1) and (devices_on | length == 0) %}
+            {{ lights_on | length }} lumières allumées
+
+          {% else %}
+            <font color='#6a7377'>Tout est éteint</font>
+          {% endif %}
+          
+
+        laundry: |
+          {% set is_washing_machine_running = states('binary_sensor.is_washing_machine_running') %}
+          {% set is_washing_machine_standby = states('binary_sensor.is_washing_machine_standby') %}
+
+          {% if (is_washing_machine_running == 'on') %}
+            <ha-icon icon="mdi:washing-machine"></ha-icon> Machine en cours
+          {% endif %}
+
+          {% if (is_washing_machine_running =='off' and is_washing_machine_standby == 'on') %}
+            <ha-icon icon="mdi:washing-machine"></ha-icon> Machine terminée 
+          {% endif %}
+
+        vacuum: >
+          {% set entity_id = 'vacuum.wall_e' %}
+          {% if is_state(entity_id, 'cleaning') %}
+            Wall-E passe l'aspirateur
+          {% elif is_state(entity_id, 'returning') %}
+            Wall-E a terminé
+          {% endif %}
+
+        covers: >
+          {% set covers = [states.cover.volet_fenetre_cuisine, states.cover.volet_porte_cuisine, states.cover.volet_salon_droite, states.cover.volet_salon_gauche, states.cover.volet_salle_a_manger, states.cover.volet_chambre_parents, states.cover.volet_chambre_d_amis, states.cover.volet_bureau, states.cover.volet_chambre_romain, states.cover.volet_chambre_valentine] %}
+          {% set covers_open = covers | selectattr('state','eq','open') | list  %}
+          {% set covers_closed = covers | selectattr('state','eq','closed') | list %}
+          {% set covers_name = covers | selectattr('state','eq','open') | map(attribute='name') | join(', ') %}
+
+          {% if (covers_open | length == 0) %}
+            <ha-icon icon="hass:blinds"></ha-icon> fermés
+
+          {% elif (covers_open | length == 1) %} 
+            <ha-icon icon="hass:blinds-open"></ha-icon> {{ covers_name | regex_replace(',([^,]*)$',' et\\1') }} est ouvert
+
+          {% elif (covers_open | length > 1) and (covers_open | length <= 9) %} 
+            <ha-icon icon="hass:blinds-open"></ha-icon>  {{ covers_open | length }} ouverts
+
+          {% elif (covers_open | length == 10) %} 
+            <ha-icon icon="hass:blinds-open"></ha-icon> ouverts
+          {% endif %}
+
+        calendar: >
+          {% set time = ' 00:00:00' %}
+          {% set start = now().date() %}
+          {% set end = (start + timedelta(days=1)) ~ time %}
+          {% set start = start ~ time %}
+
+          {% set entities = states.calendar
+          | rejectattr('attributes.start_time', 'undefined')
+          | selectattr('attributes.start_time', '>', start)
+          | rejectattr('attributes.end_time', '>', end) | list %}
+          {% for sensor in entities %}
+            <ha-icon icon="hass:calendar-today"></ha-icon> {{ as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') }} {{ sensor.attributes.message }}
+          {% endfor %}
+          
+        waste: >
+          {% set time = ' 00:00:00' %}
+          {% set start = (now().date() + timedelta(days=1)) %}
+          {% set end = (start + timedelta(days=1)) ~ time %}
+          {% set start = start ~ time %}
+          {% set entities = states.calendar
+          | rejectattr('attributes.start_time', 'undefined')
+          | selectattr('attributes.start_time', '==', start) | list %}
+          {% for sensor in entities %}
+            {% if sensor.attributes.friendly_name == "Tri" -%}
+              <ha-icon icon="mdi:recycle"></ha-icon>
+            {%- else -%}
+              <ha-icon icon="mdi:trash-can-outline"></ha-icon>
+            {%- endif %} {{ sensor.attributes.message }} demain !
+          {% endfor %}
+
+        battery: >
+          {% set entities = states.sensor 
+            | selectattr('entity_id', 'search', 'battery_level$')
+            | map(attribute = 'entity_id') | list %}
+          {% for sensor in entities if states(sensor) != 'unknown' and states(sensor) !=
+          'unavailable' and states(sensor) != 'None' and states(sensor) | int(default=0) <= 15 %}
+            {% if loop.first %} {{'\u26A0\uFE0F'}} Batterie {% else %}, {% endif %}
+            {{ state_attr(sensor, 'friendly_name') }} {{ states(sensor) }}%
+          {% endfor %}

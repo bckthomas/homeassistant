@@ -1,0 +1,10 @@
+input_boolean:
+  canicule:
+    name: Plan canicule
+    icon: mdi:weather-sunny-alert
+  nightcover:
+    name: Fermeture automatique le soir
+    icon: mdi:weather-night
+  leavecover:
+    name: Fermeture automatique en partant
+    icon: mdi:exit-run

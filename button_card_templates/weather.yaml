@@ -1,0 +1,212 @@
+widget_weather:
+  aspect_ratio: 1/1
+  show_icon: false
+  show_entity_picture: true
+  show_name: true
+  show_state: true
+  show_label: false
+  tap_action:
+    action: more-info
+  styles:
+    grid:
+      - grid-template-areas: |
+          "n"
+          "temp"
+          "forecast"
+          "i"
+          "s"
+          "l"
+      - grid-template-columns: 1fr
+      - grid-template-rows: min-content repeat(2, 1fr) repeat(2, min-content)
+      - gap: 0%
+    card:
+      - border-radius: var(--button-card-border-radius)
+      - padding: 1rem
+      - height: 100%
+      - background-position: center
+      - background-repeat: no-repeat    
+      - color: rgba(255, 255, 255, 0.8)
+    name:
+      - place-self: start
+      - text-transform: uppercase
+      - font-weight: 500
+    img_cell:
+      - justify-content: start
+      - overflow: visible
+      - margin-top: -155px
+    icon:
+      - width: 40%
+    custom_fields:
+      temp:
+        - place-self: end
+        - margin-top: 5px
+      forecast:
+        - place-self: end
+        - text-align: right
+        - margin: 75px 0 0
+  custom_fields:
+    temp: >
+      [[[ return entity.attributes.temperature + "°"; ]]]
+    forecast: >
+      [[[
+        let min = "<ha-icon icon='mdi:thermometer-low'></ha-icon> " + Math.round(entity.attributes.forecast[0].templow).toString() + "°";
+        let max = "<ha-icon icon='mdi:thermometer-high'></ha-icon> " + Math.round(entity.attributes.forecast[0].temperature).toString() + "°";
+        var vent = "";
+        if (entity.attributes.wind_speed > 0) {
+          vent = "<br/><ha-icon icon='mdi:windsock'></ha-icon> " + Math.round(entity.attributes.wind_speed).toString() + "km/h";
+        }
+        var pluie = "";
+        if (entity.attributes.forecast[0].precipitation > 0) {
+          pluie = "<br/><ha-icon icon='mdi:weather-pouring'></ha-icon> " + entity.attributes.forecast[0].precipitation + "mm";
+        }
+        return min + max + vent + pluie;
+      ]]]
+  entity_picture: >
+    [[[
+      if ((entity.state == 'sunny') && (states['sun.sun'].state == 'above_horizon'))
+        return "/local/weather/clear-day.svg";
+        if ((entity.state == 'sunny') || (entity.state == 'clear-night') && (states['sun.sun'].state == 'below_horizon'))
+          return "/local/weather/clear-night.svg";   
+            if (entity.state == 'fog')
+              return "/local/weather/fog.svg";     
+                if ((entity.state == 'partlycloudy') && (states['sun.sun'].state == 'above_horizon'))
+                  return "/local/weather/partly-cloudy-day.svg";                      
+                    if ((entity.state == 'partlycloudy') && (states['sun.sun'].state == 'below_horizon'))
+                      return "/local/weather/partly-cloudy-night.svg";    
+                        if (entity.state == 'rainy')
+                          return "/local/weather/rain.svg";                  
+                            if (entity.state == 'sleet')
+                              return "/local/weather/sleet.svg";
+                                if (entity.state == 'snow')
+                                  return "/local/weather/snow.svg";
+                                    if (entity.state == 'cloudy')
+                                      return "/local/weather/cloudy.svg";  
+                                        if (entity.state == 'lightning')
+                                          return "/local/community/lovelace-meteofrance-weather-card/icons/thunder.svg"; 
+                                          if (entity.state == 'hail')
+                                            return "/local/community/lovelace-meteofrance-weather-card/icons/rainy-7.svg";  
+                                            if (entity.state == 'lightning-rainy')
+                                              return "/local/community/lovelace-meteofrance-weather-card/icons/lightning-rainy.svg";  
+                                            
+      else (entity.state == 'wind')
+        return "/local/weather/wind.svg";                        
+    ]]]
+  extra_styles: |
+    [[[
+      let case_rainy = '/local/weather/rainy.gif';
+      let case_cloudy = '/local/weather/cloudy.gif';
+      let case_partly_cloudy = '/local/weather/partly_cloudy.gif';
+      let case_wind = '/local/weather/wind.gif';
+      let case_lightning = '/local/weather/lightning.gif';
+      let case_hail = '/local/weather/hail.gif';
+      let case_sunny = '/local/weather/sunny.gif';
+      let case_fog = '/local/weather/fog.gif';
+      let cardBgColor = 'rgba(43, 104, 233, .7)';
+      let cardBgImage = 'linear-gradient(0deg, rgba(43, 104, 233, .7) 0%, rgba(85, 187, 240, .7) 100%)';
+      if (entity && entity.state) {
+        switch(entity.state) {
+          case 'wind':
+            cardBgColor = 'rgb(117,121,128)';
+            cardBgImage = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_wind + ')';
+            break;
+          case 'partlycloudy':
+            cardBgColor = 'rgb(117,121,128)';
+            cardBgImage = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_partly_cloudy + ')';
+            break;
+          case 'cloudy':
+            cardBgColor = 'rgb(117,121,128)';
+            cardBgImage = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_cloudy + ')';
+            break;
+          case 'lightning':
+            cardBgColor = 'rgb(117,121,128)';
+            cardBgImage = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_lightning + ')';
+            break;
+          case 'hail':
+            cardBgColor = 'rgb(117,121,128)';
+            cardBgImage = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_hail + ')';
+            break;
+          case 'rainy':
+            cardBgColor = 'rgb(117,121,128)';
+            cardBgImage = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_rainy + ')';
+            break;
+          case 'sunny':
+            cardBgColor = 'rgb(117,121,128)';
+            cardBgImage = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_sunny + ')';
+            break;
+          case 'fog':
+            cardBgColor = 'rgb(117,121,128)';
+            cardBgImage = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_fog + ')';
+            break;
+            
+        }
+      }    
+      return `
+        #name {
+          font-size: 1vw;
+        }
+        #temp {
+          font-size: 1.5vw;
+        }
+        #forecast {
+          font-size: .8vw;
+        }
+        #state {
+          font-size: .7vw;
+        }
+        ha-icon {
+          width: 1vw
+        }
+        /* portrait */
+        @media screen and (max-width: 1200px) {
+          #name {
+            font-size: 1.3vw;
+          }
+          #temp {
+            font-size: 4.5vw;
+          }
+          #forecast {
+            font-size: 3vw;
+          }
+          #state {
+            font-size: 1.1vw;
+          }    
+        }
+        /* phone */
+        @media screen and (max-width: 800px) {
+          #name {
+            font-size: 3.5vw;
+          }
+          #forecast {
+            font-size: 8rem;
+          }
+          #temp {
+            font-size: 12vw;
+          }    
+          #state {
+            font-size: 3.5vw;
+          }                         
+        }
+        #card {
+          background-color: ${cardBgColor};
+          background-image: ${cardBgImage};
+          background-size: cover;
+        }
+        @keyframes card_bounce {
+          0% {
+            transform: scale(1);
+          }
+          15% {
+            transform: scale(0.9);
+          }
+          25% {
+            transform: scale(1);
+          }
+          30% {
+            transform: scale(0.98);
+          }
+          100% {
+            transform: scale(1);
+          }
+        }
+      `
+    ]]]

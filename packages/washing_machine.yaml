@@ -1,0 +1,12 @@
+template:
+  - binary_sensor:
+      - name: is_washing_machine_running
+        unique_id: is_washing_machine_running
+        state: "{{ states('sensor.buanderie_current_consumption') | float(default = 0) > 5 }}"
+        device_class: running
+        delay_on: "0:01:00"
+      - name: is_washing_machine_standby
+        unique_id: is_washing_machine_standby
+        state: "{{ states('sensor.buanderie_current_consumption') | float(default = 0) > 1 and states('sensor.buanderie_current_consumption') | float(default = 0) < 5 }}"
+        delay_on: "0:02:00"
+        device_class: running

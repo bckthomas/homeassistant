@@ -1,0 +1,88 @@
+homeassistant:
+  customize:
+    cover.volet_fenetre_cuisine:
+      friendly_name: Fenêtre cuisine
+    cover.volet_porte_cuisine:
+      friendly_name: Porte cuisine
+    cover.volet_salon_droite:
+      friendly_name: Salon droite
+    cover.volet_salon_gauche:
+      friendly_name: Salon gauche
+    cover.volet_salle_a_manger:
+      friendly_name: Salle à manger
+    cover.volet_chambre_parents:
+      friendly_name: Chambre parents
+    cover.volet_chambre_d_amis:
+      friendly_name: Chambre d'amis
+    cover.volet_bureau:
+      friendly_name: Bureau
+    cover.volet_chambre_romain:
+      friendly_name: Chambre Romain
+    cover.volet_chambre_valentine:
+      friendly_name: Chambre Valentine
+
+cover:
+  - platform: group
+    name: Tous les volets
+    entities:
+      - cover.volet_fenetre_cuisine
+      - cover.volet_porte_cuisine
+      - cover.volet_salon_droite
+      - cover.volet_salon_gauche
+      - cover.volet_salle_a_manger
+      - cover.volet_chambre_parents
+      - cover.volet_chambre_d_amis
+      - cover.volet_bureau
+      - cover.volet_chambre_romain
+      - cover.volet_chambre_valentine
+  - platform: group
+    name: Etage
+    entities:
+      - cover.volet_fenetre_cuisine
+      - cover.volet_porte_cuisine
+      - cover.volet_salon_droite
+      - cover.volet_salon_gauche
+      - cover.volet_salle_a_manger
+      - cover.volet_chambre_parents
+      - cover.volet_chambre_d_amis
+      - cover.volet_bureau
+  - platform: group
+    name: Soir
+    entities:
+      - cover.volet_salle_a_manger
+      - cover.volet_chambre_parents
+      - cover.volet_chambre_d_amis
+      - cover.volet_bureau
+      - cover.volet_chambre_romain
+      - cover.volet_chambre_valentine
+  - platform: group
+    name: Cuisine
+    entities:
+      - cover.volet_fenetre_cuisine
+      - cover.volet_porte_cuisine
+  - platform: group
+    name: Salon
+    entities:
+      - cover.volet_salon_droite
+      - cover.volet_salon_gauche
+  - platform: group
+    name: Chambres bas
+    entities:
+      - cover.volet_chambre_romain
+      - cover.volet_chambre_valentine
+  - platform: group
+    name: Pièces
+    entities:
+      - cover.volet_chambre_romain
+      - cover.volet_chambre_valentine
+      - cover.volet_chambre_parents
+      - cover.volet_chambre_d_amis
+      - cover.volet_bureau
+  - platform: group
+    name: Loft
+    entities:
+      - cover.volet_salon_droite
+      - cover.volet_salon_gauche
+      - cover.volet_fenetre_cuisine
+      - cover.volet_porte_cuisine
+      - cover.volet_salle_a_manger

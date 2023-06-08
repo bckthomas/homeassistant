@@ -1,0 +1,34 @@
+solar:
+  custom_fields:
+    circle: >
+      [[[
+        if (entity ) {
+          let input = entity.state == null ? ' ' : `${entity.state}<tspan font-size="10">W</tspan>`;
+          return `
+            <svg viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="20.5" fill="rgba(255,255,255,0.04)" />
+              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${input}</text>
+            </svg>
+          `;
+        }
+      ]]]
+  styles:
+    name:
+      - margin-bottom: 33%
+    custom_fields:
+      circle:
+        - display: initial
+        - width: 90%
+        - letter-spacing: 0.03vw
+        - margin: -6% -6% 0 0
+        - justify-self: end
+        - opacity: 1
+      graph:
+        - filter: opacity(50%)
+        - overflow: unset
+        - bottom: 0%
+        - left: 0%
+        - width: 100%
+        - position: absolute
+    card:
+      - overflow: unset
