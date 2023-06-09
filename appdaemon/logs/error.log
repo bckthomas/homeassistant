@@ -107,3 +107,8 @@ ValueError: could not convert string to float: 'not set'
 2023-06-07 10:14:43.524825 ERROR take_out_trash: User defined log take_out_trash not found
 2023-06-07 10:14:43.526385 ERROR rollover_printer: User defined log rollover_printer not found
 2023-06-07 18:13:22.189624 ERROR notifier: User defined log notifier not found
+2023-06-08 23:52:42.828352 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-09 09:18:55.668936 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-09 09:27:10.612098 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-09 09:49:20.963580 ERROR rollover_printer: User defined log rollover_printer not found
+2023-06-09 11:13:42.832999 ERROR rollover_printer: User defined log rollover_printer not found

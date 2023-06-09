@@ -1064,3 +1064,198 @@
 2023-06-07 18:13:22.179350 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/notifier.py
 2023-06-07 18:13:22.188588 INFO AppDaemon: Loading app notifier using class notifier from module notifier
 2023-06-07 18:13:22.191014 INFO AppDaemon: Calling initialize() for notifier
+2023-06-08 20:51:01.741769 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 20:51:06.745610 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 20:51:07.358818 INFO AppDaemon: SIGTERM Received
+2023-06-08 20:51:07.359128 INFO AppDaemon: AppDaemon is shutting down
+2023-06-08 20:51:07.500545 INFO AppDaemon: Removing module /config/appdaemon/apps/monitor_washing_machine.py
+2023-06-08 20:51:07.500808 INFO AppDaemon: Removing module /config/appdaemon/apps/take_out_trash.py
+2023-06-08 20:51:07.500999 INFO AppDaemon: Removing module /config/appdaemon/apps/notifier.py
+2023-06-08 20:51:07.501217 INFO AppDaemon: Removing module /config/appdaemon/apps/rollover_printer.py
+2023-06-08 20:51:07.504773 INFO AppDaemon: Terminating notifier
+2023-06-08 20:51:07.506085 INFO AppDaemon: Terminating monitor_washing_machine
+2023-06-08 20:51:07.508560 INFO AppDaemon: Terminating take_out_trash
+2023-06-08 20:51:07.509102 INFO AppDaemon: Terminating rollover_printer
+2023-06-08 20:51:07.509815 INFO AppDaemon: Shutting down webserver
+2023-06-08 20:51:11.752671 INFO HASS: Disconnecting from Home Assistant
+2023-06-08 20:51:11.753063 INFO AppDaemon: Saving all namespaces
+2023-06-08 20:51:11.753329 INFO AppDaemon: AppDaemon is stopped.
+2023-06-08 23:51:11.277193 INFO main_log: AppDaemon Version 4.4.2 starting
+2023-06-08 23:51:11.281942 INFO main_log: Python version is 3.11.3
+2023-06-08 23:51:11.282317 INFO main_log: Configuration read from: /config/appdaemon/appdaemon.yaml
+2023-06-08 23:51:11.282654 INFO main_log: Added log: main_log
+2023-06-08 23:51:11.283149 INFO main_log: Added log: error_log
+2023-06-08 23:51:11.283462 INFO main_log: Added log: Access
+2023-06-08 23:51:11.283781 INFO main_log: Added log: Diag
+2023-06-08 23:51:11.284094 INFO main_log: Added log: monitor_washing_machine
+2023-06-08 23:51:11.284418 INFO main_log: Added log: take_out_trash
+2023-06-08 23:51:11.284745 INFO main_log: Added log: notifier
+2023-06-08 23:51:12.147934 INFO AppDaemon: Loading Plugin HASS using class HassPlugin from module hassplugin
+2023-06-08 23:51:12.974333 INFO HASS: HASS Plugin Initializing
+2023-06-08 23:51:12.974663 WARNING HASS: ha_url not found in HASS configuration - module not initialized
+2023-06-08 23:51:12.974946 INFO HASS: HASS Plugin initialization complete
+2023-06-08 23:51:12.975492 INFO main_log: HTTP is disabled
+2023-06-08 23:51:22.221619 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:51:22.326690 INFO AppDaemon: App 'notifier' added
+2023-06-08 23:51:22.328649 INFO AppDaemon: App 'monitor_washing_machine' added
+2023-06-08 23:51:22.330044 INFO AppDaemon: App 'take_out_trash' added
+2023-06-08 23:51:22.330876 INFO AppDaemon: App 'rollover_printer' added
+2023-06-08 23:51:22.331456 INFO AppDaemon: Found 4 active apps
+2023-06-08 23:51:22.331790 INFO AppDaemon: Found 0 inactive apps
+2023-06-08 23:51:22.332188 INFO AppDaemon: Found 0 global libraries
+2023-06-08 23:51:22.332538 INFO AppDaemon: Starting Apps with 4 workers and 4 pins
+2023-06-08 23:51:28.825894 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:51:34.761606 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:51:40.113959 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:51:45.287622 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:51:50.334983 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:51:55.362649 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:52:00.377992 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:52:05.396033 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:52:10.421771 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:52:15.463257 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:52:20.482159 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:52:25.496291 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:52:30.525516 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:52:35.540496 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-08 23:52:40.668014 INFO HASS: Connected to Home Assistant 2023.5.4
+2023-06-08 23:52:40.887134 INFO HASS: Evaluating startup conditions
+2023-06-08 23:52:41.392196 INFO HASS: Startup condition met: hass state=RUNNING
+2023-06-08 23:52:41.392767 INFO HASS: All startup conditions met
+2023-06-08 23:52:41.563473 INFO AppDaemon: Got initial state from namespace default
+2023-06-08 23:52:42.673675 INFO AppDaemon: Scheduler running in realtime
+2023-06-08 23:52:42.675384 INFO AppDaemon: Adding /config/appdaemon/apps to module import path
+2023-06-08 23:52:42.678957 INFO AppDaemon: Loading App Module: /config/appdaemon/apps/notifier.py
+2023-06-08 23:52:42.796691 INFO AppDaemon: Loading App Module: /config/appdaemon/apps/rollover_printer.py
+2023-06-08 23:52:42.799624 INFO AppDaemon: Loading App Module: /config/appdaemon/apps/monitor_washing_machine.py
+2023-06-08 23:52:42.804226 INFO AppDaemon: Loading App Module: /config/appdaemon/apps/take_out_trash.py
+2023-06-08 23:52:42.812560 INFO AppDaemon: Loading app notifier using class notifier from module notifier
+2023-06-08 23:52:42.814180 INFO AppDaemon: Loading app monitor_washing_machine using class monitor_washing_machine from module monitor_washing_machine
+2023-06-08 23:52:42.815593 INFO AppDaemon: Loading app take_out_trash using class take_out_trash from module take_out_trash
+2023-06-08 23:52:42.827392 INFO AppDaemon: Loading app rollover_printer using class rollover_printer from module rollover_printer
+2023-06-08 23:52:42.832697 INFO AppDaemon: Calling initialize() for notifier
+2023-06-08 23:52:42.872016 INFO AppDaemon: Calling initialize() for monitor_washing_machine
+2023-06-08 23:52:42.890013 INFO AppDaemon: Calling initialize() for take_out_trash
+2023-06-08 23:52:42.923809 INFO AppDaemon: Calling initialize() for rollover_printer
+2023-06-08 23:52:42.930964 INFO AppDaemon: App initialization complete
+2023-06-09 09:18:15.206336 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:18:20.250195 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:18:25.258796 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:18:30.264800 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:18:35.273575 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:18:40.281891 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:18:45.457999 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:18:50.467523 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:18:55.482258 INFO HASS: Connected to Home Assistant 2023.6.1
+2023-06-09 09:18:55.589591 INFO HASS: Evaluating startup conditions
+2023-06-09 09:18:55.597810 INFO HASS: Startup condition met: hass state=RUNNING
+2023-06-09 09:18:55.598147 INFO HASS: All startup conditions met
+2023-06-09 09:18:55.645508 INFO AppDaemon: Processing restart for HASS
+2023-06-09 09:18:55.646422 INFO AppDaemon: Terminating notifier
+2023-06-09 09:18:55.647507 INFO AppDaemon: Terminating monitor_washing_machine
+2023-06-09 09:18:55.648089 INFO AppDaemon: Terminating take_out_trash
+2023-06-09 09:18:55.648736 INFO AppDaemon: Terminating rollover_printer
+2023-06-09 09:18:55.649454 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/notifier.py
+2023-06-09 09:18:55.658598 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/monitor_washing_machine.py
+2023-06-09 09:18:55.660575 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/take_out_trash.py
+2023-06-09 09:18:55.662539 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/rollover_printer.py
+2023-06-09 09:18:55.663888 INFO AppDaemon: Loading app notifier using class notifier from module notifier
+2023-06-09 09:18:55.665937 INFO AppDaemon: Loading app monitor_washing_machine using class monitor_washing_machine from module monitor_washing_machine
+2023-06-09 09:18:55.667076 INFO AppDaemon: Loading app take_out_trash using class take_out_trash from module take_out_trash
+2023-06-09 09:18:55.668232 INFO AppDaemon: Loading app rollover_printer using class rollover_printer from module rollover_printer
+2023-06-09 09:18:55.670392 INFO AppDaemon: Calling initialize() for notifier
+2023-06-09 09:18:55.674626 INFO AppDaemon: Calling initialize() for monitor_washing_machine
+2023-06-09 09:18:55.676189 INFO AppDaemon: Calling initialize() for take_out_trash
+2023-06-09 09:18:55.680947 INFO AppDaemon: Calling initialize() for rollover_printer
+2023-06-09 09:26:25.360006 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:26:30.367000 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:26:35.373648 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:26:40.380292 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:26:45.385754 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:26:50.422354 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:26:55.431449 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:26:55.930317 WARNING HASS: Error getting services - retrying
+2023-06-09 09:27:00.489797 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:27:05.500319 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:27:10.525975 INFO HASS: Connected to Home Assistant 2023.6.1
+2023-06-09 09:27:10.561390 INFO HASS: Evaluating startup conditions
+2023-06-09 09:27:10.568553 INFO HASS: Startup condition met: hass state=RUNNING
+2023-06-09 09:27:10.568842 INFO HASS: All startup conditions met
+2023-06-09 09:27:10.598333 INFO AppDaemon: Processing restart for HASS
+2023-06-09 09:27:10.598724 INFO AppDaemon: Terminating notifier
+2023-06-09 09:27:10.599300 INFO AppDaemon: Terminating monitor_washing_machine
+2023-06-09 09:27:10.599741 INFO AppDaemon: Terminating take_out_trash
+2023-06-09 09:27:10.600311 INFO AppDaemon: Terminating rollover_printer
+2023-06-09 09:27:10.601532 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/notifier.py
+2023-06-09 09:27:10.605240 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/monitor_washing_machine.py
+2023-06-09 09:27:10.606215 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/take_out_trash.py
+2023-06-09 09:27:10.607521 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/rollover_printer.py
+2023-06-09 09:27:10.608481 INFO AppDaemon: Loading app notifier using class notifier from module notifier
+2023-06-09 09:27:10.609692 INFO AppDaemon: Loading app monitor_washing_machine using class monitor_washing_machine from module monitor_washing_machine
+2023-06-09 09:27:10.610641 INFO AppDaemon: Loading app take_out_trash using class take_out_trash from module take_out_trash
+2023-06-09 09:27:10.611519 INFO AppDaemon: Loading app rollover_printer using class rollover_printer from module rollover_printer
+2023-06-09 09:27:10.613218 INFO AppDaemon: Calling initialize() for notifier
+2023-06-09 09:27:10.615523 INFO AppDaemon: Calling initialize() for monitor_washing_machine
+2023-06-09 09:27:10.616883 INFO AppDaemon: Calling initialize() for take_out_trash
+2023-06-09 09:27:10.621287 INFO AppDaemon: Calling initialize() for rollover_printer
+2023-06-09 09:48:24.536205 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:48:29.543942 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:48:34.549392 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:48:39.557536 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:48:44.565347 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:48:49.991070 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:48:55.000105 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:49:00.012868 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:49:05.165780 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:49:10.177363 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:49:15.187841 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 09:49:20.710817 INFO HASS: Connected to Home Assistant 2023.6.1
+2023-06-09 09:49:20.891989 INFO HASS: Evaluating startup conditions
+2023-06-09 09:49:20.901074 INFO HASS: Startup condition met: hass state=RUNNING
+2023-06-09 09:49:20.901330 INFO HASS: All startup conditions met
+2023-06-09 09:49:20.947645 INFO AppDaemon: Processing restart for HASS
+2023-06-09 09:49:20.948231 INFO AppDaemon: Terminating notifier
+2023-06-09 09:49:20.949153 INFO AppDaemon: Terminating monitor_washing_machine
+2023-06-09 09:49:20.949882 INFO AppDaemon: Terminating take_out_trash
+2023-06-09 09:49:20.950673 INFO AppDaemon: Terminating rollover_printer
+2023-06-09 09:49:20.951942 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/notifier.py
+2023-06-09 09:49:20.955399 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/monitor_washing_machine.py
+2023-06-09 09:49:20.956813 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/take_out_trash.py
+2023-06-09 09:49:20.958232 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/rollover_printer.py
+2023-06-09 09:49:20.959357 INFO AppDaemon: Loading app notifier using class notifier from module notifier
+2023-06-09 09:49:20.960644 INFO AppDaemon: Loading app monitor_washing_machine using class monitor_washing_machine from module monitor_washing_machine
+2023-06-09 09:49:20.961788 INFO AppDaemon: Loading app take_out_trash using class take_out_trash from module take_out_trash
+2023-06-09 09:49:20.962960 INFO AppDaemon: Loading app rollover_printer using class rollover_printer from module rollover_printer
+2023-06-09 09:49:20.964587 INFO AppDaemon: Calling initialize() for notifier
+2023-06-09 09:49:20.967342 INFO AppDaemon: Calling initialize() for monitor_washing_machine
+2023-06-09 09:49:20.968536 INFO AppDaemon: Calling initialize() for take_out_trash
+2023-06-09 09:49:20.974486 INFO AppDaemon: Calling initialize() for rollover_printer
+2023-06-09 11:12:58.974339 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 11:13:03.988643 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 11:13:08.994844 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 11:13:14.003622 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 11:13:21.038064 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 11:13:27.532669 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 11:13:32.546031 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 11:13:37.555274 WARNING HASS: Disconnected from Home Assistant, retrying in 5 seconds
+2023-06-09 11:13:42.610249 INFO HASS: Connected to Home Assistant 2023.6.1
+2023-06-09 11:13:42.745881 INFO HASS: Evaluating startup conditions
+2023-06-09 11:13:42.754522 INFO HASS: Startup condition met: hass state=RUNNING
+2023-06-09 11:13:42.754755 INFO HASS: All startup conditions met
+2023-06-09 11:13:42.807613 INFO AppDaemon: Processing restart for HASS
+2023-06-09 11:13:42.808278 INFO AppDaemon: Terminating notifier
+2023-06-09 11:13:42.809442 INFO AppDaemon: Terminating monitor_washing_machine
+2023-06-09 11:13:42.810264 INFO AppDaemon: Terminating take_out_trash
+2023-06-09 11:13:42.811155 INFO AppDaemon: Terminating rollover_printer
+2023-06-09 11:13:42.812646 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/notifier.py
+2023-06-09 11:13:42.819347 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/monitor_washing_machine.py
+2023-06-09 11:13:42.821580 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/take_out_trash.py
+2023-06-09 11:13:42.823991 INFO AppDaemon: Reloading Module: /config/appdaemon/apps/rollover_printer.py
+2023-06-09 11:13:42.825496 INFO AppDaemon: Loading app notifier using class notifier from module notifier
+2023-06-09 11:13:42.827832 INFO AppDaemon: Loading app monitor_washing_machine using class monitor_washing_machine from module monitor_washing_machine
+2023-06-09 11:13:42.831408 INFO AppDaemon: Loading app take_out_trash using class take_out_trash from module take_out_trash
+2023-06-09 11:13:42.832262 INFO AppDaemon: Loading app rollover_printer using class rollover_printer from module rollover_printer
+2023-06-09 11:13:42.834851 INFO AppDaemon: Calling initialize() for notifier
+2023-06-09 11:13:42.841944 INFO AppDaemon: Calling initialize() for monitor_washing_machine
+2023-06-09 11:13:42.843227 INFO AppDaemon: Calling initialize() for take_out_trash
+2023-06-09 11:13:42.847488 INFO AppDaemon: Calling initialize() for rollover_printer

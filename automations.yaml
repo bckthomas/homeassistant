@@ -16,6 +16,11 @@
     data: {}
     target:
       entity_id: cover.loft
+  - delay:
+      hours: 0
+      minutes: 0
+      seconds: 5
+      milliseconds: 0
   - service: cover.open_cover
     data: {}
     target:
@@ -73,7 +78,7 @@
     below: 100
   condition:
   - condition: state
-    entity_id: cover.cuisine
+    entity_id: cover.volet_fenetre_cuisine
     state: open
   - condition: not
     conditions:
@@ -192,4 +197,58 @@
     target:
       entity_id:
       - switch.guirlande
+  mode: single
+- id: '1686305054447'
+  alias: Notification alarme mode nuit
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - alarm_control_panel.maison
+    from:
+    to: armed_night
+  condition: []
+  action:
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.salon
+    data:
+      media_content_id: media-source://media_source/local/system_activated.mp3
+      media_content_type: audio/mpeg
+    metadata:
+      title: system_activated.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
+  mode: single
+- id: '1686305498303'
+  alias: Notification désactivation alarme mode nuit
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - alarm_control_panel.maison
+    from: armed_night
+    to: disarmed
+  condition: []
+  action:
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.cuisine
+    data:
+      media_content_id: media-source://media_source/local/voice_system_off.mp3
+      media_content_type: audio/mpeg
+    metadata:
+      title: voice_system_off.mp3
+      thumbnail:
+      media_class: music
+      children_media_class:
+      navigateIds:
+      - {}
+      - media_content_type: app
+        media_content_id: media-source://media_source
   mode: single
