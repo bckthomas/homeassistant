@@ -138,6 +138,15 @@ browser_mod:
                 - entity: sensor.unraid_free_space
                   name: Stockage 12TB
 
+            - type: custom:hui-horizontal-stack-card
+              cards:
+                - type: custom:button-card
+                  name: Adguard
+                  icon: mdi:shield-check
+                  entity: switch.adguard_home_protection
+                  template: icon_name
+                  color: rgb(28, 128, 199)
+
           footer:
             type: custom:apexcharts-card
             layout: minimal

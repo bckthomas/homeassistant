@@ -24,7 +24,7 @@ sidebar:
       display: flex !important;
     }
     #name {
-      padding: 1vw 2.5vw 0 var(--custom-layout-card-padding);
+      padding: 1vw 1.7vw 0 var(--custom-layout-card-padding);
       white-space: normal;
       text-align: left;
     }

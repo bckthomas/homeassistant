@@ -143,6 +143,5 @@
             | map(attribute = 'entity_id') | list %}
           {% for sensor in entities if states(sensor) != 'unknown' and states(sensor) !=
           'unavailable' and states(sensor) != 'None' and states(sensor) | int(default=0) <= 15 %}
-            {% if loop.first %} {{'\u26A0\uFE0F'}} Batterie {% else %}, {% endif %}
-            {{ state_attr(sensor, 'friendly_name') }} {{ states(sensor) }}%
+            {{'\u26A0\uFE0F'}} <ha-icon icon="mdi:battery-low"></ha-icon> {{ state_attr(sensor, 'friendly_name') }} {{ states(sensor) }}%<br/>
           {% endfor %}
