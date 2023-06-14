@@ -1,0 +1,63 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Solaire
+    card_mod:
+      style:
+        #popup header
+        .:
+    content:
+      type: custom:mod-card
+      card_mod:
+        style:
+          hui-grid-card:
+            $: |
+              button-card:nth-child(2) {
+                margin: 0.6em 0 2.1em 0.8em;
+              }
+              button-card:nth-child(4) {
+                margin: 0.6em 0 0.5em 0.8em;
+              }
+              #root {
+                grid-gap: 0 !important;
+                padding: var(--tablet-popup-content-padding);
+              }
+      card:
+        type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: custom:apexcharts-card
+            view_layout:
+              grid-area: zone1
+            graph_span: 12h
+            all_series_config:
+              stroke_width: 2
+            header:
+              show: false
+              show_states: false
+              colorize_states: false
+            series:
+              - entity: sensor.pv_power
+                curve: smooth
+                type: line
+                group_by:
+                  duration: 10min
+              - entity: sensor.import_export_power
+                curve: smooth
+                type: line
+                group_by:
+                  duration: 10min
+              - entity: sensor.consommation_2
+                curve: smooth
+                type: line
+                group_by:
+                  duration: 10min
+          - type: horizontal-stack
+            view_layout:
+              grid-area: zone2
+            cards:
+              - type: energy-distribution
+                link_dashboard: true
+              - type: energy-solar-consumed-gauge

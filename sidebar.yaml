@@ -129,13 +129,15 @@
           {% set entities = states.calendar
           | rejectattr('attributes.start_time', 'undefined')
           | selectattr('attributes.start_time', '==', start) | list %}
-          {% for sensor in entities %}
-            {% if sensor.attributes.friendly_name == "Tri" -%}
-              <ha-icon icon="mdi:recycle"></ha-icon>
-            {%- else -%}
-              <ha-icon icon="mdi:trash-can-outline"></ha-icon>
-            {%- endif %} {{ sensor.attributes.message }} demain !
-          {% endfor %}
+          {% if now().strftime('%T') > '17:30:00' %}
+            {% for sensor in entities %}
+              {% if sensor.attributes.friendly_name == "Tri" -%}
+                <ha-icon icon="mdi:recycle"></ha-icon>
+              {%- else -%}
+                <ha-icon icon="mdi:trash-can-outline"></ha-icon>
+              {%- endif %} {{ sensor.attributes.message }} demain !
+            {% endfor %}
+          {% endif %}
 
         battery: >
           {% set entities = states.sensor 

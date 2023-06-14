@@ -29,17 +29,58 @@ automation:
         target:
           entity_id: media_player.salon
   - alias: Extinction ampli hifi
-    description: "Description ampli hifi après 2 minutes d'inactivité"
+    description: "Extinction ampli hifi après 2 minutes d'inactivité"
     mode: single
     trigger:
       - platform: state
         entity_id:
           - media_player.salon
-        from: playing
+        to: idle
         for:
           hours: 0
           minutes: 2
           seconds: 0
+      - platform: state
+        entity_id:
+          - media_player.salon
+        to: "off"
+        for:
+          hours: 0
+          minutes: 2
+          seconds: 0
+      - platform: state
+        entity_id:
+          - media_player.salon
+        to: paused
+        for:
+          hours: 0
+          minutes: 2
+          seconds: 0
+      - platform: state
+        entity_id:
+          - media_player.salon
+        to: standby
+        for:
+          hours: 0
+          minutes: 2
+          seconds: 0
+      - platform: state
+        entity_id:
+          - media_player.salon
+        to: unavailable
+        for:
+          hours: 0
+          minutes: 2
+          seconds: 0
+      - platform: state
+        entity_id:
+          - media_player.salon
+        to: unknown
+        for:
+          hours: 0
+          minutes: 2
+          seconds: 0
+    condition: []
     action:
       - service: switch.turn_off
         data: {}

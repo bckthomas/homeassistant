@@ -1,0 +1,131 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Arrosage
+    style: >
+      --popup-max-width: calc(385px + 385px);
+      --ha-card-border-radius: 0;
+    card_mod:
+      style:
+        #popup header
+        .:
+    content:
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 0
+        grid-template-columns: 385px 385px
+        grid-template-rows: 1fr
+        grid-template-areas: |
+          "zone1 zone2"
+        mediaquery:
+          #portrait
+          "(max-width: 1200px)":
+            grid-template-columns: 1fr
+            grid-template-rows: repeat(2, 1fr)
+            grid-template-areas: |
+              "zone1"
+              "zone2"
+      cards:
+        - type: vertical-stack
+          view_layout:
+            grid-area: zone1
+          cards:
+            - type: custom:button-card
+              entity: script.rainbird_irrigate
+              show_state: false
+              show_label: false
+              show_name: true
+              name: Lancer l'arrosage
+              show_icon: false
+              tap_action:
+                action: call-service
+                service: script.turn_on
+                service_data:
+                  entity_id: script.rainbird_irrigate
+                confirmation:
+                  text: Lancer l'arrosage ?
+              double_tap_action:
+                action: call-service
+                service: script.turn_on
+                service_data:
+                  entity_id: script.rainbird_irrigate_off
+                confirmation:
+                  text: Arrêter le cycle d'arrosage ?           
+            - type: horizontal-stack
+              cards:
+                - type: custom:button-card
+                  entity: switch.irrig_gazon
+                  icon: mdi:sprinkler-variant
+                  tap_action:
+                    action: call-service
+                    service: switch.turn_on
+                    service_data:
+                      entity_id: switch.irrig_gazon
+                    confirmation:
+                      text: Arrosage du gazon ?
+                  double_tap_action:
+                    action: call-service
+                    service: switch.turn_off
+                    service_data:
+                      entity_id: switch.irrig_gazon
+                    confirmation:
+                      text: Arrêter l'arrosage du gazon ?
+                - type: custom:button-card
+                  entity: switch.irrig_potager
+                  icon: mdi:sprinkler-variant
+                  tap_action:
+                    action: call-service
+                    service: switch.turn_on
+                    service_data:
+                      entity_id: switch.irrig_potager
+                    confirmation:
+                      text: Arrosage du potager ?
+                  double_tap_action:
+                    action: call-service
+                    service: switch.turn_off
+                    service_data:
+                      entity_id: switch.irrig_potager
+                    confirmation:
+                      text: Arrêter l'arrosage du potager ?
+                - type: custom:button-card
+                  entity: switch.irrig_cavefraise
+                  icon: mdi:sprinkler-variant
+                  tap_action:
+                    action: call-service
+                    service: switch.turn_on
+                    service_data:
+                      entity_id: switch.irrig_cavefraise
+                    confirmation:
+                      text: Arrose de la cave à fin et les fraises ?
+                  double_tap_action:
+                    action: call-service
+                    service: switch.turn_off
+                    service_data:
+                      entity_id: switch.irrig_cavefraise
+                    confirmation:
+                      text: Arrêter l'arrosage de la cave à vin et des fraises ?
+            - type: horizontal-stack
+              cards:
+                - type: entities
+                  entities:
+                    - entity: input_number.irrigation_gazonduration
+                      icon: mdi:timer-outline
+                - type: entities
+                  entities:
+                    - entity: input_number.irrigation_potagerduration
+                      icon: mdi:timer-outline
+                - type: entities
+                  entities:
+                    - entity: input_number.irrigation_cavefraiseduration
+                      icon: mdi:timer-outline      
+
+        - type: entities
+          view_layout:
+            grid-area: zone2
+          entities:
+            - entity: automation.irrigation_irrigate
+            - entity: input_number.irrigation_interval
+            - entity: sensor.irrig_days_since_last_irrigation
+            - entity: input_number.irrigation_rainthreshold

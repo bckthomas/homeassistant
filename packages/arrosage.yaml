@@ -1,0 +1,177 @@
+switch:
+  - platform: template
+    switches:
+      irrig_gazon:
+        friendly_name: "Gazon"
+        value_template: "{{ is_state('switch.gazon', 'on') }}"
+        turn_on:
+          service: rainbird.start_irrigation
+          data_template:
+            entity_id: switch.gazon
+            duration: "{{ states('input_number.irrigation_gazonduration') | int }}"
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.potager
+      irrig_potager:
+        friendly_name: "Potager"
+        value_template: "{{ is_state('switch.potager', 'on') }}"
+        turn_on:
+          service: rainbird.start_irrigation
+          data_template:
+            entity_id: switch.potager
+            duration: "{{ states('input_number.irrigation_potagerduration') | int }}"
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.gazon
+      irrig_cavefraise:
+        friendly_name: "Cave à vin / Fraisiers"
+        value_template: "{{ is_state('switch.fraisiers_cave_a_vin', 'on') }}"
+        turn_on:
+          service: rainbird.start_irrigation
+          data_template:
+            entity_id: switch.fraisiers_cave_a_vin
+            duration: "{{ states('input_number.irrigation_cavefraiseduration') | int }}"
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.gazon
+
+input_number:
+  irrigation_rainthreshold:
+    name: Threshold
+    unit_of_measurement: hours
+    initial: 2
+    min: 1
+    max: 12
+    step: 1
+
+  irrigation_interval:
+    name: Intervalle
+    unit_of_measurement: days
+    initial: 1
+    min: 0
+    max: 7
+    step: 1
+
+  irrigation_gazonduration:
+    name: Durée
+    unit_of_measurement: minutes
+    initial: 25
+    min: 0
+    max: 60
+    step: 1
+
+  irrigation_potagerduration:
+    name: Durée
+    unit_of_measurement: minutes
+    initial: 15
+    min: 0
+    max: 60
+    step: 1
+
+  irrigation_cavefraiseduration:
+    name: Durée
+    unit_of_measurement: minutes
+    initial: 15
+    min: 0
+    max: 60
+    step: 1
+
+input_datetime:
+  irrigation_lastwatered:
+    name: Dernier arrosage
+    has_date: true
+    has_time: true
+
+automation:
+  - alias: Irrigation.Irrigate
+    trigger:
+    - at: 08:00:00
+      platform: time
+    condition:
+    - condition: template
+      value_template: '{{ states("sensor.history_rainy_past_two_days") | int < states(''input_number.irrigation_rainthreshold'') | int }}'
+    - condition: template
+      value_template: '{{ states("sensor.irrig_days_since_last_irrigation") | int >= states(''input_number.irrigation_interval'') | int }}'
+    action:
+      - service: homeassistant.turn_on
+        data:
+          entity_id: script.rainbird_irrigate
+
+  - alias: Irrigation.Gazon.ON
+    trigger:
+      platform: state
+      entity_id: switch.irrig_gazon
+      from: "off"
+      to: "on"
+    action:
+      - service: timer.start
+        data_template:
+          entity_id: timer.irrigation_timer
+          duration: "{{ states('sensor.irrigation_time') }}"
+
+  - alias: Irrigation.Potager.ON
+    trigger:
+      platform: state
+      entity_id: switch.irrig_potager
+      from: "off"
+      to: "on"
+    action:
+      - service: timer.start
+        data_template:
+          entity_id: timer.irrigation_timer
+          duration: "{{ states('sensor.irrigation_time') }}"
+
+  - alias: Irrigation.CaveFraise.ON
+    trigger:
+      platform: state
+      entity_id: switch.irrig_cavefraise
+      from: "off"
+      to: "on"
+    action:
+      - service: timer.start
+        data_template:
+          entity_id: timer.irrigation_timer
+          duration: "{{ states('sensor.irrigation_time') }}"
+
+script:
+  rainbird_irrigate:
+    alias: Arrosage
+    sequence:
+      - data: {}
+        entity_id: switch.irrig_gazon
+        service: switch.turn_on
+      - delay: 00:00:59
+      - wait_template: '{{ is_state(''switch.irrig_gazon'',''off'') }}'
+      - data: {}
+        entity_id: switch.irrig_potager
+        service: switch.turn_on
+      - delay: 00:00:59
+      - wait_template: '{{ is_state(''switch.irrig_potager'',''off'') }}'
+      - data: {}
+        entity_id: switch.irrig_cavefraise
+        service: switch.turn_on
+      - delay: 00:00:59
+      - wait_template: '{{ is_state(''switch.irrig_cavefraise'',''off'') }}'
+      - service: input_datetime.set_datetime
+        entity_id: input_datetime.irrigation_lastwatered
+        data_template:
+          datetime: "{{ now().strftime('%Y-%m-%d %H:%M:%S') }}"
+  
+  rainbird_irrigate_off:
+    alias: Arrosage Off
+    sequence:
+      - data: {}
+        entity_id: script.rainbird_irrigate  
+        service: script.turn_off
+      - data: {}
+        entity_id: switch.irrig_gazon
+        service: switch.turn_off
+      - data: {}
+        entity_id: switch.irrig_potager
+        service: switch.turn_off
+      - data: {}
+        entity_id: switch.irrig_cavefraise
+        service: switch.turn_off

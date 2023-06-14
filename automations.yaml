@@ -252,3 +252,21 @@
       - media_content_type: app
         media_content_id: media-source://media_source
   mode: single
+- id: '1686382729131'
+  alias: Ouverture volets aprèx extinction TV
+  description: ''
+  trigger:
+  - platform: state
+    entity_id:
+    - media_player.tv_ambilight
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: input_boolean.canicule
+    state: 'off'
+  action:
+  - service: cover.open_cover
+    data: {}
+    target:
+      entity_id: cover.salon
+  mode: single

@@ -46,7 +46,7 @@ browser_mod:
       layout_type: custom:grid-layout
       layout:
         margin: 0
-        grid-template-columns: 385px 385px 385px
+        grid-template-columns: 385px 385px
         grid-template-rows: 1fr
         grid-template-areas: |
           "hass unraid"
@@ -60,7 +60,6 @@ browser_mod:
               "unraid"
       cards:
         ### HOME ASSISTANT
-
         - type: entities
           view_layout:
             grid-area: hass

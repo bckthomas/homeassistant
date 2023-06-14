@@ -149,7 +149,7 @@ views:
                     return variables.translate_unknown;
                 }
               ]]]
-            double_tap_action: !include popup/salon_tv.yaml
+            #double_tap_action: !include popup/salon_tv.yaml
             template:
               - base
               - icon_tv
@@ -157,7 +157,7 @@ views:
 
           - type: custom:button-card
             entity: media_player.fire_tv
-            name: Salle de jeux
+            name: Fire TV
             state_display: >
               [[[
                 if (variables.state === 'playing') {
@@ -245,7 +245,7 @@ views:
           - type: custom:button-card
             #entity: sensor.total_rollover_pages
             name: Arrosage
-            tap_action: !include popup/monitoring_imprimante.yaml
+            tap_action: !include popup/arrosage.yaml
             template:
               - base
 
@@ -259,34 +259,34 @@ views:
         view_layout:
           grid-area: sovrum
         cards:
-#          - type: grid
-#            columns: 2
-#            cards:
-#              - type: custom:button-card
-#                entity: light.sovrum_group
-#                name: Sänglampor
-#                template:
-#                  - light
-#                  - icon_lamp
+          #          - type: grid
+          #            columns: 2
+          #            cards:
+          #              - type: custom:button-card
+          #                entity: light.sovrum_group
+          #                name: Sänglampor
+          #                template:
+          #                  - light
+          #                  - icon_lamp
 
-#              - type: custom:button-card
-#                entity: climate.ac
-#                name: Klimat
-#                double_tap_action: !include popup/sovrum_klimat.yaml
-#                template:
-#                  - base
-#                  - icon_climate
-#                  - circle
-#                variables:
-#                  circle_input: >
-#                    [[[
-#                      if (entity) {
-#                          return entity.state === 'cool'
-#                              ? Math.round(entity.attributes.temperature).toString()
-#                              : Math.round(entity.attributes.current_temperature).toString();
-#                      }
-#                    ]]]
-#                  circle_input_unit: "°C"
+          #              - type: custom:button-card
+          #                entity: climate.ac
+          #                name: Klimat
+          #                double_tap_action: !include popup/sovrum_klimat.yaml
+          #                template:
+          #                  - base
+          #                  - icon_climate
+          #                  - circle
+          #                variables:
+          #                  circle_input: >
+          #                    [[[
+          #                      if (entity) {
+          #                          return entity.state === 'cool'
+          #                              ? Math.round(entity.attributes.temperature).toString()
+          #                              : Math.round(entity.attributes.current_temperature).toString();
+          #                      }
+          #                    ]]]
+          #                  circle_input_unit: "°C"
 
           - type: custom:teamtracker-card
             entity: sensor.canadiens
@@ -457,9 +457,10 @@ views:
                   hours_to_show: 12
                   animate: true
                   hour24: true
-                  line_width: 4
+                  points_per_hour: 20
+                  height: 150
+                  line_width: 8
                   font_size: 75
-                  height: 100
                   points: false
                   entities:
                     - sensor.pv_power
@@ -474,8 +475,8 @@ views:
                     state: false
                     points: false
                     legend: false
-                  tap_action: !include popup/monitoring_piscine.yaml
-            tap_action: !include popup/monitoring_piscine.yaml
+                  tap_action: !include popup/solar.yaml
+            tap_action: !include popup/solar.yaml
             template:
               - base
               - icon_solar

@@ -12,14 +12,14 @@ sensor:
       {% else %}
           {{ "None" }}
       {% endif %}
-     
+
   - platform: integration
     name: "PV Energy" # energie totale produite par les panneaux (depuis le debut)
     source: sensor.pv_power
     unit_prefix: "k"
     unit_time: "h"
     method: "left"
-     
+
   - platform: rest
     name: "Import Export Power" # puissance importé si + ou exporté si -
     device_class: "power"
@@ -33,17 +33,17 @@ sensor:
       {% else %}
           {{ "None" }}
       {% endif %}
-     
+
   - platform: template
     sensors:
-        export_power: # il est judicieux de separer la puissance exporté de importé
-            friendly_name: "Export Power"
-            unit_of_measurement: "W"
-            device_class: "power"
-            value_template: >
-              {% set p = states('sensor.import_export_power') | float(0) %}
-              {{ ((p | abs) - p) / 2 }}
-               
+      export_power: # il est judicieux de separer la puissance exporté de importé
+        friendly_name: "Export Power"
+        unit_of_measurement: "W"
+        device_class: "power"
+        value_template: >
+          {% set p = states('sensor.import_export_power') | float(0) %}
+          {{ ((p | abs) - p) / 2 }}
+
   - platform: integration
     name: "Export Energy" # energie totale exporté (depuis le debut)
     source: sensor.export_power
@@ -53,13 +53,27 @@ sensor:
 
 utility_meter:
   pv_energy_daily: # production PV du jour
-      name: "PV Energy Daily"
-      unique_id: pv_energy_daily
-      source: sensor.pv_energy
-      cycle: daily
+    name: "PV Energy Daily"
+    unique_id: pv_energy_daily
+    source: sensor.pv_energy
+    cycle: daily
   export_energy_daily: # energie exporté du jour
-      name: "Export Energy Daily"
-      unique_id: export_energy_daily
-      source: sensor.export_energy
-      cycle: daily
-      
+    name: "Export Energy Daily"
+    unique_id: export_energy_daily
+    source: sensor.export_energy
+    cycle: daily
+
+template:
+  - trigger:
+      - platform: time_pattern
+        minutes: "/1"
+    sensor:
+      - name: Consommation
+        unique_id: power_consommation
+        device_class: "power"
+        state_class: "measurement"
+        unit_of_measurement: "W"
+        state: >
+          {% set pv_power =  states('sensor.pv_power') | float(0)%}
+          {% set import_export_power =  states('sensor.import_export_power') | float(0)%}
+          {{ (pv_power|float + import_export_power|float) |round(0) }}
