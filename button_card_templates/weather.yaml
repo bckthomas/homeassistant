@@ -49,17 +49,19 @@ widget_weather:
       [[[ return entity.attributes.temperature + "°"; ]]]
     forecast: >
       [[[
-        let min = "<ha-icon icon='mdi:thermometer-low'></ha-icon> " + Math.round(entity.attributes.forecast[0].templow).toString() + "°";
-        let max = "<ha-icon icon='mdi:thermometer-high'></ha-icon> " + Math.round(entity.attributes.forecast[0].temperature).toString() + "°";
-        var vent = "";
-        if (entity.attributes.wind_speed > 0) {
-          vent = "<br/><ha-icon icon='mdi:windsock'></ha-icon> " + Math.round(entity.attributes.wind_speed).toString() + "km/h";
+        if (entity !== undefined) {
+          let min = "<ha-icon icon='mdi:thermometer-low'></ha-icon> " + Math.round(entity.attributes.forecast[0].templow).toString() + "°";
+          let max = "<ha-icon icon='mdi:thermometer-high'></ha-icon> " + Math.round(entity.attributes.forecast[0].temperature).toString() + "°";
+          var vent = "";
+          if (entity.attributes.wind_speed > 0) {
+            vent = "<br/><ha-icon icon='mdi:windsock'></ha-icon> " + Math.round(entity.attributes.wind_speed).toString() + "km/h";
+          }
+          var pluie = "";
+          if (entity.attributes.forecast[0].precipitation > 0) {
+            pluie = "<br/><ha-icon icon='mdi:weather-pouring'></ha-icon> " + entity.attributes.forecast[0].precipitation + "mm";
+          }
+          return min + max + vent + pluie;
         }
-        var pluie = "";
-        if (entity.attributes.forecast[0].precipitation > 0) {
-          pluie = "<br/><ha-icon icon='mdi:weather-pouring'></ha-icon> " + entity.attributes.forecast[0].precipitation + "mm";
-        }
-        return min + max + vent + pluie;
       ]]]
   entity_picture: >
     [[[

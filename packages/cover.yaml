@@ -100,18 +100,18 @@ sensor:
 binary_sensor:
   - platform: threshold
     name: "Soleil : Ouest"
-    upper: 170
-    lower: 80
+    upper: 300
+    lower: 250
     entity_id: sensor.sunazimuth
   - platform: threshold
     name: "Soleil : Sud"
-    upper: 270
-    lower: 100
+    upper: 250
+    lower: 120
     entity_id: sensor.sunazimuth
   - platform: threshold
     name: "Soleil : Est"
     upper: 299
-    lower: 260
+    lower: 40
     entity_id: sensor.sunazimuth
   - platform: template
     sensors:

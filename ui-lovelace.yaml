@@ -186,7 +186,7 @@ views:
         columns: 2
         cards:
           - type: custom:button-card
-            entity: weather.anse
+            entity: weather.forecast_home
             show_state: false
             name: Anse
             tap_action: !include popup/popup_meteo.yaml
@@ -454,7 +454,7 @@ views:
               graph:
                 card:
                   type: custom:mini-graph-card
-                  hours_to_show: 12
+                  hours_to_show: 6
                   animate: true
                   hour24: true
                   points_per_hour: 20
@@ -465,6 +465,7 @@ views:
                   entities:
                     - sensor.pv_power
                     - sensor.import_export_power
+                    - sensor.consommation_2
                   style: |
                     ha-card {
                       box-shadow: none;

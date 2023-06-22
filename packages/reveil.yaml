@@ -29,6 +29,35 @@ automation:
       - service: script.wake_up
       - service: input_boolean.turn_off
         entity_id: input_boolean.wakeactivated
+  - alias: 'Shut wake off if holidays'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.vacances_scolaires_aujourdhui
+        from: "on"
+        to: "off"
+    condition: []
+    action:
+      - service: input_boolean.turn_off
+        data: {}
+        target:
+          entity_id: input_boolean.wakestatus
+  - alias: 'Switch wake on if holidays'
+    mode: single
+    trigger:
+      - platform: state
+        entity_id:
+          - binary_sensor.vacances_scolaires_aujourdhui
+        from: "off"
+        to: "on"
+    condition: []
+    action:
+      - service: input_boolean.turn_on
+        data: {}
+        target:
+          entity_id: input_boolean.wakestatus
+
 
 script:
   wake_up:
