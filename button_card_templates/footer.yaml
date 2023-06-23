@@ -26,7 +26,11 @@ footer:
   custom_fields:
     notify: >
       [[[
-        if (Number.isInteger(variables.notify)) {
+        if (variables.notify =='armed_night') {
+          return '<ha-icon icon="mdi:shield-moon-outline"></ha-icon>';
+        } else if (variables.notify =='armed_away') {
+          return '<ha-icon icon="mdi:shield-home-outline"></ha-icon>';          
+        } else if (Number.isInteger(variables.notify)) {
             return variables.notify;
         } else if (variables.notify) {
             return `<span style="font-weight: 900;">!</span>`;

@@ -26,7 +26,7 @@ Cette configuration est issue du travail de [Mattias Persson](https://github.com
 | Xiaomi   | Mi Roborock S6maxV        | [roborock](https://github.com/humbertogontijo/homeassistant-roborock)        | Aspirateur robot                                                                        |
 | Sonoff   | Dongle-e                  | [zigbee2mqtt](https://github.com/Koenkk/zigbee2mqtt)                         | Dongle USB Zigbee USB connecté à une image docker Z2M sous Unraid                       |
 | Philips  | TV Ambilight              | [philips-js](https://www.home-assistant.io/integrations/philips_js/)         | TV                                                                                      |
-| Amazon   | Fire HD                   | [android debug bridge](https://www.home-assistant.io/integrations/androidtv) | Clé USB une autre TV                                                                    |
+| Amazon   | Fire HD                   | [android debug bridge](https://www.home-assistant.io/integrations/androidtv) | Clé USB pour une autre TV                                                                    |
 
 ---
 

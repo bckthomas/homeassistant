@@ -447,7 +447,7 @@ views:
               - base
 
           - type: custom:button-card
-            entity: sensor.pv_power
+            entity: sensor.import_export_power
             name: Solaire
             show_state: false
             custom_fields:
@@ -619,15 +619,12 @@ views:
               <ha-icon icon="mdi:shield-home"></ha-icon> Alarme
             tap_action: !include popup/footer_alarme.yaml
             triggers_update:
-              - update.unifi_dream_machine
-              - binary_sensor.template_udm_internet
+              - alarm_control_panel.maison
             variables:
               notify: >
                 [[[
-                  let id = this._config.triggers_update;
-                  if (id.every(e => states[e]))
-                      return states[id[0]].state === 'on'
-                          ? 1
-                          : states[id[1]].state === 'off';
+                  let id = states['alarm_control_panel.maison'];
+                  if (id.state =='armed_night') return 'armed_night';
+                  if (id.state =='armed_away') return 'armed_away';
                 ]]]
             template: footer

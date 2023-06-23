@@ -322,6 +322,10 @@ extra_styles:
             top: var(--footer-notify-top);
             right: var(--footer-notify-right);
           }
+          
+          #notify ha-icon {
+            opacity: 1;
+          }
 
           /* portrait */
           @media screen and (max-width: 1200px) {
