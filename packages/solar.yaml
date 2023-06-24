@@ -77,3 +77,15 @@ template:
           {% set pv_power =  states('sensor.pv_power') | float(0)%}
           {% set import_export_power =  states('sensor.import_export_power') | float(0)%}
           {{ (pv_power|float + import_export_power|float) |round(0) }}
+
+automation:
+  - alias: Envoi BDPV
+    description: ""
+    trigger:
+      - platform: time
+        at: "04:35:00"
+    condition: []
+    action:
+      - service: rest_command.bdpv_send_index
+        data: {}
+    mode: single
