@@ -58,18 +58,18 @@ input_number:
   irrigation_gazonduration:
     name: Durée
     unit_of_measurement: minutes
-    initial: 25
+    initial: 15
     min: 0
     max: 60
-    step: 1
+    step: 5
 
   irrigation_potagerduration:
     name: Durée
     unit_of_measurement: minutes
-    initial: 15
+    initial: 30
     min: 0
     max: 60
-    step: 1
+    step: 5
 
   irrigation_cavefraiseduration:
     name: Durée
@@ -77,7 +77,7 @@ input_number:
     initial: 15
     min: 0
     max: 60
-    step: 1
+    step: 5
 
 input_datetime:
   irrigation_lastwatered:
@@ -110,7 +110,7 @@ automation:
       - service: timer.start
         data_template:
           entity_id: timer.irrigation_timer
-          duration: "{{ states('sensor.irrigation_time') }}"
+          duration: "{{ states('input_number.irrigation_gazonduration') }}"
 
   - alias: Irrigation.Potager.ON
     trigger:
@@ -122,7 +122,7 @@ automation:
       - service: timer.start
         data_template:
           entity_id: timer.irrigation_timer
-          duration: "{{ states('sensor.irrigation_time') }}"
+          duration: "{{ states('input_number.irrigation_potagerduration') }}"
 
   - alias: Irrigation.CaveFraise.ON
     trigger:
@@ -134,7 +134,7 @@ automation:
       - service: timer.start
         data_template:
           entity_id: timer.irrigation_timer
-          duration: "{{ states('sensor.irrigation_time') }}"
+          duration: "{{ states('input_number.irrigation_cavefraiseduration') }}"
 
 script:
   rainbird_irrigate:
@@ -175,3 +175,6 @@ script:
       - data: {}
         entity_id: switch.irrig_cavefraise
         service: switch.turn_off
+
+timer:
+  irrigation_timer:        

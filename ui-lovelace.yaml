@@ -443,6 +443,33 @@ views:
           - type: custom:button-card
             entity: sensor.maison_zone_1_room_temperature
             name: Chauffage
+            custom_fields:
+              graph:
+                card:
+                  type: custom:mini-graph-card
+                  hours_to_show: 6
+                  animate: true
+                  hour24: true
+                  points_per_hour: 20
+                  height: 150
+                  line_width: 8
+                  font_size: 75
+                  points: false
+                  entities:
+                    - sensor.maison_zone_1_room_temperature
+                    - sensor.temperature_ss_sol_temperature
+                  style: |
+                    ha-card {
+                      box-shadow: none;
+                    }
+                  show:
+                    name: false
+                    icon: false
+                    state: false
+                    points: false
+                    legend: false
+                  tap_action: !include popup/solar.yaml
+            tap_action: !include popup/solar.yaml
             template:
               - base
 
