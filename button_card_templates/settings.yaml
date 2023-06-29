@@ -10,3 +10,10 @@ settings:
     translate_no_updates: Aucune mise à jour
     translate_update_available: Mise à jour disponible
     translate_updates_available: Mises à jour disponibles
+    translate_on: On
+    translate_off: Off
+    translate_cool: Cool
+    translate_fan_only: Fan
+    translate_playing: Lecture
+    translate_paused: Pause
+    translate_standby: Veille
