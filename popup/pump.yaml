@@ -1,0 +1,54 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Chauffage
+    card_mod:
+      style:
+        #popup header
+        .:
+    content:
+      type: custom:mod-card
+      card_mod:
+        style:
+          hui-grid-card:
+            $: |
+              button-card:nth-child(2) {
+                margin: 0.6em 0 2.1em 0.8em;
+              }
+              button-card:nth-child(4) {
+                margin: 0.6em 0 0.5em 0.8em;
+              }
+              #root {
+                grid-gap: 0 !important;
+                padding: var(--tablet-popup-content-padding);
+              }
+      card:
+        type: grid
+        columns: 1
+        square: false
+        cards:
+          - type: custom:apexcharts-card
+            header:
+              show: true
+              show_states: true
+              colorize_states: true
+            series:
+              - entity: sensor.maison_zone_1_room_temperature
+                curve: smooth
+                type: line
+                name: Ssous-sol
+                group_by:
+                  duration: 10min
+              - entity: sensor.temperature_ss_sol_temperature
+                curve: smooth
+                type: line
+                name: Salon
+                group_by:
+                  duration: 10min
+            apex_config:
+              legend:
+                show: false
+          - type: custom:simple-thermostat
+            entity: climate.maison_zone_1
+

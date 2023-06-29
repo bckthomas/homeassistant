@@ -10,7 +10,7 @@ automation:
     action:
       - service: notify.mobile_app_mi_a2_lite
         data:
-          message: "{{ state_attr('calendar.poubelles', 'message')}} demain (new)!"
+          message: "{{ state_attr('calendar.poubelles', 'message')}} demain !"
     mode: single
 
   - alias: Notification tri
@@ -25,5 +25,5 @@ automation:
       - service: notify.mobile_app_mi_a2_lite
         data:
           message: |
-            {{ state_attr('calendar.tri', 'message')}} demain (new)!
+            {{ state_attr('calendar.tri', 'message')}} demain !
     mode: single

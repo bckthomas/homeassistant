@@ -63,8 +63,8 @@ class take_out_trash(hass.Hass):
             self.call_service("input_boolean/turn_off", entity_id = "input_boolean.poubelle_verte_a_sortir")
             self.fire_event("NOTIFIER",
                 action = "send_to_present",
-                title = "♻️ Poubelle Verte", 
-                message = "N'oublie pas de sortir la poubelle verte",
+                title = "♻️ Poubelle jaune", 
+                message = "N'oublie pas de sortir la poubelle jaune",
                 icon =  "mdi:recycle",
                 color = "deep-orange",
                 tag = "green_trash")

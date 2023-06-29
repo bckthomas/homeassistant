@@ -441,8 +441,10 @@ views:
               - icon_alarm
 
           - type: custom:button-card
-            entity: sensor.maison_zone_1_room_temperature
+            entity: climate.maison_zone_1
             name: Chauffage
+            show_name: false
+            show_state: false
             custom_fields:
               graph:
                 card:
@@ -468,14 +470,17 @@ views:
                     state: false
                     points: false
                     legend: false
-                  tap_action: !include popup/solar.yaml
-            tap_action: !include popup/solar.yaml
+                  tap_action: !include popup/pump.yaml
+            tap_action: !include popup/pump.yaml
             template:
               - base
+              - icon_pump
+              - climate
 
           - type: custom:button-card
             entity: sensor.import_export_power
             name: Solaire
+            show_name: false
             show_state: false
             custom_fields:
               graph:

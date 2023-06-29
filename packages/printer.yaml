@@ -101,7 +101,7 @@ sensor:
 
       total_rollover_pages:
         friendly_name: Impressions restantes
-        value_template: "{{ states('sensor.hp_envy_5540_pages_allowance_remaining')|int(0) + states('sensor.hp_envy_5540_pages_rollover_remaining')|int(0) }}"          
+        value_template: "{{ states('sensor.hp_envy_5540_pages_allowance_remaining')|int(0) + states('sensor.hp_envy_5540_pages_rollover_remaining')|int(0) }}"
 
 input_number:
   # The total number of pages that had been printed at the start of this period of the printing plan
@@ -188,16 +188,12 @@ automation:
         entity_id: input_number.hp_envy_5540_pages_rollover_allowance
         data_template:
           value:
-            "{% if states('sensor.hp_envy_5540_pages_overprint')|int > 0 and (states('sensor.hp_envy_5540_pages_overprint')|int
-            % states('input_number.hp_envy_5540_pages_overprint_block_size')|int) >
-            0 %} {{ states('input_number.hp_envy_5540_pages_overprint_block_size')|int
-            - (states('sensor.hp_envy_5540_pages_overprint')|int % states('input_number.hp_envy_5540_pages_overprint_block_size')|int)  }}
-            {% elif states('sensor.hp_envy_5540_pages_allowance_remaining')|int + states('sensor.hp_envy_5540_pages_rollover_remaining')|int
-            > states('input_number.hp_envy_5540_pages_rollover_monthly_max_allowance')|int
-            %} {{ states('input_number.hp_envy_5540_pages_rollover_monthly_max_allowance')|int
-            }} {% else %} {{ states('sensor.hp_envy_5540_pages_allowance_remaining')|int
-            + states('sensor.hp_envy_5540_pages_rollover_remaining')|int }} {% endif
-            %}"
+            "{% if states('sensor.hp_envy_5540_pages_allowance_remaining')|int + states('sensor.hp_envy_5540_pages_rollover_remaining')|int > states('input_number.hp_envy_5540_pages_rollover_monthly_max_allowance')|int %}
+            {{ states('input_number.hp_envy_5540_pages_rollover_monthly_max_allowance')|int}}
+            {% else %}
+            {{ states('sensor.hp_envy_5540_pages_allowance_remaining')|int + states('sensor.hp_envy_5540_pages_rollover_remaining')|int }}
+            {% endif %}"
+
       - service: input_number.set_value
         entity_id: input_number.hp_envy_5540_pages_at_month_start
         data_template:

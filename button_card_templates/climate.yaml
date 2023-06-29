@@ -2,10 +2,10 @@ climate:
   custom_fields:
     circle: >
       [[[
-        if (entity && entity.attributes.current_temperature) {
+        if (entity) {
           let input = entity.attributes.current_temperature == null ? ' ' : `${entity.attributes.current_temperature}<tspan font-size="10">°C</tspan>`,
-            stroke_color = entity.attributes.hvac_action === 'heating' ? '#ff9800' : 'none',
-            fill_color = entity.attributes.hvac_action === 'idle' ? 'rgba(255,255,255,0.04)' : 'none';
+            stroke_color = entity.attributes.status === 'heating' ? '#ff9800' : 'none',
+            fill_color = entity.attributes.status === 'idle' ? 'rgba(255,255,255,0.04)' : 'none';
           return `
             <svg viewBox="0 0 50 50">
               <circle cx="25" cy="25" r="20.5" stroke="${stroke_color}" stroke-width="1.5" fill="${fill_color}" />

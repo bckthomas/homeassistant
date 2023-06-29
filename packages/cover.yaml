@@ -110,7 +110,7 @@ binary_sensor:
     entity_id: sensor.sunazimuth
   - platform: threshold
     name: "Soleil : Est"
-    upper: 299
+    upper: 150
     lower: 40
     entity_id: sensor.sunazimuth
   - platform: template
