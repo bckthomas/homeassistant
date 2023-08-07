@@ -150,7 +150,7 @@ browser_mod:
             type: custom:apexcharts-card
             layout: minimal
             graph_span: 1h
-            locale: se
+            locale: fr
             apex_config:
               chart:
                 fontFamily: var(--primary-font-family)
@@ -203,9 +203,9 @@ browser_mod:
               type: area
               fill_raw: last
             series:
-              - entity: sensor.deluge_down_speed
+              - entity: sensor.deluge_download_speed
                 name: Download
                 color: green
-              - entity: sensor.deluge_up_speed
+              - entity: sensor.deluge_upload_speed
                 name: Upload
                 color: "#385581"

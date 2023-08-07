@@ -87,7 +87,7 @@ cover:
       - cover.volet_porte_cuisine
       - cover.volet_salle_a_manger
 
-sensor: 
+sensor:
   - platform: template
     sensors:
       sunelevation:
@@ -101,7 +101,7 @@ binary_sensor:
   - platform: threshold
     name: "Soleil : Ouest"
     upper: 300
-    lower: 250
+    lower: 230
     entity_id: sensor.sunazimuth
   - platform: threshold
     name: "Soleil : Sud"
@@ -113,31 +113,3 @@ binary_sensor:
     upper: 150
     lower: 40
     entity_id: sensor.sunazimuth
-  - platform: template
-    sensors:
-      vr_sun_hot:
-        device_class: heat
-        delay_on: 
-          seconds: 300
-        delay_off:
-          seconds: 300
-        value_template: "{{state_attr('weather.anse', 'temperature')|float(0) >= states('input_number.vr_sun_hot') |float(0)
-                        and states('sensor.anse_cloud_cover')|float(0) <= states('input_number.vr_cloud_cover')|float(0) }}" 
-        friendly_name: "Alerte haute température"
-        #Math.round(weather.anse.attributes.forecast[0].temperature).toString()
-
-input_number:
-  vr_sun_hot:
-    name: Seuil haute température
-    min: 10
-    max: 40
-    step: 1
-    unit_of_measurement: "°"
-    icon: mdi:sun-thermometer-outline
-  vr_cloud_cover:
-    name: Seuil couverture nuageuse
-    min: 0
-    max: 100
-    step: 5
-    unit_of_measurement: "%"
-    icon: mdi:cloud-lock-outline 

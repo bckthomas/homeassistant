@@ -8,3 +8,9 @@ input_boolean:
   leavecover:
     name: Fermeture automatique en partant
     icon: mdi:exit-run
+  gotosleep:
+    name: Bonne nuit
+    initial: off
+  homeleave:
+    name: Tout fermer
+    initial: off

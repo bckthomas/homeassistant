@@ -1,0 +1,6 @@
+switch:
+  - platform: group
+    name: Lumières
+    entities:
+      - switch.guirlande
+      - switch.lumiere_salle_a_manger

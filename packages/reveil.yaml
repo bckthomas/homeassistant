@@ -10,62 +10,40 @@ automation:
     trigger:
       platform: template
       value_template: "{{states('sensor.time') == (state_attr('input_datetime.wake_time','timestamp') | int | timestamp_custom('%H:%M', False))}}"
-    condition:  
-     condition: template
-     value_template: >
+    condition:
+      condition: template
+      value_template: >
         {% set today = 'input_boolean.wakeweekday_' ~ now().strftime("%a") | lower ~ '' %}
         {{ is_state('input_boolean.wakestatus', 'on') and is_state(today, 'on') }}
     action:
       service: input_boolean.turn_on
       entity_id: input_boolean.wakeactivated
 
-  - alias: 'Wake 1 Activated'
+  - alias: "Wake 1 Activated"
     trigger:
       platform: state
       entity_id: input_boolean.wakeactivated
-      from: 'off'
-      to: 'on'
-    action:   
+      from: "off"
+      to: "on"
+    action:
       - service: script.wake_up
       - service: input_boolean.turn_off
         entity_id: input_boolean.wakeactivated
-  - alias: 'Shut wake off if holidays'
-    mode: single
-    trigger:
-      - platform: state
-        entity_id:
-          - binary_sensor.vacances_scolaires_aujourdhui
-        from: "on"
-        to: "off"
-    condition: []
-    action:
-      - service: input_boolean.turn_off
-        data: {}
-        target:
-          entity_id: input_boolean.wakestatus
-  - alias: 'Switch wake on if holidays'
-    mode: single
-    trigger:
-      - platform: state
-        entity_id:
-          - binary_sensor.vacances_scolaires_aujourdhui
-        from: "off"
-        to: "on"
-    condition: []
-    action:
-      - service: input_boolean.turn_on
-        data: {}
-        target:
-          entity_id: input_boolean.wakestatus
-
 
 script:
   wake_up:
-    alias :  Réveil matin
+    alias: Réveil matin
     sequence:
       - service: alarm_control_panel.alarm_disarm
+        data:
+          code: !secret alarm
         target:
-          entity_id: alarm_control_panel.maison    
+          entity_id: alarm_control_panel.maison
+      - delay:
+          hours: 0
+          minutes: 0
+          seconds: 10
+          milliseconds: 0
       - service: cover.set_cover_position
         target:
           entity_id: cover.volet_chambre_parents

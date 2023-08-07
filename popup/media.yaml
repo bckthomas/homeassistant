@@ -1,0 +1,63 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Musique
+    hide_header: true
+    style:
+      .: |
+        :host .content {
+          width: calc(385px);
+          max-width: 90vw;
+        }
+    content:
+      type: vertical-stack
+      show_header_toggle: false
+      style: &border |
+        ha-card {
+          border-radius: 0;
+          animation: ha-card 1s forwards;
+        }
+
+        @keyframes ha-card {
+          0%, 100% {
+              border-right: 1.5px solid rgba(0, 0, 0, 0.2);
+          }
+        }
+
+        /* phone */
+        @media screen and (max-width: 800px) {
+          ha-card {
+              border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
+              padding-right: 0;
+              animation: none;
+          }
+        }
+      cards:
+        - type: custom:mini-media-player
+          entity: media_player.salon
+          group: true
+          source: icon
+          info: short
+          hide:
+            volume: true
+            power: true
+            source: true
+        - type: custom:mini-media-player
+          entity: media_player.salon
+          group: true
+          hide:
+            controls: true
+            source: true
+            progress: true
+            info: true
+            power: true
+        - type: custom:mini-media-player
+          entity: media_player.cuisine
+          group: true
+          hide:
+            controls: true
+            source: true
+            progress: true
+            info: true
+            power: true
