@@ -33,6 +33,8 @@ browser_mod:
               show: true
               show_states: true
               colorize_states: true
+            all_series_config:
+              stroke_width: 2
             series:
               - entity: sensor.maison_zone_1_room_temperature
                 curve: smooth
@@ -51,4 +53,3 @@ browser_mod:
                 show: false
           - type: custom:simple-thermostat
             entity: climate.maison_zone_1
-

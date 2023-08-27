@@ -186,7 +186,7 @@ views:
         columns: 2
         cards:
           - type: custom:button-card
-            entity: weather.forecast_home
+            entity: weather.anse
             show_state: false
             name: Anse
             tap_action: !include popup/popup_meteo.yaml
@@ -306,13 +306,22 @@ views:
           - type: conditional
             conditions:
               - entity: select.conditional_media
+                state: Salon
+            card:
+              type: custom:button-card
+              entity: media_player.salon
+              template:
+                - conditional_media
+              tap_action: !include popup/media.yaml
+          - type: conditional
+            conditions:
+              - entity: select.conditional_media
                 state: Cuisine
             card:
               type: custom:button-card
               entity: media_player.salon
               template:
                 - conditional_media
-                - icon_plex
               tap_action: !include popup/media.yaml
 
           - type: conditional
@@ -510,7 +519,7 @@ views:
 
           - type: custom:button-card
             name: >
-              <ha-icon icon="mdi:robot-vacuum"></ha-icon> Aspirateur
+              <ha-icon icon="cil:roborock-vacuum"></ha-icon> Aspirateur
             tap_action: !include popup/footer_vacuum.yaml
             triggers_update:
               - sensor.date

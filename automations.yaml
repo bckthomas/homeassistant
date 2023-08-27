@@ -34,7 +34,10 @@
     - alarm_control_panel.maison
     from: armed_night
     to: disarmed
-  condition: []
+  condition:
+  - condition: state
+    entity_id: cover.volet_fenetre_cuisine
+    state: open
   action:
   - service: media_player.play_media
     target:

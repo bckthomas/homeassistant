@@ -136,6 +136,7 @@ conditional_media:
               await = setTimeout(marquee, 100),
               data = entity.attributes.data,
               artist = entity.attributes.media_artist,
+              album = entity.attributes.media_album_name,
               title = entity.attributes.media_title;
 
             if (data !== undefined) {
@@ -151,7 +152,7 @@ conditional_media:
                     : title === undefined && artist !== undefined
                         ? artist
                         : title !== undefined && artist !== undefined
-                            ? `${artist} - ${title}`
+                            ? `${artist} - ${album} - ${title}`
                             : variables.translate_idle;
             }
 
