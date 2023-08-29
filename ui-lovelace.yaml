@@ -303,44 +303,41 @@ views:
           grid-area: media
         columns: 1
         cards:
-          - type: conditional
-            conditions:
-              - entity: select.conditional_media
-                state: Salon
-            card:
-              type: custom:button-card
-              entity: media_player.salon
-              template:
-                - conditional_media
-              tap_action: !include popup/media.yaml
-          - type: conditional
-            conditions:
-              - entity: select.conditional_media
-                state: Cuisine
-            card:
-              type: custom:button-card
-              entity: media_player.salon
-              template:
-                - conditional_media
-              tap_action: !include popup/media.yaml
+          - type: custom:swipe-card
+            parameters:
+              speed: 550
+              spaceBetween: 40
+              threshold: 5
+            cards:
+              - type: conditional
+                conditions:
+                  - entity: select.conditional_media
+                    state: Salon
+                card:
+                  type: custom:button-card
+                  entity: media_player.salon
+                  template:
+                    - conditional_media
+                  tap_action: !include popup/media.yaml
+              - type: conditional
+                conditions:
+                  - entity: select.conditional_media
+                    state: Cuisine
+                card:
+                  type: custom:button-card
+                  entity: media_player.salon
+                  template:
+                    - conditional_media
+                  tap_action: !include popup/media.yaml
 
-          - type: conditional
-            conditions:
-              - entity: select.conditional_media
-                state_not: Salon
-
-              - entity: select.conditional_media
-                state_not: Cuisine
-
-            card:
-              type: custom:button-card
-              entity: sensor.derniers_ajouts
-              name: Dernier ajouté
-              tap_action:
-                action: none
-              template:
-                - conditional_media
-                - icon_plex
+              - type: custom:button-card
+                entity: sensor.derniers_ajouts
+                name: Dernier ajouté
+                tap_action:
+                  action: none
+                template:
+                  - conditional_media
+                  - icon_plex
 
       #################################################
       #                                               #
