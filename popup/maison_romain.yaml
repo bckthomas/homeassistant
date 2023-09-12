@@ -1,0 +1,36 @@
+action: fire-dom-event
+browser_mod:
+  service: browser_mod.popup
+  data:
+    title: Romain
+    card_mod:
+      style:
+        #popup header
+        .:
+    style: >
+      --popup-max-width: 400px;
+    content:
+      type: vertical-stack
+      cards:
+        - type: entities
+          card_mod:
+            class: content
+          entities:
+            - entity: person.romain
+              secondary_info: last-changed
+
+        - type: history-graph
+          card_mod:
+            style: |
+              ha-card > div {
+                padding: 0 2em 1em 1.6em !important;
+              }
+          entities:
+            - entity: person.romain
+
+        - type: picture
+          image: /local/ETRomain.jpg
+          tap_action:
+            action: none
+          hold_action:
+            action: none

@@ -255,41 +255,47 @@ views:
       #                                               #
       #################################################
 
-      - type: vertical-stack
+      - type: grid
         view_layout:
           grid-area: sovrum
+        title: Jardin
+        columns: 2
         cards:
-          #          - type: grid
-          #            columns: 2
-          #            cards:
-          #              - type: custom:button-card
-          #                entity: light.sovrum_group
-          #                name: Sänglampor
-          #                template:
-          #                  - light
-          #                  - icon_lamp
+          - type: custom:button-card
+            entity: person.thomas
+            name: Thomas
+            triggers_update:
+              - sensor.thomas_last_changed
+            tap_action: !include popup/maison_thomas.yaml
+            variables:
+              retain: sensor.thomas_last_changed
+            template:
+              - person
+              - circle
 
-          #              - type: custom:button-card
-          #                entity: climate.ac
-          #                name: Klimat
-          #                double_tap_action: !include popup/sovrum_klimat.yaml
-          #                template:
-          #                  - base
-          #                  - icon_climate
-          #                  - circle
-          #                variables:
-          #                  circle_input: >
-          #                    [[[
-          #                      if (entity) {
-          #                          return entity.state === 'cool'
-          #                              ? Math.round(entity.attributes.temperature).toString()
-          #                              : Math.round(entity.attributes.current_temperature).toString();
-          #                      }
-          #                    ]]]
-          #                  circle_input_unit: "°C"
+          - type: custom:button-card
+            entity: person.benedicte
+            name: Bénédicte
+            triggers_update:
+              - sensor.benedicte_last_changed
+            tap_action: !include popup/maison_benedicte.yaml
+            variables:
+              retain: sensor.benedicte_last_changed
+            template:
+              - person
+              - circle
 
-          - type: custom:teamtracker-card
-            entity: sensor.canadiens
+          - type: custom:button-card
+            entity: person.romain
+            name: Romain
+            triggers_update:
+              - sensor.romain_last_changed
+            tap_action: !include popup/maison_romain.yaml
+            variables:
+              retain: sensor.romain_last_changed
+            template:
+              - person
+              - circle
 
       #################################################
       #                                               #
@@ -319,6 +325,7 @@ views:
                   template:
                     - conditional_media
                   tap_action: !include popup/media.yaml
+
               - type: conditional
                 conditions:
                   - entity: select.conditional_media
@@ -330,14 +337,109 @@ views:
                     - conditional_media
                   tap_action: !include popup/media.yaml
 
-              - type: custom:button-card
-                entity: sensor.derniers_ajouts
-                name: Dernier ajouté
-                tap_action:
-                  action: none
-                template:
-                  - conditional_media
-                  - icon_plex
+              - type: conditional
+                conditions:
+                  - entity: media_player.plex_plex_for_android_tv_android
+                    state: playing
+                card:
+                  type: custom:mini-media-player
+                  entity: media_player.plex_plex_for_android_tv_android
+                  artwork: full-cover
+                  hide:
+                    source: true
+                    volume: true
+                    controls: true
+                    power: true
+                    icon: true
+                  card_mod:
+                    style: |
+                      ha-card {
+                        height: 100%;
+                      }
+
+              - type: custom:swipe-card
+                parameters:
+                  autoplay:
+                    delay: 5000
+                    disableOnInteraction: false
+                  mousewheel:
+                    sensitivity: 2
+                  pagination:
+                    type: bullets
+                    clickable: true
+                  grabCursor: true
+                  threshold: 5
+                  speed: 600
+                  spaceBetween: 40
+                  direction: vertical
+                  autoHeight: true
+                  height: 360
+                cards:
+                  - type: custom:button-card
+                    entity: sensor.derniers_ajouts
+                    name: " "
+                    tap_action:
+                      action: url
+                      url_path: https://app.plex.tv/
+                    template:
+                      - last_plex_1
+                      - icon_plex
+                  - type: custom:button-card
+                    entity: sensor.derniers_ajouts
+                    name: " "
+                    tap_action:
+                      action: none
+                    template:
+                      - last_plex_2
+                      - icon_plex
+                  - type: custom:button-card
+                    entity: sensor.derniers_ajouts
+                    name: " "
+                    tap_action:
+                      action: none
+                    template:
+                      - last_plex_3
+                      - icon_plex
+                  - type: custom:button-card
+                    entity: sensor.derniers_ajouts
+                    name: " "
+                    tap_action:
+                      action: none
+                    template:
+                      - last_plex_4
+                      - icon_plex
+                  - type: custom:button-card
+                    entity: sensor.derniers_ajouts
+                    name: " "
+                    tap_action:
+                      action: none
+                    template:
+                      - last_plex_5
+                      - icon_plex
+                  - type: custom:button-card
+                    entity: sensor.derniers_ajouts
+                    name: " "
+                    tap_action:
+                      action: none
+                    template:
+                      - last_plex_6
+                      - icon_plex
+                  - type: custom:button-card
+                    entity: sensor.derniers_ajouts
+                    name: " "
+                    tap_action:
+                      action: none
+                    template:
+                      - last_plex_7
+                      - icon_plex
+                  - type: custom:button-card
+                    entity: sensor.derniers_ajouts
+                    name: " "
+                    tap_action:
+                      action: none
+                    template:
+                      - last_plex_8
+                      - icon_plex
 
       #################################################
       #                                               #
@@ -448,55 +550,39 @@ views:
       #                                               #
       #################################################
 
-      - type: grid
-        title: Maison
+      - type: vertical-stack
         view_layout:
           grid-area: hemma
-        columns: 2
         cards:
-          - type: custom:button-card
-            entity: person.thomas
-            name: Thomas
-            triggers_update:
-              - sensor.thomas_last_changed
-            tap_action: !include popup/maison_thomas.yaml
-            variables:
-              retain: sensor.thomas_last_changed
-            template:
-              - person
-              - circle
+          - type: custom:teamtracker-card
+            entity: sensor.canadiens
+            card_mod:
+              style: |
+                ha-card {
+                  margin-bottom: 2vw;
+                }
+          - type: grid
+            columns: 2
+            cards:
+              - type: custom:button-card
+                entity: input_boolean.homeleave
+                name: Tout fermer
+                show_state: false
+                hold_action:
+                  action: none
+                template:
+                  - base
+                  - icon_away
 
-          - type: custom:button-card
-            entity: person.benedicte
-            name: Bénédicte
-            triggers_update:
-              - sensor.benedicte_last_changed
-            tap_action: !include popup/maison_benedicte.yaml
-            variables:
-              retain: sensor.benedicte_last_changed
-            template:
-              - person
-              - circle
-
-          - type: custom:button-card
-            entity: input_boolean.homeleave
-            name: Tout fermer
-            show_state: false
-            hold_action:
-              action: none
-            template:
-              - base
-              - icon_away
-
-          - type: custom:button-card
-            entity: input_boolean.gotosleep
-            name: Bonne nuit
-            show_state: false
-            hold_action:
-              action: none
-            template:
-              - base
-              - icon_sleep
+              - type: custom:button-card
+                entity: input_boolean.gotosleep
+                name: Bonne nuit
+                show_state: false
+                hold_action:
+                  action: none
+                template:
+                  - base
+                  - icon_sleep
 
       #################################################
       #                                               #

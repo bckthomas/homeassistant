@@ -233,6 +233,48 @@ extra_styles:
 
         `:''}
 
+        ${this._config.template.includes('last_added') ? `
+
+         /* * * * * * * * * * * * * * * * * *
+          *                                 *
+          *              MEDIA              *
+          *                                 *
+          * * * * * * * * * * * * * * * * * */
+
+          :host {
+            --blur-intensity: blur(4.5px) brightness(0.8);
+          }
+
+          /* phone */
+          @media screen and (max-width: 800px) {
+            :host {
+              --blur-intensity: blur(2.5px) brightness(0.8);
+            }
+          }
+
+          #ripple, .js-tilt-glare {
+            clip-path: inset(0 round calc(var(--button-card-border-radius) / 2));
+          }
+
+          #container {
+            overflow: hidden;
+          }
+
+          .marquee {
+            animation: marquee 20s linear infinite;
+          }
+
+          @keyframes marquee {
+            from {
+              transform: translateX(0%);
+            }
+            to {
+              transform: translateX(-50%);
+            }
+          }
+
+        `:''}
+
         ${this._config.template.includes('conditional_media') ? `
 
          /* * * * * * * * * * * * * * * * * *

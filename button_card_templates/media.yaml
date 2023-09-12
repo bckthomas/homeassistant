@@ -268,3 +268,132 @@ conditional_media:
           }, 0);
         return ' ';
       ]]]
+
+#################################################
+#                                               #
+#               LAST PLEX              #
+#                                               #
+#################################################
+
+last_plex_1:
+  aspect_ratio: 1000/996
+  template:
+    - base
+    - base_media
+    - conditional_media
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || 1;
+        }
+      ]]]
+
+last_plex_2:
+  aspect_ratio: 1000/996
+  template:
+    - base
+    - base_media
+    - conditional_media
+    - last_plex_1
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || 2;
+        }
+      ]]]
+
+last_plex_3:
+  aspect_ratio: 1000/996
+  template:
+    - base
+    - base_media
+    - conditional_media
+    - last_plex_1
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || 3;
+        }
+      ]]]
+
+last_plex_4:
+  aspect_ratio: 1000/996
+  template:
+    - base
+    - base_media
+    - conditional_media
+    - last_plex_1
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || 4;
+        }
+      ]]]
+
+last_plex_5:
+  aspect_ratio: 1000/996
+  template:
+    - base
+    - base_media
+    - conditional_media
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || 5;
+        }
+      ]]]
+
+last_plex_6:
+  aspect_ratio: 1000/996
+  template:
+    - base
+    - base_media
+    - conditional_media
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || 6;
+        }
+      ]]]
+
+last_plex_7:
+  aspect_ratio: 1000/996
+  template:
+    - base
+    - base_media
+    - conditional_media
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || 7;
+        }
+      ]]]
+
+last_plex_8:
+  aspect_ratio: 1000/996
+  template:
+    - base
+    - base_media
+    - conditional_media
+  variables:
+    i: >
+      [[[
+        if (entity) {
+            let data = entity.attributes.data;
+            return data === undefined || 8;
+        }
+      ]]]

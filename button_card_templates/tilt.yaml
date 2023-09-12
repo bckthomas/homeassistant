@@ -23,7 +23,7 @@ tilt:
             speed: 800,
             parallax: '25px'
         }
-        if (this._config.template.includes('conditional_media')) {
+        if ((this._config.template.includes('conditional_media')) || (this._config.template.includes('last_added'))) {
             options.scale = options.scale % parseInt(options.scale) / 2 + parseInt(options.scale);
             options.perspective = options.perspective * 2;
             return options;
