@@ -388,7 +388,8 @@ views:
                     entity: sensor.derniers_ajouts
                     name: " "
                     tap_action:
-                      action: none
+                      action: url
+                      url_path: https://app.plex.tv/
                     template:
                       - last_plex_2
                       - icon_plex
@@ -396,7 +397,8 @@ views:
                     entity: sensor.derniers_ajouts
                     name: " "
                     tap_action:
-                      action: none
+                      action: url
+                      url_path: https://app.plex.tv/
                     template:
                       - last_plex_3
                       - icon_plex
@@ -404,7 +406,8 @@ views:
                     entity: sensor.derniers_ajouts
                     name: " "
                     tap_action:
-                      action: none
+                      action: url
+                      url_path: https://app.plex.tv/
                     template:
                       - last_plex_4
                       - icon_plex
@@ -412,7 +415,8 @@ views:
                     entity: sensor.derniers_ajouts
                     name: " "
                     tap_action:
-                      action: none
+                      action: url
+                      url_path: https://app.plex.tv/
                     template:
                       - last_plex_5
                       - icon_plex
@@ -420,7 +424,8 @@ views:
                     entity: sensor.derniers_ajouts
                     name: " "
                     tap_action:
-                      action: none
+                      action: url
+                      url_path: https://app.plex.tv/
                     template:
                       - last_plex_6
                       - icon_plex
@@ -428,7 +433,8 @@ views:
                     entity: sensor.derniers_ajouts
                     name: " "
                     tap_action:
-                      action: none
+                      action: url
+                      url_path: https://app.plex.tv/
                     template:
                       - last_plex_7
                       - icon_plex
@@ -436,7 +442,8 @@ views:
                     entity: sensor.derniers_ajouts
                     name: " "
                     tap_action:
-                      action: none
+                      action: url
+                      url_path: https://app.plex.tv/
                     template:
                       - last_plex_8
                       - icon_plex

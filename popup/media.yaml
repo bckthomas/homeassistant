@@ -46,7 +46,6 @@ browser_mod:
       layout_type: custom:grid-layout
       cards:
         - type: entities
-          title: Musique
           show_header_toggle: false
           card_mod:
             class: header
