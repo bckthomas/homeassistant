@@ -4,9 +4,6 @@ browser_mod:
   data:
     title: Thomas
     card_mod:
-      style:
-        #popup header
-        .:
     style: >
       --popup-max-width: 400px;
     content:
@@ -71,7 +68,6 @@ browser_mod:
                   border-top: 2px solid #1a1a1a;
                   border-radius: 0;
                   transition: none;
-                  margin-bottom: -4px !important;
                   height: 25em !important;
                 }
               ha-map$: |

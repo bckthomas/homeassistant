@@ -339,12 +339,15 @@ views:
 
               - type: conditional
                 conditions:
-                  - entity: media_player.plex_plex_for_android_tv_android
+                  - entity: media_player.fire_tv_salle_de_jeux
                     state: playing
                 card:
                   type: custom:mini-media-player
-                  entity: media_player.plex_plex_for_android_tv_android
+                  entity: media_player.fire_tv_salle_de_jeux
                   artwork: full-cover
+                  scale: "1.5"
+                  template:
+                    - custom_media
                   hide:
                     source: true
                     volume: true
@@ -354,7 +357,28 @@ views:
                   card_mod:
                     style: |
                       ha-card {
-                        height: 100%;
+                        height: 360px;
+                      }
+
+              - type: conditional
+                conditions:
+                  - entity: media_player.plex_plex_for_android_tv_android
+                    state: playing
+                card:
+                  type: custom:mini-media-player
+                  entity: media_player.plex_plex_for_android_tv_android
+                  artwork: full-cover
+                  scale: "1.5"
+                  hide:
+                    source: true
+                    volume: true
+                    controls: true
+                    power: true
+                    icon: true
+                  card_mod:
+                    style: |
+                      ha-card {
+                        height: 360px;
                       }
 
               - type: custom:swipe-card
@@ -566,7 +590,13 @@ views:
             card_mod:
               style: |
                 ha-card {
-                  margin-bottom: 2vw;
+                  margin-bottom: 50px;
+                }
+                .card {
+                  padding: 0;
+                }
+                .line, .pre-row1, .pre-row2, .pre-row3, .post-row1 {
+                  display: none;
                 }
           - type: grid
             columns: 2
@@ -616,7 +646,7 @@ views:
             variables:
               notify: >
                 [[[
-                  let id = states['sensor.morty_last_clean_end'];
+                  let id = states['sensor.wall_e_fin_du_dernier_nettoyage'];
                   if (id) return (Date.now() - Date.parse(id.state)) > 6048e5;
                 ]]]
             template: footer

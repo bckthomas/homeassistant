@@ -12,9 +12,6 @@ browser_mod:
           $grid-layout$:
             # card divider border
             .: |
-              #root {
-                  margin: -24px 0 !important;
-              }
             hui-entities-card:
               $: |
                 .card-content {

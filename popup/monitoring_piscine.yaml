@@ -34,16 +34,6 @@ browser_mod:
           }
         }
       cards:
-        - type: conditional
-          conditions:
-            - entity: sensor.piscine_last_update
-              state_not: unknown
-          card:
-            type: entities
-            entities:
-              - entity: sensor.piscine_last_update
-                icon: mdi:timer
-
         - type: "custom:pool-monitor-card"
           temperature: sensor.piscine_temperature
           ph: sensor.piscine_ph

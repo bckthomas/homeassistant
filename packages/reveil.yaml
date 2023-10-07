@@ -34,16 +34,6 @@ script:
   wake_up:
     alias: Réveil matin
     sequence:
-      - service: alarm_control_panel.alarm_disarm
-        data:
-          code: !secret alarm
-        target:
-          entity_id: alarm_control_panel.maison
-      - delay:
-          hours: 0
-          minutes: 0
-          seconds: 10
-          milliseconds: 0
       - service: cover.set_cover_position
         target:
           entity_id: cover.volet_chambre_parents
@@ -56,6 +46,11 @@ script:
           entity_id: cover.cuisine, cover.salon, cover.volet_bureau, cover.volet_salle_a_manger, cover.volet_chambre_d_amis
       - delay:
           minutes: 2
+      - service: alarm_control_panel.alarm_disarm
+        data:
+          code: !secret alarm
+        target:
+          entity_id: alarm_control_panel.maison
       - service: cover.set_cover_position
         target:
           entity_id: cover.volet_chambre_romain, cover.volet_chambre_valentine
@@ -70,6 +65,69 @@ script:
 input_datetime:
   wake_time:
     name: wake_time
+    has_date: false
+    has_time: true
+
+  wake_time_lundi_romain:
+    name: Romain
+    has_date: false
+    has_time: true
+  wake_time_mardi_romain:
+    name: Romain
+    has_date: false
+    has_time: true
+  wake_time_mercredi_romain:
+    name: Romain
+    has_date: false
+    has_time: true
+  wake_time_jeudi_romain:
+    name: Romain
+    has_date: false
+    has_time: true
+  wake_time_vendredi_romain:
+    name: Romain
+    has_date: false
+    has_time: true
+
+  wake_time_lundi_valentine:
+    name: Valentine
+    has_date: false
+    has_time: true
+  wake_time_mardi_valentine:
+    name: Valentine
+    has_date: false
+    has_time: true
+  wake_time_mercredi_valentine:
+    name: Valentine
+    has_date: false
+    has_time: true
+  wake_time_jeudi_valentine:
+    name: Valentine
+    has_date: false
+    has_time: true
+  wake_time_vendredi_valentine:
+    name: Valentine
+    has_date: false
+    has_time: true
+
+  wake_time_lundi_parents:
+    name: Valentine
+    has_date: false
+    has_time: true
+  wake_time_mardi_parents:
+    name: Valentine
+    has_date: false
+    has_time: true
+  wake_time_mercredi_parents:
+    name: Valentine
+    has_date: false
+    has_time: true
+  wake_time_jeudi_parents:
+    name: Valentine
+    has_date: false
+    has_time: true
+  wake_time_vendredi_parents:
+    name: Valentine
     has_date: false
     has_time: true
 
@@ -101,4 +159,70 @@ input_boolean:
     icon: mdi:calendar
   wakeweekday_sat:
     name: Samedi
+    icon: mdi:calendar
+
+  wakeweekday_sun_romain:
+    name: Romain
+    icon: mdi:calendar
+  wakeweekday_mon_romain:
+    name: Romain
+    icon: mdi:calendar
+  wakeweekday_tue_romain:
+    name: Romain
+    icon: mdi:calendar
+  wakeweekday_wed_romain:
+    name: Romain
+    icon: mdi:calendar
+  wakeweekday_thu_romain:
+    name: Romain
+    icon: mdi:calendar
+  wakeweekday_fri_romain:
+    name: Romain
+    icon: mdi:calendar
+  wakeweekday_sat_romain:
+    name: Romain
+    icon: mdi:calendar
+
+  wakeweekday_sun_valentine:
+    name: Valentine
+    icon: mdi:calendar
+  wakeweekday_mon_valentine:
+    name: Valentine
+    icon: mdi:calendar
+  wakeweekday_tue_valentine:
+    name: Valentine
+    icon: mdi:calendar
+  wakeweekday_wed_valentine:
+    name: Valentine
+    icon: mdi:calendar
+  wakeweekday_thu_valentine:
+    name: Valentine
+    icon: mdi:calendar
+  wakeweekday_fri_valentine:
+    name: Valentine
+    icon: mdi:calendar
+  wakeweekday_sat_valentine:
+    name: Valentine
+    icon: mdi:calendar
+    
+  wakeweekday_sun_parents:
+    name:  Parents
+    icon: mdi:calendar
+  wakeweekday_mon_parents:
+    name:  Parents
+    icon: mdi:calendar
+  wakeweekday_tue_parents:
+    name:  Parents
+    icon: mdi:calendar
+  wakeweekday_wed_parents:
+    name:  Parents
+    icon: mdi:calendar
+  wakeweekday_thu_parents:
+    name:  Parents
+    icon: mdi:calendar
+  wakeweekday_fri_parents:
+    name: Parents
+    icon: mdi:calendar
+  wakeweekday_sat_parents:
+    name: Parents
     icon: mdi:calendar

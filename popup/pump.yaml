@@ -3,10 +3,6 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Chauffage
-    card_mod:
-      style:
-        #popup header
-        .:
     content:
       type: custom:mod-card
       card_mod:
@@ -39,7 +35,7 @@ browser_mod:
               - entity: sensor.maison_zone_1_room_temperature
                 curve: smooth
                 type: line
-                name: Ssous-sol
+                name: Sous-sol
                 group_by:
                   duration: 10min
               - entity: sensor.temperature_ss_sol_temperature

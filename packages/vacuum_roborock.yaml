@@ -2,7 +2,7 @@ homeassistant:
   customize:
     vacuum.wall_e:
       icon: cil:roborock-vacuum
-    sensor.wall_e_last_clean_end:
+    sensor.wall_e_fin_du_dernier_nettoyage:
       friendly_name: Dernier nettoyage
       icon: mdi:calendar-clock
 

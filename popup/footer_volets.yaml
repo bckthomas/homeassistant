@@ -12,9 +12,6 @@ browser_mod:
           $grid-layout$:
             # card divider border
             .: |
-              #root {
-                  margin: -24px 0 !important;
-              }
             hui-entities-card:
               $: |
                 .card-content {
@@ -71,6 +68,7 @@ browser_mod:
             class: header
           cards:
             - type: entities
+              show_header_toggle: false
               entities:
                 - entity: cover.tous_les_volets
                 - entity: cover.cuisine

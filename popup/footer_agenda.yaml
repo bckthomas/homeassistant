@@ -3,10 +3,6 @@ browser_mod:
   service: browser_mod.popup
   data:
     title: Agenda
-    card_mod:
-      style:
-        #popup header
-        .:
     content:
       type: "custom:atomic-calendar-revive"
       enableModeChange: true
@@ -26,7 +22,7 @@ browser_mod:
       hideFinishedEvents: true
       showRelativeTime: false
       showDate: false
-      sortByStartTime: true
+      sortBy: start
       showLocation: true
       showHiddenText: false
       disableLocationLink: false
