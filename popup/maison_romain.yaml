@@ -4,29 +4,776 @@ browser_mod:
   data:
     title: Romain
     style: >
-      --popup-max-width: 400px;
+      --popup-max-width: calc(385px + 400px + 385px);
+      --ha-card-border-radius: 0;
+    card_mod:
+      style:
+        layout-card:
+          $grid-layout$:
+            # card divider border
+            .: |
+            hui-entities-card:
+              $: |
+                .card-content {
+                  padding: var(--tablet-popup-content-padding);
+                  padding-bottom: 0.8em;
+                }
+                ha-card {
+                  border-right: 1.5px solid rgba(0, 0, 0, 0.2);
+                  border-radius: 0;
+                  transition: none;
+                }
+                /* portrait */
+                @media screen and (max-width: 1200px) {
+                  ha-card {
+                    border-right: none;
+                    border-bottom: 1.5px solid rgba(0, 0, 0, 0.2);
+                  }
+                }
+              $hui-horizontal-stack-card:
+                # horizontal bottom buttons
+                $: |
+                  #root {
+                    justify-content: space-evenly;
+                    margin-top: 1.7em;
+                    max-width: 82vw; /* iphonex */
+                  }
+
     content:
-      type: vertical-stack
+      type: custom:layout-card
+      layout_type: custom:grid-layout
+      layout:
+        margin: 0
+        grid-template-columns: 385px 400px 385px
+        grid-template-rows: 1fr
+        grid-template-areas: |
+          "timetable grade average"
+        mediaquery:
+          #portrait
+          "(max-width: 1200px)":
+            grid-template-columns: 1fr
+            grid-template-rows: repeat(3, 1fr)
+            grid-template-areas: |
+              "timetable"
+              "grade"
+              "average"
       cards:
         - type: entities
+          view_layout:
+            grid-area: timetable
+          show_header_toggle: false
           card_mod:
-            class: content
+            class: header
           entities:
             - entity: person.romain
               secondary_info: last-changed
 
-        - type: history-graph
-          card_mod:
-            style: |
-              ha-card > div {
-                padding: 0 2em 1em 1.6em !important;
-              }
-          entities:
-            - entity: person.romain
+            - type: custom:vertical-stack-in-card
+              style: |
+                ha-card { 
+                  box-shadow: none;
+                }
+              cards:
+                - type: custom:vertical-stack-in-card
+                  style: |
+                    ha-card { 
+                      box-shadow: none ;
+                      margin: 5px 1px 5px 1px;
+                    }
+                  cards:
+                    - type: conditional
+                      conditions:
+                        - entity: sensor.pronote_beck_romain_timetable_period
+                          state_not: unavailable
+                      card:
+                        type: markdown
+                        content: >-
+                          <div>Emploi du temps</div> {% set months =
+                          ["Janvier","Février", "Mars", "Avril", "Mai", "Juin",
+                          "Juillet", "Août", "Septembre", "Octobre", "Novembre",
+                          "Décembre"] %}
 
-        - type: picture
-          image: /local/ETRomain.jpg
-          tap_action:
-            action: none
-          hold_action:
-            action: none
+                          {% set days = ["Lundi", "Mardi", "Mercredi", "Jeudi",
+                          "Vendredi", "Samedi", "Dimanche"] %}
+
+                          {% set weeknum = now().strftime("%W") %} 
+
+                          <table>
+                            {% set items = state_attr('sensor.pronote_beck_romain_timetable_period','lessons') %}
+                            <tbody>
+                              {%- for i in range(0, items | count, 1) -%}
+                                {% if (items[i].start_at - now().today()).days > 4 %}
+                                  {% continue %}
+                                {% endif %}
+
+                                {%- if i == 0 -%}
+                                  <tr><td colspan="5"><b>{{ days[items[i].start_at.strftime('%w')| int - 1] }} {{ items[i].start_at.strftime("%d") }}</b></td></tr>
+                                {%- endif -%}
+
+                                {%- if items[i].start_at.strftime("%F") > items[i-1].start_at.strftime("%F") -%} 
+                                  <tr><td colspan="5"><b>{{ days[items[i].start_at.strftime('%w')| int - 1] }} {{ items[i].start_at.strftime("%d") }}</b></td></tr>
+                                {%- endif -%}
+
+                                <tr>
+                                {%- if items[i].canceled != True -%}
+                                    <td>{{ items[i].start_time }}<br />{{ items[i].end_time }}</td>
+                                    <td>
+                                      {%- if as_timestamp(items[i].end_at) | timestamp_local < as_timestamp(now()) | timestamp_local -%}
+                                        <del>
+                                      {%- endif -%}
+                                      {%- if as_timestamp(items[i].start_at) | timestamp_local <= as_timestamp(now()) | timestamp_local and as_timestamp(items[i].end_at) | timestamp_local >= as_timestamp(now()) | timestamp_local -%}
+                                        <mark></mark>
+                                      {%- else -%}
+                                        <span></span>
+                                      {%- endif -%}
+                                      {%- if as_timestamp(items[i].end_at) | timestamp_local < as_timestamp(now()) | timestamp_local -%}
+                                        </del>
+                                      {%- endif -%}
+                                    </td>
+                                    <td>{{ items[i].lesson }}<br /> <span>{{ items[i].classroom }}</td>
+                                {%- else -%}
+                                  <td><del>{{ items[i].start_time }}<br />{{ items[i].end_time }}</del></td>
+                                  <td><del><mark></mark></del></td>
+                                  <td><del>{{ items[i].lesson }} <span>{{ items[i].status }}</span></del></td>
+                                {%- endif -%}
+                                </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                        card_mod:
+                          style:
+                            .: |
+                              ha-card ha-markdown {
+                                padding:0px
+                              }
+                              ha-card ha-markdown.no-header {
+                                padding:05px
+                              }
+                            ha-markdown$: |
+                              ha-markdown-element {
+                                display: inline-block;
+                                height: 300px;
+                                overflow-y: scroll;
+                                width: 100%;
+                              }
+                              @media only screen and (min-height: 600px) {
+                                ha-markdown-element {
+                                  height: 480px;
+                                }
+                              }
+                              div {
+                                padding: 10px;
+                                text-align: center;
+                                color: var(--title);
+                                font-weight:600;
+                                font-size: 15px;
+                                font-family: Avenir; 
+                              }
+                              table{
+                                border-spacing: 0px;
+                                font-size: 0.9em;
+                                font-family: Roboto;
+                                width: 100%;
+                                outline: 0px solid #393c3d;
+                                margin-top:5px;
+                              }
+                              caption {
+                                text-align: center;
+                                font-weight: bold;
+                                font-size: 1.2em;
+                              }
+                              td:first-of-type {
+                                width:;
+                              }
+                              td:nth-of-type(2)>span {
+                                display: block;
+                                background-color: lightgrey;
+                                border-radius: 40% / 10%;
+                                width: 0.5em;
+                                height: 3em;
+                                padding: 0px;
+                              }
+                              td:nth-of-type(2)>del>mark {
+                                display: block;
+                                background-color: #EC4B34;
+                                border-radius: 40% / 10%;
+                                width: 0.5em;
+                                height: 3em;
+                                padding: 0px;
+                              }
+                              td:nth-of-type(2)>del>span {
+                                display: none;
+                              }
+                              td:nth-of-type(2)>mark {
+                                display: block;
+                                background-color: #009767;
+                                border-radius: 40% / 10%;
+                                width: 0.5em;
+                                height: 3em;
+                                padding: 0px;
+                              }
+                              td:last-of-type {
+                                width: 90%;
+                              }
+                              td:last-of-type span {
+                                display: inline-block;
+                                padding: 0%;
+                                width: 97%;
+                                text-align: right;
+                              }
+                              td {
+                                padding: 5px 10px 5px 10px;
+                                margin-bottom: 3px;
+                                text-align: left;
+                                border-bottom: 0px solid #1c2020;
+                              }
+                              tr {
+                                border-bottom: 0px solid #1c2020;
+                              }
+                              tr:nth-of-type(even) {
+                                background-color: rgb(54, 54, 54, 0.3);
+                              }
+                              tr:last-of-type {
+                                border-bottom: transparent;          }*
+                              mark {
+                                background: #009767;
+                                color: #222627;
+                                border-radius: 5px;
+                                padding: 5px;
+                              }
+                              span {
+                                padding: 5px;
+                              }
+                              tr:nth-child(n+2) > td:nth-child(2) {
+                                text-align: left;
+                              }
+
+        - type: entities
+          view_layout:
+            grid-area: grade
+          state_color: true
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - type: custom:vertical-stack-in-card
+              style: |
+                ha-card { 
+                  box-shadow: none ;
+                  margin: 5px 1px 5px 1px;
+                }
+              cards:
+                - type: conditional
+                  conditions:
+                    - entity: sensor.pronote_beck_romain_evaluations
+                      state_not: unavailable
+                  card:
+                    type: markdown
+                    content: >-
+                      <div>Evaluations</div> {% set items =
+                      state_attr('sensor.pronote_beck_romain_evaluations','evaluations')%}
+                      <table width='100%'>
+                        <tbody>
+                        {% for i in range(0, items | count, 1) %}
+                        <tr><td width='15%'>{{ items[i].date.strftime("%d-%m") }}</td><td width='55%'>{{ items[i].subject }}</td><td width='15%'>
+                        {% set acquisitions = items[i].acquisitions %}
+                        {% for j in range(0,acquisitions|count,1) %}{% if acquisitions[j].level == 'Très bonne maîtrise' %}💚{% elif acquisitions[j].level == 'Maîtrise satisfaisante' %}🟢{% elif acquisitions[j].level == "Presque maîtrisé" %}🟡{% elif acquisitions[j].level == "Début de maîtrise" %}🟡{% elif acquisitions[j].level == 'Maîtrise fragile'  %}🟠{% elif acquisitions[j].level == 'Maîtrise insuffisante'  %}🔴{% elif acquisitions[j].level == 'Absent'  %}❌{% else %}?{% endif %}{% endfor %}</td></tr>
+                        {% endfor %}
+                      </tbody> </table>
+                    card_mod:
+                      style:
+                        .: |
+                          ha-card ha-markdown {
+                            padding:0px
+                          }
+                          ha-card ha-markdown.no-header {
+                            padding: 05px
+                          }
+                        ha-markdown$: |
+                          h1 {
+                              font-weight: normal;
+                              font-size: 24px;
+                          }
+                          div {
+                              padding: 10px;
+                              text-align: center;
+                              color: var(--title);
+                              font-weight:600;
+                              font-size: 15px;
+                              font-family: Avenir;
+                          }
+                          table{
+                            border-collapse: collapse;
+                            font-weight:normal;
+                            font-size:1em;
+                            font-family: Roboto;
+                            width: auto;
+                            outline: 0px solid #393c3d;
+                            margin-top: 10px;
+                          } caption {
+                              text-align: center;
+                              font-weight: bold;
+                              font-size: 1.2em;
+                          } td {
+                              padding: 0px 5px 0px 5px;
+                              text-align: left;
+                              border-bottom: 0px solid #1c2020;
+                          }
+                          tr {
+                              border-bottom: 0px solid #1c2020;
+                              line-height: 4px;
+                          }
+                          tr:nth-of-type(even) {
+                              background-color: rgb(54, 54, 54, 0.3);
+                          }
+                          tr:last-of-type {
+                              border-bottom: transparent;
+                          }
+                          mark {
+                              background: #009767;
+                              color: #222627;
+                              border-radius: 10px;
+                              padding: 5px;
+                          }
+                          span {
+                              background: rgb(180, 70, 70);
+                              color: #00000;
+                              border-radius: 10px;
+                              padding: 5px;
+                          }
+                          span {
+                              padding: 5px;
+                          }
+                          tr:nth-child(n+2) > td:nth-child(2) {
+                            text-align: left;
+                          }
+            - type: custom:vertical-stack-in-card
+              style: |
+                ha-card { 
+                  box-shadow: none ;
+                  margin: 5px 1px 5px 1px;
+                }
+              cards:
+                - type: conditional
+                  conditions:
+                    - entity: sensor.pronote_beck_romain_grades
+                      state_not: unavailable
+                  card:
+                    type: markdown
+                    content: |2-
+                          <div>Notes</div><table> 
+                          {% set items = state_attr('sensor.pronote_beck_romain_grades','grades')%}
+                        <tr>
+                        <td><h4>Date<h3></td>
+                        <td><h4>Cours</td>
+                        <td><h4>Note</td>
+                        <td><h4>Class</td>
+                        <td><h4>Max</td>
+                        <td><h4>Min</td>
+                        </tr>
+                        {% for i in range(0, items | count, 1) %}
+                        <tr>    
+                        <td>{{ items[i].date.strftime("%d-%m") }}</td>
+                        <td>{{ items[i].subject }}</td>
+                        <td>{% if items[i].grade == "Absent" %}❌{% else %}{{ items[i].grade_out_of }}{% endif %}</td>
+                        <td>{{ items[i].class_average }}</td>
+                        <td>{{ items[i].max }}</td>
+                        <td>{{ items[i].min }}</td>
+                        </tr>
+                      {% endfor %}
+                    card_mod:
+                      style:
+                        .: |
+                          ha-card ha-markdown {
+                            padding:0px
+                          }
+                          ha-card ha-markdown.no-header {
+                            padding: 05px
+                          }
+                        ha-markdown$: |
+                          h1 {
+                              font-weight: normal;
+                              font-size: 24px;
+                          }
+                          div {
+                              padding: 10px;
+                              text-align: center;
+                              color: var(--title);
+                              font-weight:600;
+                              font-size: 15px;
+                              font-family: Avenir;
+
+                          }
+                          table{
+                            border-collapse: collapse;
+                            font-weight:normal;
+                            font-size:1.em;
+                            font-family: Roboto;
+                            letter-spacing: -1px;
+                            width: auto;
+                            outline: 0px solid #393c3d;
+                            margin-top: 10px;
+                          } caption {
+                              text-align: center;
+                              font-weight: bold;
+                              font-size: 1.2em;
+                          } td {
+                              padding: 0px 5px 0px 5px;
+                              text-align: center;
+                              border-bottom: 0px solid #1c2020;
+                          }
+                          tr {
+                              border-bottom: 0px solid #1c2020;
+                              line-height: 25px;
+                          }
+                          tr:nth-of-type(even) {
+                              background-color: rgb(54, 54, 54, 0.5);
+                          }
+                          tr:last-of-type {
+                              border-bottom: transparent;
+                          }
+                          mark {
+                              background: var(--color-blue);
+                              color: #222627;
+                              border-radius: 10px;
+                              padding: 5px;
+                          }
+                          span {
+                              background: rgb(180, 70, 70);
+                              color: #00000;
+                              border-radius: 10px;
+                              padding: 5px;
+                          }
+                          span {
+                              padding: 5px;
+                          }
+                          tr:nth-child(n+2) > td:nth-child(2) {
+                            text-align: left;
+                          }
+
+        - type: entities
+          view_layout:
+            grid-area: average
+          state_color: true
+          show_header_toggle: false
+          card_mod:
+            class: header
+          entities:
+            - type: custom:vertical-stack-in-card
+              style: |
+                ha-card { 
+                  box-shadow: none ;
+                  margin: 5px 1px 5px 1px;
+                }
+              cards:
+                - type: conditional
+                  conditions:
+                    - entity: sensor.pronote_beck_romain_averages
+                      state_not: unavailable
+                  card:
+                    type: markdown
+                    content: |2-
+                        <div>Moyennes</div><table>
+                          {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}
+                        <tr>
+                        <td><h4>Matière<h3></td>
+                        <td><h4>Moyenne élève</td>
+                        <td><h4>Moyenne classe</td>
+                        <td><h4>Min</td>
+                        <td><h4>Max</td>
+                        </tr>
+                        {% for i in range(0, items | count, 1) %}
+                        <tr>    
+
+                        <td>{{ items[i].subject }}</td>
+                        <td>{{ items[i].average }} / {{ items[i].out_of }}</td>
+                        <td>{{ items[i].class }}</td>
+                        <td>{{ items[i].min }}</td>
+                        <td>{{ items[i].max }}</td>
+                        </tr>
+                      {% endfor %}
+                    card_mod:
+                      style:
+                        .: |
+                          ha-card ha-markdown {
+                            padding:0px
+                          }
+                          ha-card ha-markdown.no-header {
+                            padding: 05px
+                          }
+                        ha-markdown$: |
+                          h1 {
+                              font-weight: normal;
+                              font-size: 24px;
+                          }
+                          div {
+                              padding: 10px;
+                              text-align: center;
+                              color: var(--title);
+                              font-weight:600;
+                              font-size: 15px;
+                              font-family: Avenir;
+
+                          }
+                          table{
+                            border-collapse: collapse;
+                            font-weight:normal;
+                            font-size:1.em;
+                            font-family: Roboto;
+                            letter-spacing: -1px;
+                            width: auto;
+                            outline: 0px solid #393c3d;
+                            margin-top: 10px;
+                          } caption {
+                              text-align: center;
+                              font-weight: bold;
+                              font-size: 1.2em;
+                          } td {
+                              padding: 0px 4px 0px 4px;
+                              text-align: center;
+                              border-bottom: 0px solid #1c2020;
+                          }
+                          tr {
+                              border-bottom: 0px solid #1c2020;
+                              line-height: 25px;
+                          }
+                          tr:nth-of-type(even) {
+                              background-color: rgb(54, 54, 54, 0.5);
+                          }
+                          tr:last-of-type {
+                              border-bottom: transparent;
+                          }
+                          mark {
+                              background: var(--color-blue);
+                              color: ##000000;
+                              border-radius: 10px;
+                              padding: 5px;
+                          }
+                          span {
+                              background: rgb(180, 70, 70);
+                              color: #00000;
+                              border-radius: 10px;
+                              padding: 5px;
+                          }
+                          span {
+                              padding: 5px;
+                          }
+                          tr:nth-child(n+1) > td:nth-child(1) {
+                            text-align: left;
+                          }
+            - type: custom:vertical-stack-in-card
+              style: |
+                ha-card { 
+                  box-shadow: none ;
+                  margin: 5px 1px 5px 1px;
+                }
+              cards:
+                - type: conditional
+                  conditions:
+                    - entity: sensor.pronote_beck_romain_homework
+                      state_not: unavailable
+                  card:
+                    type: markdown
+                    content: |-
+
+
+                      <div>{{states.sensor.devoirs_romain_next_day.state}}</div>
+                      <table>
+                          <tbody>
+                              {% set items = state_attr('sensor.pronote_beck_romain_homework','homework') %}
+                              {%-for i in range(0, items | count, 1) -%}
+                              <tr>
+                                  <td>
+                                  {%- if items[i].done == true -%}
+                                      <mark>
+                                      {{items[i].date.strftime("%d/%m")}}
+                                      </mark>
+                                  {%- else -%}
+                                      <span>
+                                      {{items[i].date.strftime("%d/%m")}}
+                                      </span>
+                                  {% endif %}</td>              
+                                  <td>{{items[i].subject}}</td>
+                                  <td>{{items[i].description}}</td>
+                              </tr>
+                              {% endfor %}
+                        </tbody>
+                      </table>
+                    card_mod:
+                      style:
+                        .: |
+                          ha-card ha-markdown {
+                            padding:0px
+                          }
+                          ha-card ha-markdown.no-header {
+                            padding: 05px
+                          }
+                        ha-markdown$: |
+                          ha-markdown-element {
+                            display: inline-block;
+                            height: 300px;
+                            overflow-y: scroll;
+                            width: 100%;
+                          }
+                          @media only screen and (min-height: 600px) {
+                            ha-markdown-element {
+                              height: 400px;
+                            }
+                          }
+                          div {
+                              padding: 10px;
+                              text-align: center;
+                              color: var(--title);
+                              font-weight:600;
+                              font-size: 15px;
+                              font-family: Avenir;
+
+                          }
+                          table{
+                            border-collapse: collapse;
+                            font-weight:normal;
+                            font-size:1em;
+                            font-family: Roboto;
+                            width: auto;
+                            outline: 0px solid #393c3d;
+                            margin-top: 10px;
+                          } caption {
+                              text-align: center;
+                              font-weight: bold;
+                              font-size: 1.2em;
+                          } td {
+                              padding: 5px 5px 5px 5px;
+                              text-align: left;
+                              border-bottom: 0px solid #1c2020;
+                          }
+                          tr {
+                              border-bottom: 0px solid #1c2020;
+                          }
+                          tr:nth-of-type(even) {
+                              background-color: rgb(54, 54, 54, 0.5);
+                          }
+                          tr:last-of-type {
+                              border-bottom: transparent;
+                          }
+                          mark {
+                              background: var(--color-blue);
+                              color: ##000000;
+                              border-radius: 15px;
+                              padding: 5px;
+                          }
+                          span {
+                              background: rgb(180, 70, 70);
+                              color: ##000000;
+                              border-radius: 15px;
+                              padding: 5px;
+                          }
+                          span {
+                              padding: 5px;
+                          }
+                          tr:nth-child(n+2) > td:nth-child(2) {
+                            text-align: left;
+                          }
+            - type: custom:vertical-stack-in-card
+              style: |
+                ha-card { 
+                  box-shadow: none ;
+                  margin: 5px 1px 5px 1px;
+                }
+              cards:
+                - type: conditional
+                  conditions:
+                    - entity: sensor.pronote_beck_romain_absences
+                      state_not: unavailable
+                  card:
+                    type: markdown
+                    content: >-
+                      <div>Absences</div><table>  {% set items =
+                      state_attr('sensor.pronote_beck_romain_absences','absences')
+                      %} {% for i in range(0, items | count, 1) %} <tr> {%- if
+                      items[i].justified == True -%} <td> <mark> {{
+                      items[i].from.strftime("%d-%m") }}</mark></td> {% else %}
+                      <td> <span>{{ items[i].from.strftime("%d-%m")
+                      }}</span></td>  {%- endif -%}  <td>{{ items[i].hours }}</td>
+                      <td>{{ items[i].reason }}</td> {% endfor %}
+                    card_mod:
+                      style:
+                        .: |
+                          ha-card ha-markdown {
+                            padding:0px
+                          }
+                          ha-card ha-markdown.no-header {
+                            padding:05px
+                          }
+                        ha-markdown$: |
+                          div {
+                              padding: 10px;
+                              text-align: center;
+                              color: var(--title);
+                              font-weight:600;
+                              font-size: 15px;
+                              font-family: Avenir;e:1.2em;
+
+                          }
+                          table{
+                            border-collapse: collapse;
+                            font-family: Roboto;
+                            width: 100%;
+                            outline: 0px solid #393c3d;
+                            margin-top:5px;
+                          } caption {
+                              text-align: center;
+                              font-weight: bold;
+                              font-size: 1.2em;
+                          } td {
+                              padding: 5px 10px 5px 10px;
+                              text-align: left;
+                              border-bottom: 0px solid #1c2020;
+                          }
+                          tr {
+                              border-bottom: 0px solid #1c2020;
+                          }
+                          tr:nth-of-type(even) {
+                              background-color: rgb(54, 54, 54, 0.3);
+                          }
+                          tr:last-of-type {
+                              border-bottom: transparent;          }*
+                          mark {
+                              background: var(--color-blue);
+                              color: #222627;
+                              border-radius: 5px;
+                              padding: 5px;
+                          }
+                          span {
+                              background: rgb(180, 70, 70);
+                              color: #00000;
+                              border-radius: 5px;
+                              padding: 5px;
+                          }
+                          span {
+                              padding: 5px;
+                          }
+                          tr:nth-child(n+2) > td:nth-child(2) {
+                            text-align: left;
+                          }
+            - type: custom:vertical-stack-in-card
+              style: |
+                ha-card { 
+                  box-shadow: none ;
+                  margin: 5px 1px 5px 1px;
+                }
+              cards:
+                - type: custom:button-card
+                  entity: sensor.derniere_mise_a_jour_de_pronote_romain
+                  show_state: true
+                  name: MàJ
+                  layout: name_state
+                  show_icon: false
+                  styles:
+                    name:
+                      - justify-self: null
+                      - font-size: 12px
+                      - color: var(--text-off)
+                    state:
+                      - justify-self: null
+                      - font-size: 12px
+                      - color: var(--text-on)

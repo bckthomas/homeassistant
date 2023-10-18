@@ -1,0 +1,101 @@
+template:
+  - sensor:
+      - name: Dernière mise à jour de Pronote Romain
+        unique_id: sensor.derniere_mise_a_jour_de_pronote_romain
+        state: "{{ state_attr('sensor.pronote_beck_romain','updated_at').strftime('%d-%m-%Y à %H:%M') }}"  
+        
+      - name: Début des cours de Romain - Demain
+        unique_id: sensor.debut_des_cours_de_romain_demain
+        icon: "mdi:clock-time-five-outline"
+        state: >-            
+                {% if state_attr('sensor.pronote_beck_romain_timetable_tomorrow', 'lessons')[0] is defined %}
+                  {{state_attr('sensor.pronote_beck_romain_timetable_tomorrow', 'day_start_at').strftime('%H:%M')}}
+                {% else %}
+                  Pas cours
+                {% endif %}                  
+
+      - name: Fin des cours de Romain - Demain
+        unique_id: sensor.fin_des_cours_de_romain_demain
+        icon: "mdi:clock-time-five-outline"
+        state: >- 
+                {% if state_attr('sensor.pronote_beck_romain_timetable_tomorrow', 'lessons')[0] is defined %}
+                  {{state_attr('sensor.pronote_beck_romain_timetable_tomorrow', 'day_end_at').strftime('%H:%M')}}
+                {% else %}
+                  Pas cours
+                {% endif %} 
+            
+      - name: Date début des cours de Romain - Demain
+        unique_id: sensor.date_debut_des_cours_de_romain_demain
+        icon: "mdi:clock-time-five-outline"
+        state: >- 
+                {% if state_attr('sensor.pronote_beck_romain_timetable_tomorrow', 'lessons')[0] is defined %}
+                  {%- set date = state_attr('sensor.pronote_beck_romain_timetable_tomorrow', 'day_start_at').strftime('%A %H:%M') 
+                    | replace('Monday', 'L.')
+                    | replace('Tuesday', 'M.')
+                    | replace('Wednesday', 'Me.')
+                    | replace('Thursday', 'J.')
+                    | replace('Friday', 'V.')
+                    | replace('Saturday', 'S.')
+                    | replace('Sunday', 'D.') %}
+                  {{ date }}
+                {% else %}
+                  non
+                {% endif %}
+
+      - name: Journée de cours de Romain - Demain
+        unique_id: sensor.journee_de_cours_de_romain_demain
+        icon: "mdi:clock-time-five-outline"
+        state: >-            
+                {% if state_attr('sensor.pronote_beck_romain_timetable_tomorrow', 'lessons')[0] is defined %}
+                  {{state_attr('sensor.pronote_beck_romain_timetable_tomorrow', 'day_start_at').strftime('%H:%M')}} - {{state_attr('sensor.pronote_beck_romain_timetable_tomorrow', 'day_end_at').strftime('%H:%M')}}
+                {% else %}
+                  Pas cours
+                {% endif %} 
+                
+      - name: Début des cours de Romain - Aujourd'hui
+        unique_id: sensor.debut_des_cours_de_romain_aujourd_hui
+        icon: "mdi:clock-time-five-outline"
+        state: >-            
+                {% if state_attr('sensor.pronote_beck_romain_timetable_today', 'lessons')[0] is defined %}
+                  {{state_attr('sensor.pronote_beck_romain_timetable_today', 'day_start_at').strftime('%H:%M')}}
+                {% else %}
+                  Pas cours
+                {% endif %} 
+
+      - name: Fin des cours de Romain - Aujourd'hui
+        unique_id: sensor.fin_des_cours_de_romain_aujourd_hui
+        icon: "mdi:clock-time-five-outline"
+        state: >- 
+                {% if state_attr('sensor.pronote_beck_romain_timetable_today', 'lessons')[0] is defined %}
+                  {{state_attr('sensor.pronote_beck_romain_timetable_today', 'day_end_at').strftime('%H:%M')}}
+                {% else %}
+                  Pas cours
+                {% endif %} 
+
+      - name: Date début des cours de Romain - Aujourd'hui
+        unique_id: sensor.date_debut_des_cours_de_romain_aujourd_hui
+        icon: "mdi:clock-time-five-outline"
+        state: >- 
+                {% if state_attr('sensor.pronote_beck_romain_timetable_today', 'lessons')[0] is defined %}
+                  {%- set date = state_attr('sensor.pronote_beck_romain_timetable_today', 'day_start_at').strftime('%A %H:%M') 
+                    | replace('Monday', 'L.')
+                    | replace('Tuesday', 'M.')
+                    | replace('Wednesday', 'Me.')
+                    | replace('Thursday', 'J.')
+                    | replace('Friday', 'V.')
+                    | replace('Saturday', 'S.')
+                    | replace('Sunday', 'D.') %}
+                  {{ date }}
+                {% else %}
+                  non
+                {% endif %}
+                
+      - name: Journée de cours de Romain - Aujourd'hui
+        unique_id: sensor.journee_de_cours_de_Romain_aujourd_hui
+        icon: "mdi:clock-time-five-outline"
+        state: >-            
+                {% if state_attr('sensor.pronote_beck_romain_timetable_today', 'lessons')[0] is defined %}
+                  {{state_attr('sensor.pronote_beck_romain_timetable_today', 'day_start_at').strftime('%H:%M')}} - {{state_attr('sensor.pronote_beck_romain_timetable_today', 'day_end_at').strftime('%H:%M')}}
+                {% else %}
+                  Pas cours
+                {% endif %} 

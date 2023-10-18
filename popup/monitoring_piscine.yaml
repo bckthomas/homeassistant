@@ -38,4 +38,6 @@ browser_mod:
           temperature: sensor.piscine_temperature
           ph: sensor.piscine_ph
           orp: sensor.piscine_oxydo_reduction_potential
-          tds: sensor.piscine_salt_round
+          salinity: sensor.piscine_salt
+          show_names: false
+          language: fr
