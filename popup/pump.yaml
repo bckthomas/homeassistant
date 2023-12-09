@@ -32,7 +32,7 @@ browser_mod:
             all_series_config:
               stroke_width: 2
             series:
-              - entity: sensor.maison_zone_1_room_temperature
+              - entity: sensor.maison_zone_1_temperature_ambiante
                 curve: smooth
                 type: line
                 name: Sous-sol
@@ -49,3 +49,8 @@ browser_mod:
                 show: false
           - type: custom:simple-thermostat
             entity: climate.maison_zone_1
+
+          - type: entities
+            entities:
+              - entity: input_boolean.chauffageoff
+              - entity: input_datetime.enddate_chauffageoff

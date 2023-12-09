@@ -297,6 +297,14 @@ views:
               - person
               - circle
 
+          - type: custom:button-card
+            entity: person.valentine
+            name: Valentine
+            tap_action: !include popup/maison_valentine.yaml
+            template:
+              - person
+              - circle
+
       #################################################
       #                                               #
       #                     MEDIA                     #
@@ -518,7 +526,7 @@ views:
                   font_size: 75
                   points: false
                   entities:
-                    - sensor.maison_zone_1_room_temperature
+                    - sensor.maison_zone_1_temperature_ambiante
                     - sensor.temperature_ss_sol_temperature
                   style: |
                     ha-card {

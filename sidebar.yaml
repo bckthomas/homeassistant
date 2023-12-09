@@ -21,7 +21,7 @@
           </font>
 
         active: >
-          
+
           {% set lights = [
             states.switch.lumiere_salle_a_manger,
             states.switch.guirlande
@@ -66,18 +66,12 @@
           {% else %}
             <font color='#6a7377'>Tout est éteint</font>
           {% endif %}
-          
 
         laundry: |
-          {% set is_washing_machine_running = states('binary_sensor.is_washing_machine_running') %}
-          {% set is_washing_machine_standby = states('binary_sensor.is_washing_machine_standby') %}
+          {% set washing_machine_state = states('input_select.washing_machine_state') %}
 
-          {% if (is_washing_machine_running == 'on') %}
-            <ha-icon icon="mdi:washing-machine"></ha-icon> Machine en cours
-          {% endif %}
-
-          {% if (is_washing_machine_running =='off' and is_washing_machine_standby == 'on') %}
-            <ha-icon icon="mdi:washing-machine"></ha-icon> Machine terminée 
+          {% if (washing_machine_state != 'Eteinte') %}
+            <ha-icon icon="mdi:washing-machine"></ha-icon> {{states('input_select.washing_machine_state')}}
           {% endif %}
 
         vacuum: >
@@ -120,7 +114,7 @@
           {% for sensor in entities %}
             <ha-icon icon="hass:calendar-today"></ha-icon> {{ as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') }} {{ sensor.attributes.message }}
           {% endfor %}
-          
+
         waste: >
           {% set time = ' 00:00:00' %}
           {% set start = (now().date() + timedelta(days=1)) %}

@@ -26,3 +26,10 @@ proximity:
       - person.benedicte
     tolerance: 50
     unit_of_measurement: m 
+
+group:
+  parents:
+    name: Parents
+    entities:
+      - person.benedicte
+      - person.thomas

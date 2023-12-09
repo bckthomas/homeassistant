@@ -69,17 +69,8 @@ browser_mod:
               secondary_info: last-changed
 
             - type: custom:vertical-stack-in-card
-              style: |
-                ha-card { 
-                  box-shadow: none;
-                }
               cards:
                 - type: custom:vertical-stack-in-card
-                  style: |
-                    ha-card { 
-                      box-shadow: none ;
-                      margin: 5px 1px 5px 1px;
-                    }
                   cards:
                     - type: conditional
                       conditions:
@@ -147,7 +138,7 @@ browser_mod:
                                 padding:0px
                               }
                               ha-card ha-markdown.no-header {
-                                padding:05px
+                                padding:0 5px
                               }
                             ha-markdown$: |
                               ha-markdown-element {
@@ -164,10 +155,7 @@ browser_mod:
                               div {
                                 padding: 10px;
                                 text-align: center;
-                                color: var(--title);
                                 font-weight:600;
-                                font-size: 15px;
-                                font-family: Avenir; 
                               }
                               table{
                                 border-spacing: 0px;
@@ -287,7 +275,7 @@ browser_mod:
                             padding:0px
                           }
                           ha-card ha-markdown.no-header {
-                            padding: 05px
+                            padding: 0 5px
                           }
                         ha-markdown$: |
                           h1 {
@@ -295,12 +283,8 @@ browser_mod:
                               font-size: 24px;
                           }
                           div {
-                              padding: 10px;
                               text-align: center;
-                              color: var(--title);
                               font-weight:600;
-                              font-size: 15px;
-                              font-family: Avenir;
                           }
                           table{
                             border-collapse: collapse;
@@ -388,7 +372,7 @@ browser_mod:
                             padding:0px
                           }
                           ha-card ha-markdown.no-header {
-                            padding: 05px
+                            padding: 0 5px
                           }
                         ha-markdown$: |
                           h1 {
@@ -396,13 +380,8 @@ browser_mod:
                               font-size: 24px;
                           }
                           div {
-                              padding: 10px;
                               text-align: center;
-                              color: var(--title);
                               font-weight:600;
-                              font-size: 15px;
-                              font-family: Avenir;
-
                           }
                           table{
                             border-collapse: collapse;
@@ -499,7 +478,7 @@ browser_mod:
                             padding:0px
                           }
                           ha-card ha-markdown.no-header {
-                            padding: 05px
+                            padding: 0 5px
                           }
                         ha-markdown$: |
                           h1 {
@@ -507,13 +486,8 @@ browser_mod:
                               font-size: 24px;
                           }
                           div {
-                              padding: 10px;
                               text-align: center;
-                              color: var(--title);
                               font-weight:600;
-                              font-size: 15px;
-                              font-family: Avenir;
-
                           }
                           table{
                             border-collapse: collapse;
@@ -621,13 +595,8 @@ browser_mod:
                             }
                           }
                           div {
-                              padding: 10px;
                               text-align: center;
-                              color: var(--title);
                               font-weight:600;
-                              font-size: 15px;
-                              font-family: Avenir;
-
                           }
                           table{
                             border-collapse: collapse;
@@ -706,13 +675,8 @@ browser_mod:
                           }
                         ha-markdown$: |
                           div {
-                              padding: 10px;
                               text-align: center;
-                              color: var(--title);
                               font-weight:600;
-                              font-size: 15px;
-                              font-family: Avenir;e:1.2em;
-
                           }
                           table{
                             border-collapse: collapse;

@@ -14,3 +14,12 @@ input_boolean:
   homeleave:
     name: Tout fermer
     initial: off
+  chauffageoff:
+    name: Couper le chauffage
+    icon: mdi:radiator-off
+
+input_datetime:
+  enddate_chauffageoff:
+    name: Reprise du chauffage le
+    has_time: true
+    has_date: true
