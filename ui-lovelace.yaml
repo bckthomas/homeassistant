@@ -185,16 +185,21 @@ views:
         title: Jardin
         columns: 2
         cards:
-          - type: custom:button-card
-            entity: weather.anse
-            show_state: false
-            name: Anse
-            tap_action: !include popup/popup_meteo.yaml
-            template:
-              - base
-              - widget_weather
-            view_layout:
-              grid-area: weather
+          - type: conditional
+            conditions:
+              - entity: weather.anse
+                state_not: "unavailable"
+            card:
+              type: custom:button-card
+              entity: weather.anse
+              show_state: false
+              name: Anse
+              tap_action: !include popup/popup_meteo.yaml
+              template:
+                - base
+                - widget_weather
+              view_layout:
+                grid-area: weather
 
           - type: custom:button-card
             entity: sensor.piscine_temperature
@@ -593,19 +598,24 @@ views:
         view_layout:
           grid-area: hemma
         cards:
-          - type: custom:teamtracker-card
-            entity: sensor.canadiens
-            card_mod:
-              style: |
-                ha-card {
-                  margin-bottom: 50px;
-                }
-                .card {
-                  padding: 0;
-                }
-                .line, .pre-row1, .pre-row2, .pre-row3, .post-row1 {
-                  display: none;
-                }
+          - type: conditional
+            conditions:
+              - entity: sensor.canadiens
+                state_not: "NOT_FOUND"
+            card:
+              type: custom:teamtracker-card
+              entity: sensor.canadiens
+              card_mod:
+                style: |
+                  ha-card {
+                    margin-bottom: 50px;
+                  }
+                  .card {
+                    padding: 0;
+                  }
+                  .line, .pre-row1, .pre-row2, .pre-row3, .post-row1 {
+                    display: none;
+                  }
           - type: grid
             columns: 2
             cards:

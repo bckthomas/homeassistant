@@ -101,7 +101,7 @@
             <ha-icon icon="hass:blinds-open"></ha-icon> ouverts
           {% endif %}
 
-        calendar: >
+        today: >
           {% set time = ' 00:00:00' %}
           {% set start = now().date() %}
           {% set end = (start + timedelta(days=1)) ~ time %}
@@ -109,27 +109,36 @@
 
           {% set entities = states.calendar
           | rejectattr('attributes.start_time', 'undefined')
-          | selectattr('attributes.start_time', '>', start)
+          | selectattr('attributes.start_time', '>=', start)
           | rejectattr('attributes.end_time', '>', end) | list %}
           {% for sensor in entities %}
-            <ha-icon icon="hass:calendar-today"></ha-icon> {{ as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') }} {{ sensor.attributes.message }}
+            {% if as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') == '00:00' %}
+              <ha-icon icon="hass:calendar-today"></ha-icon> {{ sensor.attributes.message }} (toute la journée)<br/>
+            {% else %}
+              <ha-icon icon="hass:calendar-today"></ha-icon> {{ as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') }} {{ sensor.attributes.message }}<br/>
+            {% endif %}
           {% endfor %}
 
-        waste: >
+        tomorrow: >
           {% set time = ' 00:00:00' %}
           {% set start = (now().date() + timedelta(days=1)) %}
           {% set end = (start + timedelta(days=1)) ~ time %}
           {% set start = start ~ time %}
+
           {% set entities = states.calendar
           | rejectattr('attributes.start_time', 'undefined')
-          | selectattr('attributes.start_time', '==', start) | list %}
+          | selectattr('attributes.start_time', '>=', start)
+          | rejectattr('attributes.end_time', '>', end) | list %}
           {% if now().strftime('%T') > '17:30:00' %}
+            <font color='#6a7377'><b>Demain</b></font> <br/>
             {% for sensor in entities %}
               {% if sensor.attributes.friendly_name == "Tri" -%}
-                <ha-icon icon="mdi:recycle"></ha-icon>
-              {%- else -%}
-                <ha-icon icon="mdi:trash-can-outline"></ha-icon>
-              {%- endif %} {{ sensor.attributes.message }} demain !
+                <ha-icon icon="mdi:recycle"></ha-icon> {{ sensor.attributes.message }}<br/>
+              {% elif sensor.attributes.friendly_name == "Poubelles" -%}
+                <ha-icon icon="mdi:trash-can-outline"></ha-icon> {{ sensor.attributes.message }}<br/>
+              {% else %}
+                {{ sensor.attributes.friendly_name }} : {{ sensor.attributes.message }}<br/>
+              {%- endif %}
             {% endfor %}
           {% endif %}
 

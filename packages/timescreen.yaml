@@ -1,3 +1,15 @@
+timer:
+  romain_tablette:
+    duration: "04:00:00"
+    name: Temps de tablette
+    icon: mdi:timer-outline
+    restore: true
+  valentine_tablette:
+    duration: "04:00:00"
+    name: Temps de tablette
+    icon: mdi:timer-outline
+    restore: true
+
 input_number:
   child_1_extra_screen_time:
     name: "Child 1 temps supplémentaire"
@@ -13,7 +25,7 @@ input_number:
     max: 1500
     step: 1
     mode: box
-    unit_of_measurement: "min"    
+    unit_of_measurement: "min"
 
   child_2_extra_screen_time:
     name: "Child 2 temps supplémentaire"
@@ -29,7 +41,7 @@ input_number:
     max: 1500
     step: 1
     mode: box
-    unit_of_measurement: "min"    
+    unit_of_measurement: "min"
 
 input_boolean:
   child_1_screen_time_active:
@@ -60,7 +72,7 @@ sensor:
     type: time
     start: "{{ now().replace(hour=0, minute=0, second=0) }}"
     end: "{{ now() }}"
-    
+
   - platform: history_stats
     name: Child 2 screen time this week
     entity_id: input_boolean.child_2_screen_time_active
@@ -79,41 +91,41 @@ sensor:
 
 template:
   - sensor:
-    - unique_id: weekly_screen_time
-      name: "Weekly screen time"
-      state: "{{ 720 if is_state('binary_sensor.school_holiday', 'on') else 360 }}"
+      - unique_id: weekly_screen_time
+        name: "Weekly screen time"
+        state: "{{ 720 if is_state('binary_sensor.school_holiday', 'on') else 360 }}"
 
-    - unique_id: child_1_weekly_screen_time_threshold
-      name: "Child 1 weekly screen time threshold"
-      state: "{{ states('sensor.weekly_screen_time') | int(0) + states('input_number.child_1_extra_screen_time') | int(0) }}"
-      availability: "{{ states('sensor.weekly_screen_time') | is_number() and states('input_number.child_1_extra_screen_time') | is_number() }}"
-      unit_of_measurement: "min"
-    - unique_id: child_1_corrected_screen_time_this_week
-      name: "Child 1 corrected screen time this week"
-      state: "{{ states('sensor.child_1_screen_time_this_week') | float(0) * 60 - states('input_number.child_1_correction_screen_time') | int(0) }}"
-      availability: "{{ states('sensor.child_1_screen_time_this_week') | is_number() and states('input_number.child_1_correction_screen_time') | is_number() }}"
-      unit_of_measurement: "min"
-    - unique_id: child_1_weekly_screen_time_remaining
-      name: "Child 1 weekly screen time remaining"
-      state: "{{ states('sensor.child_1_weekly_screen_time_threshold') | int(0) - states('sensor.child_1_screen_time_this_week') | int(0) }}"
-      availability: "{{ states('sensor.child_1_weekly_screen_time_threshold') | is_number() and states('sensor.child_1_screen_time_this_week') | is_number() }}"
-      unit_of_measurement: "min"
-      
-    - unique_id: child_2_weekly_screen_time_threshold
-      name: "Child 2 weekly screen time threshold"
-      state: "{{ states('sensor.weekly_screen_time') | int(0) + states('input_number.child_2_extra_screen_time') | int(0) }}"
-      availability: "{{ states('sensor.weekly_screen_time') | is_number() and states('input_number.child_2_extra_screen_time') | is_number() }}"
-      unit_of_measurement: "min"
-    - unique_id: child_2_corrected_screen_time_this_week
-      name: "Child 2 corrected screen time this week"
-      state: "{{ states('sensor.child_2_screen_time_this_week') | float(0) * 60 - states('input_number.child_2_correction_screen_time') | int(0) }}"
-      availability: "{{ states('sensor.child_2_screen_time_this_week') | is_number() and states('input_number.child_2_correction_screen_time') | is_number() }}"
-      unit_of_measurement: "min"
-    - unique_id: child_2_weekly_screen_time_remaining
-      name: "Child 2 weekly screen time remaining"
-      state: "{{ states('sensor.child_2_weekly_screen_time_threshold') | int(0) - states('sensor.child_2_screen_time_this_week') | int(0) }}"
-      availability: "{{ states('sensor.child_2_weekly_screen_time_threshold') | is_number() and states('sensor.child_2_screen_time_this_week') | is_number() }}"
-      unit_of_measurement: "min"
+      - unique_id: child_1_weekly_screen_time_threshold
+        name: "Child 1 weekly screen time threshold"
+        state: "{{ states('sensor.weekly_screen_time') | int(0) + states('input_number.child_1_extra_screen_time') | int(0) }}"
+        availability: "{{ states('sensor.weekly_screen_time') | is_number() and states('input_number.child_1_extra_screen_time') | is_number() }}"
+        unit_of_measurement: "min"
+      - unique_id: child_1_corrected_screen_time_this_week
+        name: "Child 1 corrected screen time this week"
+        state: "{{ states('sensor.child_1_screen_time_this_week') | float(0) * 60 - states('input_number.child_1_correction_screen_time') | int(0) }}"
+        availability: "{{ states('sensor.child_1_screen_time_this_week') | is_number() and states('input_number.child_1_correction_screen_time') | is_number() }}"
+        unit_of_measurement: "min"
+      - unique_id: child_1_weekly_screen_time_remaining
+        name: "Child 1 weekly screen time remaining"
+        state: "{{ states('sensor.child_1_weekly_screen_time_threshold') | int(0) - states('sensor.child_1_screen_time_this_week') | int(0) }}"
+        availability: "{{ states('sensor.child_1_weekly_screen_time_threshold') | is_number() and states('sensor.child_1_screen_time_this_week') | is_number() }}"
+        unit_of_measurement: "min"
+
+      - unique_id: child_2_weekly_screen_time_threshold
+        name: "Child 2 weekly screen time threshold"
+        state: "{{ states('sensor.weekly_screen_time') | int(0) + states('input_number.child_2_extra_screen_time') | int(0) }}"
+        availability: "{{ states('sensor.weekly_screen_time') | is_number() and states('input_number.child_2_extra_screen_time') | is_number() }}"
+        unit_of_measurement: "min"
+      - unique_id: child_2_corrected_screen_time_this_week
+        name: "Child 2 corrected screen time this week"
+        state: "{{ states('sensor.child_2_screen_time_this_week') | float(0) * 60 - states('input_number.child_2_correction_screen_time') | int(0) }}"
+        availability: "{{ states('sensor.child_2_screen_time_this_week') | is_number() and states('input_number.child_2_correction_screen_time') | is_number() }}"
+        unit_of_measurement: "min"
+      - unique_id: child_2_weekly_screen_time_remaining
+        name: "Child 2 weekly screen time remaining"
+        state: "{{ states('sensor.child_2_weekly_screen_time_threshold') | int(0) - states('sensor.child_2_screen_time_this_week') | int(0) }}"
+        availability: "{{ states('sensor.child_2_weekly_screen_time_threshold') | is_number() and states('sensor.child_2_screen_time_this_week') | is_number() }}"
+        unit_of_measurement: "min"
 
 automation:
   - id: reset_extra_screen_time

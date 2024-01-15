@@ -53,4 +53,5 @@ browser_mod:
           - type: entities
             entities:
               - entity: input_boolean.chauffageoff
-              - entity: input_datetime.enddate_chauffageoff
+              - entity: input_boolean.chauffagevacances
+              #- entity: input_datetime.enddate_chauffageoff
