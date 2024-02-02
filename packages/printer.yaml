@@ -188,11 +188,7 @@ automation:
         entity_id: input_number.hp_envy_5540_pages_rollover_allowance
         data_template:
           value:
-            "{% if states('sensor.hp_envy_5540_pages_allowance_remaining')|int + states('sensor.hp_envy_5540_pages_rollover_remaining')|int > states('input_number.hp_envy_5540_pages_rollover_monthly_max_allowance')|int %}
-            {{ states('input_number.hp_envy_5540_pages_rollover_monthly_max_allowance')|int}}
-            {% else %}
-            {{ states('sensor.hp_envy_5540_pages_allowance_remaining')|int + states('sensor.hp_envy_5540_pages_rollover_remaining')|int }}
-            {% endif %}"
+            "{{ states('sensor.hp_envy_5540_pages_allowance_remaining')|int + states('sensor.hp_envy_5540_pages_rollover_remaining')|int }}"
 
       - service: input_number.set_value
         entity_id: input_number.hp_envy_5540_pages_at_month_start
@@ -202,3 +198,10 @@ automation:
         entity_id: input_datetime.hp_envy_5540_this_period_start_date
         data_template:
           date: "{{ states('sensor.date') }}"
+
+
+#"{% if states('sensor.hp_envy_5540_pages_allowance_remaining')|int + states('sensor.hp_envy_5540_pages_rollover_remaining')|int > states('input_number.hp_envy_5540_pages_rollover_monthly_max_allowance')|int %}
+#{{ states('input_number.hp_envy_5540_pages_rollover_monthly_max_allowance')|int}}
+#{% else %}
+#{{ states('sensor.hp_envy_5540_pages_allowance_remaining')|int + states('sensor.hp_envy_5540_pages_rollover_remaining')|int }}
+#{% endif %}"

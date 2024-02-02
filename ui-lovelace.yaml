@@ -401,16 +401,13 @@ views:
                     disableOnInteraction: false
                   mousewheel:
                     sensitivity: 2
-                  pagination:
-                    type: bullets
-                    clickable: true
-                  grabCursor: true
+                  grabCursor: false
+                  allowTouchMove: false
                   threshold: 5
                   speed: 600
                   spaceBetween: 40
-                  direction: vertical
+                  direction: horizontal
                   autoHeight: true
-                  height: 360
                 cards:
                   - type: custom:button-card
                     entity: sensor.derniers_ajouts
@@ -598,24 +595,23 @@ views:
         view_layout:
           grid-area: hemma
         cards:
-          - type: conditional
-            conditions:
-              - entity: sensor.canadiens
-                state_not: "NOT_FOUND"
-            card:
-              type: custom:teamtracker-card
-              entity: sensor.canadiens
-              card_mod:
-                style: |
-                  ha-card {
-                    margin-bottom: 50px;
-                  }
-                  .card {
-                    padding: 0;
-                  }
-                  .line, .pre-row1, .pre-row2, .pre-row3, .post-row1 {
-                    display: none;
-                  }
+          - type: custom:teamtracker-card
+            entity: sensor.canadiens
+            card_mod:
+              style: |
+                ha-card {
+                  margin-bottom: 30px;
+                }
+                .card {
+                  padding: 0;
+                }
+                .line, .pre-row1, .pre-row2, .pre-row3 {
+                  display: none;
+                }
+                .post-row1 {
+                  font-size: 1em;
+                  text-align: center;
+                }
           - type: grid
             columns: 2
             cards:

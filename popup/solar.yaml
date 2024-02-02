@@ -96,21 +96,22 @@ browser_mod:
           ewEntity: sensor.rte_ecowatt_j0
           ewEntityJ1: sensor.rte_ecowatt_j1
           ewEntityJ2: sensor.rte_ecowatt_j2
-          showIcon: true
+          showIcon: false
           showHistory: true
-          showInTableUnit: true
-          showTitle: false
-          showPeakOffPeak: false
-          showDayPrice: true
-          showPrice: false
-          showDayMaxPower: false
+          showInTableUnit: false
+          showDayPriceHCHP: false
+          showDayHCHP: false
+          showYearRatio: false
+          showMonthRatio: false
+          showYesterdayRatio: false
           showCurrentMonthRatio: true
           showWeekRatio: false
           showTitreLigne: false
-          showYesterdayRatio: false
-          showYearRatio: true
-          showMonthRatio: true
-          showDayHCHP: false
+          showTitle: false
+          showPeakOffPeak: false
+          showDayPrice: true
+          showPrice: true
+          showDayMaxPower: false
 
         - type: horizontal-stack
           view_layout:

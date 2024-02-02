@@ -78,6 +78,18 @@ template:
           {% set import_export_power =  states('sensor.import_export_power') | float(0)%}
           {{ (pv_power|float + import_export_power|float) |round(0) }}
 
+      - name: "pv_power_test"
+        unit_of_measurement: "W"
+        state: >
+          {% set x = states('sensor.pv_power') %}
+          {{ 0 if x in  ['unavailable', 'unknown', 'none'] else x }}
+
+      - name: "import_export_power_test"
+        unit_of_measurement: "W"
+        state: >
+          {% set x = states('sensor.import_export_power') %}
+          {{ 0 if x in  ['unavailable', 'unknown', 'none'] else x }}
+
 automation:
   - alias: Envoi BDPV
     description: ""
