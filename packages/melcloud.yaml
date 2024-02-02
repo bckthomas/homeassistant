@@ -1,0 +1,413 @@
+#Melcloud sensors
+# Replace DDDDDD with Device ID, BBBBBBB Building ID, find out values inspecting your MCapp or Powershell tool.
+# see: https://www.cloudpilot.no/blog/Control-your-Mitsubishi-heat-pump-using-PowerShell/
+# ListDevices/Structure/Devices/DeviceID & BuildingID
+# https://community.home-assistant.io/t/mitsubishi-melcloud-integration-with-home-assistant/26275/526
+# X-MitsContextKey is automatically retreived and updatede every 20000 sec
+sensor:
+  - platform: rest
+    name: MC_contextkey
+    method: POST
+    resource: https://app.melcloud.com/Mitsubishi.Wifi.Client/Login/ClientLogin
+    username: !secret melcloud_user
+    password: !secret melcloud_password
+    authentication: basic
+    value_template: "OK"
+    scan_interval: 20000
+    force_update: true
+    timeout: 100
+    verify_ssl: true
+    headers:
+      Accept: application/json, text/javascript, */*; q=0.01
+      #Origin
+      Referer: https://app.melcloud.com/
+      X-Requested-With: XMLHttpRequest
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36
+      Sec-Fetch-Mode: cors
+      Content-Type: application/json
+    payload: '{"Email":"contact@thomas-beck.fr","Password":"NjlOa9PjSUZxvM","Language":"13","AppVersion":"1.18.5.1","Persist":"true","CaptchaResponse":"" }'
+    json_attributes_path: "$..LoginData"
+    json_attributes:
+      - ContextKey
+      - Client
+      - Language
+      - Country
+      - Name
+      - Duration
+      - Expiry
+      - LanguageCode
+      - CountryName
+  - platform: template
+    sensors:
+      mccontextkey:
+        friendly_name: "MCContextKey"
+        availability_template: >-
+          {{ (states("sensor.MC_contextkey") not in ["unknown", "unavailable"]) and (state_attr('sensor.MC_contextkey', 'ContextKey') != None) }}
+        value_template: "{{ state_attr('sensor.MC_contextkey', 'ContextKey') }}"
+  - platform: rest
+    name: heat_pump_api
+    resource: https://app.melcloud.com/Mitsubishi.Wifi.Client/user/ListDevices?id=76190642&buildingID=586559
+    method: GET
+    headers:
+      X-MitsContextKey: "{{ state_attr('sensor.MC_contextkey', 'ContextKey') }}"
+    # Value is prevous time stamp. New time stamp in attrib after read. Difference = scan_interval)
+    value_template: "{{ state_attr('sensor.heat_pump_api', 'LastTimeStamp') }}"
+    scan_interval: 60
+    force_update: true
+    unique_id: "heat_pump_api1"
+    json_attributes_path: "$..Devices[?(@.DeviceID==76190642)].Device"
+    json_attributes:
+      - CurrentEnergyConsumed
+      - CurrentEnergyProduced
+      - DefrostMode
+      - RoomTemperatureZone1
+      - RoomTemperatureZone2
+      - OutdoorTemperature
+      - FlowTemperature
+      - FlowTemperatureZone1
+      - FlowTemperatureZone2
+      - FlowTemperatureBoiler
+      - ReturnTemperature
+      - ReturnTemperatureZone1
+      - ReturnTemperatureZone2
+      - ReturnTemperatureBoiler
+      - TankWaterTemperature
+      - SetTankWaterTemperature
+      - MixingTankWaterTemperature
+      - TargetHCTemperatureZone1
+      - TargetHCTemperatureZone2
+      - CondensingTemperature
+      - HeatPumpFrequency
+      - DailyHeatingEnergyConsumed
+      - DailyHotWaterEnergyConsumed
+      - DailyHeatingEnergyProduced
+      - DailyHotWaterEnergyProduced
+      - DailyLegionellaActivationCounter
+      - BoilerStatus
+      - BoosterHeater1Status
+      - BoosterHeater2Status
+      - BoosterHeater2PlusStatus
+      - ImmersionHeaterStatus
+      - WaterPump1Status
+      - WaterPump2Status
+      - WaterPump3Status
+      - ValveStatus3Way
+      - ValveStatus2Way
+      - WaterPump4Status
+      - ValveStatus2Way2a
+      - ValveStatus2Way2b
+      - ThermostatStatusZone1
+      - ThermostatStatusZone2
+      - WifiSignalStrength
+      - LastTimeStamp
+  - platform: template
+    sensors:
+      heat_pump_currentenergyconsumedpower:
+        friendly_name: "CurrentEnergyConsumed"
+        # availability_template: "{{ is_state('sensor.heat_pump_api', 'OK') }}"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'CurrentEnergyConsumed') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'CurrentEnergyConsumed') }}"
+        device_class: power
+        unit_of_measurement: "kW"
+        unique_id: "CurrentEnergyConsumed1"
+      heat_pump_currentenergyproduced:
+        friendly_name: "CurrentEnergyProduced"
+        # availability_template: "{{ is_state('sensor.heat_pump_api', 'OK') }}"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'CurrentEnergyProduced') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'CurrentEnergyProduced') }}"
+        device_class: power
+        unit_of_measurement: "kW"
+        unique_id: "CurrentEnergyProduced1"
+      heat_pump_dailyheatingenergyconsumed:
+        friendly_name: "DailyHeatingEnergyConsumed"
+        # availability_template: "{{ is_state('sensor.heat_pump_api', 'OK') }}"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'DailyHeatingEnergyConsumed') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'DailyHeatingEnergyConsumed') }}"
+        device_class: energy
+        unit_of_measurement: "kWh"
+        unique_id: "DailyHeatingEnergyConsumed1"
+      heat_pump_dailyhotwaterenergyconsumed:
+        friendly_name: "DailyHotWaterEnergyConsumed"
+        # availability_template: "{{ is_state('sensor.heat_pump_api', 'OK') }}"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'DailyHotWaterEnergyConsumed') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'DailyHotWaterEnergyConsumed') }}"
+        device_class: energy
+        unit_of_measurement: "kWh"
+        unique_id: "DailyHotWaterEnergyConsumed1"
+      heat_pump_dailyheatingenergyproduced:
+        friendly_name: "DailyHeatingEnergyProduced"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'DailyHeatingEnergyProduced') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'DailyHeatingEnergyProduced') }}"
+        device_class: energy
+        unit_of_measurement: "kWh"
+        unique_id: "DailyHeatingEnergyProduced1"
+      heat_pump_dailyhotwaterenergyproduced:
+        friendly_name: "DailyHotWaterEnergyProduced"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'DailyHotWaterEnergyProduced') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'DailyHotWaterEnergyProduced') }}"
+        device_class: energy
+        unit_of_measurement: "kWh"
+        unique_id: "DailyHotWaterEnergyProduced1"
+      heat_pump_heatpumpfrequency:
+        friendly_name: "HeatPumpFrequency"
+        # availability_template: "{{ is_state('sensor.heat_pump_api', 'OK') }}"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'HeatPumpFrequency') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'HeatPumpFrequency') }}"
+        device_class: frequency
+        unit_of_measurement: "Hz"
+        unique_id: "HeatPumpFrequency1"
+      heat_pump_defrostmode:
+        friendly_name: "DefrostMode"
+        # availability_template: "{{ is_state('sensor.heat_pump_api', 'OK') }}"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'DefrostMode') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'DefrostMode') }}"
+        device_class: aqi
+        unique_id: "DefrostMode1"
+      heat_pump_roomtemperaturezone1:
+        friendly_name: "RoomTemperatureZone1"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'RoomTemperatureZone1') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'RoomTemperatureZone1') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "RoomTemperatureZone1_1"
+      heat_pump_roomtemperaturezone2:
+        friendly_name: "RoomTemperatureZone2"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'RoomTemperatureZone2') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'RoomTemperatureZone2') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "RoomTemperatureZone2_1"
+      heat_pump_outdoortemperature:
+        friendly_name: "OutdoorTemperature"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'OutdoorTemperature') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'OutdoorTemperature') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "OutdoorTemperature_1"
+      heat_pump_flowtemperature:
+        friendly_name: "FlowTemperature"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'FlowTemperature') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'FlowTemperature') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "FlowTemperature_1"
+      heat_pump_tankwatertemperature:
+        friendly_name: "TankWaterTemperature"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'TankWaterTemperature') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'TankWaterTemperature') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "TankWaterTemperature_1"
+      heat_pump_mixingtankwatertemperature:
+        friendly_name: "MixingTankWaterTemperature"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'MixingTankWaterTemperature') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'MixingTankWaterTemperature') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "MixingTankWaterTemperature_1"
+      heat_pump_condensingtemperature:
+        friendly_name: "CondensingTemperature"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'CondensingTemperature') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'CondensingTemperature') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "CondensingTemperature_1"
+      heat_pump_returntemperature:
+        friendly_name: "ReturnTemperature"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ReturnTemperature') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ReturnTemperature') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "ReturnTemperature_1"
+      heat_pump_targethctemperaturezone1:
+        friendly_name: "TargetHCTemperatureZone1"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'TargetHCTemperatureZone1') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'TargetHCTemperatureZone1') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "TargetHCTemperatureZone1"
+      heat_pump_targethctemperaturezone2:
+        friendly_name: "TargetHCTemperatureZone2"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'TargetHCTemperatureZone2') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'TargetHCTemperatureZone2') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "TargetHCTemperatureZone2"
+      #Zone temperatures
+      heat_pump_flowtemperaturezone1:
+        friendly_name: "FlowTemperatureZone1"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'FlowTemperatureZone1') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'FlowTemperatureZone1') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "FlowTemperatureZone1"
+      heat_pump_flowtemperaturezone2:
+        friendly_name: "FlowTemperatureZone2"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'FlowTemperatureZone2') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'FlowTemperatureZone2') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "FlowTemperatureZone2"
+      heat_pump_returntemperaturezone1:
+        friendly_name: "ReturnTemperatureZone1"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ReturnTemperatureZone1') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ReturnTemperatureZone1') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "ReturnTemperatureZone1"
+      heat_pump_returntemperaturezone2:
+        friendly_name: "ReturnTemperatureZone2"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ReturnTemperatureZone2') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ReturnTemperatureZone2') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "ReturnTemperatureZone2"
+      heat_pump_flowtemperatureboiler:
+        friendly_name: "FlowTemperatureBoiler"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'FlowTemperatureBoiler') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'FlowTemperatureBoiler') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "FlowTemperatureBoiler"
+      heat_pump_returntemperatureboiler:
+        friendly_name: "ReturnTemperatureBoiler"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ReturnTemperatureBoiler') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ReturnTemperatureBoiler') }}"
+        device_class: temperature
+        unit_of_measurement: "°C"
+        unique_id: "ReturnTemperatureBoiler"
+      #binary vars
+      heat_pump_boilerstatus:
+        friendly_name: "BoilerStatus"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'BoilerStatus') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'BoilerStatus') }}"
+        unique_id: "BoilerStatus"
+      heat_pump_boosterheater1status:
+        friendly_name: "BoosterHeater1Status"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'BoosterHeater1Status') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'BoosterHeater1Status') }}"
+        unique_id: "BoosterHeater1Status"
+      heat_pump_boosterheater2status:
+        friendly_name: "BoosterHeater2Status"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'BoosterHeater2Status') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'BoosterHeater2Status') }}"
+        unique_id: "BoosterHeater2Status"
+      heat_pump_boosterheater2plusstatus:
+        friendly_name: "BoosterHeater2PlusStatus"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'BoosterHeater2PlusStatus') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'BoosterHeater2PlusStatus') }}"
+        unique_id: "BoosterHeater2PlusStatus"
+      heat_pump_immersionheaterstatus:
+        friendly_name: "ImmersionHeaterStatus"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ImmersionHeaterStatus') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ImmersionHeaterStatus') }}"
+        unique_id: "ImmersionHeaterStatus"
+      heat_pump_waterpump1status:
+        friendly_name: "WaterPump1Status"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'WaterPump1Status') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'WaterPump1Status') }}"
+        unique_id: "WaterPump1Status"
+      heat_pump_waterpump2status:
+        friendly_name: "WaterPump2Status"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'WaterPump2Status') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'WaterPump2Status') }}"
+        unique_id: "WaterPump2Status"
+      heat_pump_waterpump3status:
+        friendly_name: "WaterPump3Status"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'WaterPump3Status') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'WaterPump3Status') }}"
+        unique_id: "WaterPump3Status"
+      heat_pump_waterpump4status:
+        friendly_name: "WaterPump4Status"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'WaterPump4Status') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'WaterPump4Status') }}"
+        unique_id: "WaterPump4Status"
+      heat_pump_valvestatus3way:
+        friendly_name: "ValveStatus3Way"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ValveStatus3Way') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ValveStatus3Way') }}"
+        unique_id: "ValveStatus3Way"
+      heat_pump_valvestatus2way:
+        friendly_name: "ValveStatus2Way"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ValveStatus2Way') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ValveStatus2Way') }}"
+        unique_id: "ValveStatus2Way"
+      heat_pump_valvestatus2way2a:
+        friendly_name: "ValveStatus2Way2a"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ValveStatus2Way2a') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ValveStatus2Way2a') }}"
+        unique_id: "ValveStatus2Way2a"
+      heat_pump_valvestatus2way2b:
+        friendly_name: "ValveStatus2Way2b"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ValveStatus2Way2b') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ValveStatus2Way2b') }}"
+        unique_id: "ValveStatus2Way2b"
+      heat_pump_thermostatstatuszone1:
+        friendly_name: "ThermostatStatusZone1"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ThermostatStatusZone1') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ThermostatStatusZone1') }}"
+        unique_id: "ThermostatStatusZone1"
+      heat_pump_thermostatstatuszone2:
+        friendly_name: "ThermostatStatusZone2"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'ThermostatStatusZone2') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'ThermostatStatusZone2') }}"
+        unique_id: "ThermostatStatusZone2"
+      heat_pump_wifisignalstrength:
+        friendly_name: "WifiSignalStrength"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'WifiSignalStrength') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'WifiSignalStrength') }}"
+        unique_id: "WifiSignalStrength"
+      heat_pump_lasttimestamp:
+        friendly_name: "LastTimeStamp"
+        availability_template: >-
+          {{ (states("sensor.heat_pump_api") not in ["unknown", "unavailable"]) and (state_attr('sensor.heat_pump_api', 'LastTimeStamp') != None) }}
+        value_template: "{{ state_attr('sensor.heat_pump_api', 'LastTimeStamp') }}"
+        unique_id: "LastTimeStamp"
+  #statistcal values
+  - platform: history_stats
+    type: time
+    name: HP_on_day
+    entity_id: binary_sensor.hp_on_off
+    state: "on"
+    start: "{{ now().replace(hour=0, minute=0, second=0, microsecond=0) }}"
+    end: "{{ now() }}"

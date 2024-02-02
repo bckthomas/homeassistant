@@ -245,7 +245,7 @@ conditional_media:
         - display: block
         - position: absolute
         - width: 103.1%
-        - height: 103.1%
+        - height: 70%
         - clip-path: >
             inset(74.5% 1.45% 1.45% 1.45% round 0 0 calc(var(--button-card-border-radius) / 2) calc(var(--button-card-border-radius) / 2))
         - backdrop-filter: var(--blur-intensity)
