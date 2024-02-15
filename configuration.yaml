@@ -97,7 +97,7 @@ lovelace:
         url: /hacsfiles/content-card-linky/content-card-linky.js,
         type: module,
       },
-
+      { url: /hacsfiles/lovelace-pronote/pronote.js, type: module },
       { url: "/local/marked.min.js?v=4.3.0", type: module },
       { url: "/local/vanilla-tilt.min.js?v=1.8.0", type: module },
       { url: "/local/browser_mod_icon.js?v=0.5", type: module },
@@ -122,8 +122,3 @@ rest_command:
   bdpv_send_index:
     url: !secret bppv_url
     method: POST
-
-logger:
-  default: warning
-  logs:
-    custom_components.pronote: debug

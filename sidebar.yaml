@@ -112,24 +112,27 @@
           | selectattr('attributes.start_time', '>=', start)
           | rejectattr('attributes.end_time', '>', end) | list %}
           {% for sensor in entities %}
-            {% if sensor.attributes.friendly_name == "Tri" -%}
-              <ha-icon icon="mdi:recycle"></ha-icon>
-            {% elif sensor.attributes.friendly_name == "Poubelles" -%}  
-              <ha-icon icon="mdi:trash-can-outline"></ha-icon>
-            {% elif sensor.attributes.friendly_name == "Musique" -%}
-              <ha-icon icon="mdi:music-circle-outline"></ha-icon>
+            {% if sensor.attributes.friendly_name == "Emploi du temps de Romain" -%}
             {% else %}
-              <ha-icon icon="hass:calendar-today"></ha-icon>
-            {% endif %}
-            {% if as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') == '00:00' %}
-              {{ sensor.attributes.message }}
-                {% if sensor.attributes.friendly_name == "Musique" -%}
-                {% else %}
-                  (toute la journée)<br/>
-                {% endif %}
-            {% else %}
-              {{ as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') }} {{ sensor.attributes.message }}<br/>
-            {% endif %}
+              {% if sensor.attributes.friendly_name == "Tri" -%}
+                <ha-icon icon="mdi:recycle"></ha-icon>
+              {% elif sensor.attributes.friendly_name == "Poubelles" -%}  
+                <ha-icon icon="mdi:trash-can-outline"></ha-icon>
+              {% elif sensor.attributes.friendly_name == "Musique" -%}
+                <ha-icon icon="mdi:music-circle-outline"></ha-icon>
+              {% else %}
+                <ha-icon icon="hass:calendar-today"></ha-icon>
+              {% endif %}
+              {% if as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') == '00:00' %}
+                {{ sensor.attributes.message }}
+                  {% if sensor.attributes.friendly_name == "Musique" -%}
+                  {% else %}
+                    (toute la journée)<br/>
+                  {% endif %}
+              {% else %}
+                {{ as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') }} {{ sensor.attributes.message }}<br/>
+              {% endif %}
+            {% endif %}  
           {% endfor %}
 
         tomorrow: >
@@ -151,6 +154,9 @@
                 <ha-icon icon="mdi:trash-can-outline"></ha-icon> {{ sensor.attributes.message }}<br/>
               {% elif sensor.attributes.friendly_name == "Musique" -%}
                 <ha-icon icon="mdi:album"></ha-icon> {{ sensor.attributes.message }}<br/>
+              {% elif sensor.attributes.friendly_name == "Anniversaires des contacts" -%} 
+                {{ sensor.attributes.message }}
+              {% elif sensor.attributes.friendly_name == "Emploi du temps de Romain" -%} 
               {% else %}
                 {{ sensor.attributes.friendly_name }} : {{ sensor.attributes.message }}<br/>
               {%- endif %}

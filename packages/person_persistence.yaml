@@ -12,21 +12,6 @@ template:
       device_class: occupancy
       state: "{{is_state('person.thomas', 'home') or is_state('person.benedicte', 'home')}}" 
 
-proximity:
-  distance_thomas_home:
-    zone: home
-    devices:
-      - person.thomas
-    tolerance: 50
-    unit_of_measurement: m
-
-  distance_benedicte_home:
-    zone: home
-    devices:
-      - person.benedicte
-    tolerance: 50
-    unit_of_measurement: m 
-
 group:
   parents:
     name: Parents
