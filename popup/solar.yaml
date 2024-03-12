@@ -101,7 +101,7 @@ browser_mod:
           showInTableUnit: false
           showDayPriceHCHP: false
           showDayHCHP: false
-          showYearRatio: false
+          showYearRatio: true
           showMonthRatio: false
           showYesterdayRatio: false
           showCurrentMonthRatio: true

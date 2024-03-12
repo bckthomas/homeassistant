@@ -45,7 +45,7 @@ icon_play_pause:
         - width: 25%
         - height: 25%
         - position: absolute
-        - fill: '#dedede'
+        - fill: "#dedede"
   custom_fields:
     play_pause: >
       [[[
@@ -1060,18 +1060,77 @@ icon_pool:
         <path fill="currentColor" d="M2,15C3.67,14.25 5.33,13.5 7,13.17V5A3,3 0 0,1 10,2C11.31,2 12.42,2.83 12.83,4H10A1,1 0 0,0 9,5V6H14V5A3,3 0 0,1 17,2C18.31,2 19.42,2.83 19.83,4H17A1,1 0 0,0 16,5V14.94C18,14.62 20,13 22,13V15C19.78,15 17.56,17 15.33,17C13.11,17 10.89,15 8.67,15C6.44,15 4.22,16 2,17V15M14,8H9V10H14V8M14,12H9V13C10.67,13.16 12.33,14.31 14,14.79V12M2,19C4.22,18 6.44,17 8.67,17C10.89,17 13.11,19 15.33,19C17.56,19 19.78,17 22,17V19C19.78,19 17.56,21 15.33,21C13.11,21 10.89,19 8.67,19C6.44,19 4.22,20 2,21V19Z" />
       </svg>
 
-icon_sleep:
+icon_morning:
+  state_display: Auto
   styles:
+    card:
+      - transition: all 0.3s ease-out
     custom_fields:
-      icon_sleep:
-        - top: 10.5%
-        - left: 10.1%
-        - width: 2.9vw
-        - position: absolute
+      icon:
+        - width: 79%
+        - margin-left: -1%
+        - margin-top: -1%
         - fill: >
-            [[[ return entity.state === 'on' ? '#c7983e' : '#9da0a2'; ]]]
+            [[[ return variables.state_on ? '#516d82' : '#9da0a2'; ]]]
   custom_fields:
-    icon_sleep: >
+    icon: >
+      [[[
+        const state = entity.state === 'on' ? 'animate' : null;
+        return `
+          <svg viewBox="0 0 24 24">
+            <style>
+              @keyframes animate {
+                from,
+                20%,
+                40%,
+                60%,
+                80%,
+                to {
+                  animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+                }
+                0% {
+                  transform: scale(0.3);
+                }
+                20% {
+                  transform: scale(1.1);
+                }
+                40% {
+                  transform: scale(0.9);
+                }
+                60% {
+                  transform: scale(1.03);
+                }
+                80% {
+                  transform: scale(0.97);
+                }
+                to {
+                  transform: scale(1);
+                }
+              }
+              .animate {
+                animation: animate 1s;
+                transform-origin: center;
+              }
+            </style>
+            <path class="${state}" d="M2,21H20V19H2M20,8H18V5H20M20,3H4V13A4,4 0 0,0 8,17H14A4,4 0 0,0 18,13V10H20A2,2 0 0,0 22,8V5C22,3.89 21.1,3 20,3Z" />
+          </svg>
+        `;
+      ]]]
+
+icon_sleep:
+  state_display: Auto
+  styles:
+    card:
+      - transition: all 0.3s ease-out
+    custom_fields:
+      icon:
+        - width: 79%
+        - margin-left: -1%
+        - margin-top: -1%
+        - fill: >
+            [[[ return variables.state_on ? '#516d82' : '#9da0a2'; ]]]
+  custom_fields:
+    icon: >
       [[[
         const state = entity.state === 'on' ? 'animate' : null;
         return `
@@ -1114,7 +1173,7 @@ icon_sleep:
           </svg>
         `;
       ]]]
-      
+
 icon_alarm:
   styles:
     custom_fields:
@@ -1173,7 +1232,7 @@ icon_alarm:
             ${path}
           </svg>
         `;
-      ]]]    
+      ]]]
 
 icon_solar:
   styles:
@@ -1186,7 +1245,6 @@ icon_solar:
       <svg viewBox="0 0 24 24" fill="#9da0a2">
         <path fill="currentColor" d="M3.33 16H11V13H4L3.33 16M13 16H20.67L20 13H13V16M21.11 18H13V22H22L21.11 18M2 22H11V18H2.89L2 22M11 8H13V11H11V8M15.76 7.21L17.18 5.79L19.3 7.91L17.89 9.33L15.76 7.21M4.71 7.91L6.83 5.79L8.24 7.21L6.12 9.33L4.71 7.91M3 2H6V4H3V2M18 2H21V4H18V2M12 7C14.76 7 17 4.76 17 2H7C7 4.76 9.24 7 12 7Z" />
       </svg>
-
 
 icon_pump:
   styles:

@@ -81,14 +81,9 @@ browser_mod:
                 style: |
                   ha-card { 
                     display: inline-block;
-                    height: 400px;
+                    height: 500px;
                     overflow-y: scroll;
                     width: 100%;
-                  }
-                  @media only screen and (min-height: 600px) {
-                    ha-card {  {
-                      height: 480px;
-                    }
                   }
 
         - type: entities
@@ -119,6 +114,14 @@ browser_mod:
                   display_class_max: true
                   display_new_grade_notice: true
                   max_grades: null
+                  card_mod:
+                    style: |
+                      ha-card { 
+                        display: inline-block;
+                        height: 500px;
+                        overflow-y: scroll;
+                        width: 100%;
+                      }
 
         - type: entities
           view_layout:
@@ -144,6 +147,14 @@ browser_mod:
                   display_class_average: true
                   display_class_min: true
                   display_class_max: true
+                  card_mod:
+                    style: |
+                      ha-card { 
+                        display: inline-block;
+                        height: 500px;
+                        overflow-y: scroll;
+                        width: 100%;
+                      }
 
                 - type: conditional
                   conditions:

@@ -92,7 +92,6 @@ lovelace:
         type: module,
       },
       { url: /hacsfiles/scheduler-card/scheduler-card.js, type: module },
-      { url: /hacsfiles/timer-bar-card/timer-bar-card.js, type: module },
       {
         url: /hacsfiles/content-card-linky/content-card-linky.js,
         type: module,

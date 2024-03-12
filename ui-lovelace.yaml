@@ -254,6 +254,44 @@ views:
             template:
               - base
 
+          - type: custom:button-card
+            entity: sensor.import_export_power
+            name: Solaire
+            show_name: false
+            show_state: false
+            custom_fields:
+              graph:
+                card:
+                  type: custom:mini-graph-card
+                  hours_to_show: 6
+                  animate: true
+                  hour24: true
+                  points_per_hour: 20
+                  height: 150
+                  line_width: 8
+                  font_size: 75
+                  points: false
+                  entities:
+                    - sensor.pv_power
+                    - sensor.import_export_power
+                    - sensor.consommation_2
+                  style: |
+                    ha-card {
+                      box-shadow: none;
+                    }
+                  show:
+                    name: false
+                    icon: false
+                    state: false
+                    points: false
+                    legend: false
+                  tap_action: !include popup/solar.yaml
+            tap_action: !include popup/solar.yaml
+            template:
+              - base
+              - icon_solar
+              - solar
+
       #################################################
       #                                               #
       #                    SOVRUM                     #
@@ -488,119 +526,64 @@ views:
       #                                               #
       #################################################
 
-      - type: grid
-        title: Monitoring
-        view_layout:
-          grid-area: övrigt
-        columns: 2
-        cards:
-          - type: custom:button-card
-            entity: sensor.total_rollover_pages
-            name: Imprimante
-            tap_action: !include popup/monitoring_imprimante.yaml
-            template:
-              - base
-              - icon_print
-
-          - type: custom:button-card
-            entity: input_boolean.wakestatus
-            name: Réveil
-            tap_action: !include popup/reveil.yaml
-            template:
-              - base
-              - icon_alarm
-
-          - type: custom:button-card
-            entity: climate.maison_zone_1
-            name: Chauffage
-            show_name: false
-            show_state: false
-            custom_fields:
-              graph:
-                card:
-                  type: custom:mini-graph-card
-                  hours_to_show: 6
-                  animate: true
-                  hour24: true
-                  points_per_hour: 20
-                  height: 150
-                  line_width: 8
-                  font_size: 75
-                  points: false
-                  entities:
-                    - sensor.maison_zone_1_temperature_ambiante
-                    - sensor.temperature_ss_sol_temperature
-                  style: |
-                    ha-card {
-                      box-shadow: none;
-                    }
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    points: false
-                    legend: false
-                  tap_action: !include popup/pump.yaml
-            tap_action: !include popup/pump.yaml
-            template:
-              - base
-              - icon_pump
-              - climate
-
-          - type: custom:button-card
-            entity: sensor.import_export_power
-            name: Solaire
-            show_name: false
-            show_state: false
-            custom_fields:
-              graph:
-                card:
-                  type: custom:mini-graph-card
-                  hours_to_show: 6
-                  animate: true
-                  hour24: true
-                  points_per_hour: 20
-                  height: 150
-                  line_width: 8
-                  font_size: 75
-                  points: false
-                  entities:
-                    - sensor.pv_power
-                    - sensor.import_export_power
-                    - sensor.consommation_2
-                  style: |
-                    ha-card {
-                      box-shadow: none;
-                    }
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    points: false
-                    legend: false
-                  tap_action: !include popup/solar.yaml
-            tap_action: !include popup/solar.yaml
-            template:
-              - base
-              - icon_solar
-              - solar
-
-      #################################################
-      #                                               #
-      #                     HEMMA                     #
-      #                                               #
-      #################################################
-
       - type: vertical-stack
         view_layout:
-          grid-area: hemma
+          grid-area: övrigt
         cards:
+          - type: grid
+            columns: 2
+            cards:
+              - type: custom:button-card
+                entity: sensor.total_rollover_pages
+                name: Imprimante
+                tap_action: !include popup/monitoring_imprimante.yaml
+                template:
+                  - base
+                  - icon_print
+
+              - type: custom:button-card
+                entity: climate.maison_zone_1
+                name: Chauffage
+                show_name: false
+                show_state: false
+                custom_fields:
+                  graph:
+                    card:
+                      type: custom:mini-graph-card
+                      hours_to_show: 6
+                      animate: true
+                      hour24: true
+                      points_per_hour: 20
+                      height: 150
+                      line_width: 8
+                      font_size: 75
+                      points: false
+                      entities:
+                        - sensor.maison_zone_1_temperature_ambiante
+                        - sensor.temperature_ss_sol_temperature
+                      style: |
+                        ha-card {
+                          box-shadow: none;
+                        }
+                      show:
+                        name: false
+                        icon: false
+                        state: false
+                        points: false
+                        legend: false
+                      tap_action: !include popup/pump.yaml
+                tap_action: !include popup/pump.yaml
+                template:
+                  - base
+                  - icon_pump
+                  - climate
+
           - type: custom:teamtracker-card
             entity: sensor.canadiens
             card_mod:
               style: |
                 ha-card {
-                  margin-bottom: 30px;
+                  margin-top: 30px;
                 }
                 .card {
                   padding: 0;
@@ -612,28 +595,55 @@ views:
                   font-size: 1em;
                   text-align: center;
                 }
-          - type: grid
-            columns: 2
-            cards:
-              - type: custom:button-card
-                entity: input_boolean.homeleave
-                name: Tout fermer
-                show_state: false
-                hold_action:
-                  action: none
-                template:
-                  - base
-                  - icon_away
 
-              - type: custom:button-card
-                entity: input_boolean.gotosleep
-                name: Bonne nuit
-                show_state: false
-                hold_action:
-                  action: none
-                template:
-                  - base
-                  - icon_sleep
+      #################################################
+      #                                               #
+      #                     HEMMA                     #
+      #                                               #
+      #################################################
+
+      - type: grid
+        view_layout:
+          grid-area: hemma
+        columns: 2
+        cards:
+          - type: custom:button-card
+            entity: input_boolean.wakestatus
+            name: Réveil
+            tap_action: !include popup/reveil.yaml
+            template:
+              - base
+              - icon_alarm
+
+          - type: custom:button-card
+            entity: input_boolean.morning
+            name: Tout ouvrir
+            show_state: false
+            hold_action:
+              action: none
+            template:
+              - base
+              - icon_morning
+
+          - type: custom:button-card
+            entity: input_boolean.homeleave
+            name: Tout fermer
+            show_state: false
+            hold_action:
+              action: none
+            template:
+              - base
+              - icon_away
+
+          - type: custom:button-card
+            entity: input_boolean.gotosleep
+            name: Bonne nuit
+            show_state: false
+            hold_action:
+              action: none
+            template:
+              - base
+              - icon_sleep
 
       #################################################
       #                                               #

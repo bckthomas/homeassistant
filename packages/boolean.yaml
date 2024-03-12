@@ -11,15 +11,24 @@ input_boolean:
   gotosleep:
     name: Bonne nuit
     initial: off
+  morning:
+    name: Tout ouvrir
+    initial: off
   homeleave:
     name: Tout fermer
     initial: off
   chauffageoff:
     name: Couper le chauffage
     icon: mdi:radiator-off
+    initial: off
   chauffagevacances:
     name: Vacances scolaires
     icon: mdi:radiator
+    initial: off
+  chauffagestandby:
+    name: Mise en pause
+    icon: mdi:timer-pause-outline
+    initial: off
 
 input_datetime:
   enddate_chauffageoff:

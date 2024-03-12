@@ -94,7 +94,7 @@ tablet:
   #custom variables
   ha-card-background-color: rgba(34,38,39,0.9)
   ha-card-header-background-color: rgba(48,52,52,0.8)
-  custom-layout-card-padding: 3.3vw
+  custom-layout-card-padding: 2.3vw
 
   sidebar-time-font-size: 5.2vw
   sidebar-time-line-height: 4.3vw

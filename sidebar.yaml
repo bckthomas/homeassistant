@@ -120,12 +120,14 @@
                 <ha-icon icon="mdi:trash-can-outline"></ha-icon>
               {% elif sensor.attributes.friendly_name == "Musique" -%}
                 <ha-icon icon="mdi:music-circle-outline"></ha-icon>
+              {% elif sensor.attributes.friendly_name == "Anniversaires des contacts" -%}
               {% else %}
                 <ha-icon icon="hass:calendar-today"></ha-icon>
               {% endif %}
               {% if as_timestamp(sensor.attributes.start_time) | timestamp_custom('%H:%M') == '00:00' %}
                 {{ sensor.attributes.message }}
-                  {% if sensor.attributes.friendly_name == "Musique" -%}
+                  {% if (sensor.attributes.friendly_name == "Musique" or sensor.attributes.friendly_name == "Anniversaires des contacts") -%}
+                    <br/>
                   {% else %}
                     (toute la journée)<br/>
                   {% endif %}
@@ -155,7 +157,7 @@
               {% elif sensor.attributes.friendly_name == "Musique" -%}
                 <ha-icon icon="mdi:album"></ha-icon> {{ sensor.attributes.message }}<br/>
               {% elif sensor.attributes.friendly_name == "Anniversaires des contacts" -%} 
-                {{ sensor.attributes.message }}
+                {{ sensor.attributes.message }}<br/>
               {% elif sensor.attributes.friendly_name == "Emploi du temps de Romain" -%} 
               {% else %}
                 {{ sensor.attributes.friendly_name }} : {{ sensor.attributes.message }}<br/>
