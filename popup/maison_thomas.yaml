@@ -46,7 +46,7 @@ browser_mod:
         grid-template-columns: 400px 400px
         grid-template-rows: 1fr
         grid-template-areas: |
-          "person strava"
+          "person strava test"
         mediaquery:
           #portrait
           "(max-width: 1200px)":
@@ -55,6 +55,7 @@ browser_mod:
             grid-template-areas: |
               "person"
               "strava"
+              "test"
       cards:
         - type: vertical-stack
           view_layout:
@@ -141,16 +142,51 @@ browser_mod:
                       filter: invert(0.95) grayscale(0.95) contrast(95%);
                     }
 
-        - type: entities
+        - type: vertical-stack
           view_layout:
             grid-area: strava
-          title: Strava
+          title: Sport
           show_header_toggle: false
           card_mod:
             class: header
-          entities:
-            - entity: sensor.strava_0_0
-            - entity: sensor.strava_0_1
-            - entity: sensor.strava_0_3
-            - entity: sensor.strava_0_4
-            - entity: sensor.strava_0_5
+          cards:
+            - type: entities
+              card_mod:
+                class: content
+              entities:
+                - entity: sensor.strava_0_0
+                - entity: sensor.strava_0_1
+                - entity: sensor.strava_0_3
+                - entity: sensor.strava_0_4
+                - entity: sensor.strava_0_5
+
+            - type: custom:mod-card
+              style:
+                hui-horizontal-stack-card$: |
+                  #root { 
+                    padding: 0 16px;
+                  }
+              card:
+                type: horizontal-stack
+                cards:
+                  - type: custom:button-card
+                    entity: counter.session_rockclimbing
+                    name: Escalade
+                    show_state: true
+                    template:
+                      - base
+                      - widget_sport
+                  - type: custom:button-card
+                    entity: counter.session_workout
+                    name: Fitness
+                    show_state: true
+                    template:
+                      - base
+                      - widget_sport
+                  - type: custom:button-card
+                    entity: sensor.strava_stats_summary_all_ride_activity_count
+                    name: Vélo
+                    show_state: true
+                    template:
+                      - base
+                      - widget_sport

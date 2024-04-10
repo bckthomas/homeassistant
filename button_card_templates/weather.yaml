@@ -24,7 +24,7 @@ widget_weather:
       - padding: 1rem
       - height: 100%
       - background-position: center
-      - background-repeat: no-repeat    
+      - background-repeat: no-repeat
       - color: rgba(255, 255, 255, 0.8)
     name:
       - place-self: start
@@ -50,17 +50,15 @@ widget_weather:
     forecast: >
       [[[
         if (entity !== undefined) {
-          let min = "<ha-icon icon='mdi:thermometer-low'></ha-icon> " + Math.round(entity.attributes.forecast[0].templow).toString() + "°";
-          let max = "<ha-icon icon='mdi:thermometer-high'></ha-icon> " + Math.round(entity.attributes.forecast[0].temperature).toString() + "°";
           var vent = "";
           if (entity.attributes.wind_speed > 0) {
             vent = "<br/><ha-icon icon='mdi:windsock'></ha-icon> " + Math.round(entity.attributes.wind_speed).toString() + "km/h";
           }
           var pluie = "";
-          if (entity.attributes.forecast[0].precipitation > 0) {
-            pluie = "<br/><ha-icon icon='mdi:weather-pouring'></ha-icon> " + entity.attributes.forecast[0].precipitation + "mm";
+          if (states['sensor.anse_daily_precipitation'].state > 0) {
+            pluie = "<br/><ha-icon icon='mdi:weather-pouring'></ha-icon> " + states['sensor.anse_daily_precipitation'].state + "mm";
           }
-          return min + max + vent + pluie;
+          return vent + pluie;
         }
       ]]]
   entity_picture: >

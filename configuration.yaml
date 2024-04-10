@@ -101,6 +101,7 @@ lovelace:
       { url: "/local/vanilla-tilt.min.js?v=1.8.0", type: module },
       { url: "/local/browser_mod_icon.js?v=0.5", type: module },
       { url: "/local/fonts.css?v=2.1", type: css },
+      { url: /hacsfiles/custom-sonos-card/custom-sonos-card.js, type: module }
     ]
 
 sensor:

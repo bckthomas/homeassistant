@@ -54,5 +54,6 @@ browser_mod:
             entities:
               - entity: input_boolean.chauffageoff
               - entity: input_boolean.chauffagestandby
+              - entity: input_boolean.chauffageboost
               - entity: input_boolean.chauffagevacances
               #- entity: input_datetime.enddate_chauffageoff

@@ -1,0 +1,59 @@
+widget_sport:
+  aspect_ratio: 1/1
+  show_icon: false
+  show_entity_picture: true
+  show_name: true
+  show_state: true
+  show_label: false
+  tap_action:
+    action: none
+  styles:
+    grid:
+      - grid-template-areas: |
+          "n"
+          "i"
+          "s"
+          "l"
+      - grid-template-columns: 1fr
+      - grid-template-rows: min-content repeat(2, 1fr) repeat(2, min-content)
+      - gap: 0%
+    card:
+      - border-radius: var(--button-card-border-radius)
+      - padding: 1rem
+      - height: 100%
+      - background-position: center
+      - background-repeat: no-repeat
+      - color: rgba(255, 255, 255, 0.8)
+    name:
+      - place-self: start
+      - font-weight: 700
+      - font-size: 1.5rem
+
+  extra_styles: |
+    [[[
+      let cardBgImageSport = 'linear-gradient(0deg, rgba(43, 104, 233, .7) 0%, rgba(85, 187, 240, .7) 100%)';
+      let case_workout = '/local/workout.jpg';
+      let case_rockclimbing = '/local/rockclimbing.jpg';
+      let case_velo = '/local/velo.jpg';
+      
+      switch(entity.entity_id) {
+        case 'counter.session_workout':
+            cardBgImageSport = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_workout + ')';
+          break;
+      
+        case 'counter.session_rockclimbing':
+            cardBgImageSport = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_rockclimbing + ')';
+          break;
+      
+        case 'sensor.strava_stats_summary_all_ride_activity_count':
+            cardBgImageSport = 'linear-gradient(to bottom, rgba(117,121,128,0.7) 10% , rgba(90,113,157,0.7) 38%), url(' + case_velo + ')';
+          break;
+      };
+
+      return `
+        #card {
+          background-image: ${cardBgImageSport};
+          background-size: cover;
+        }
+      `
+    ]]]

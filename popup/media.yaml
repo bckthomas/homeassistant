@@ -47,33 +47,18 @@ browser_mod:
           card_mod:
             class: header
           entities:
-            - type: custom:mini-media-player
-              entity: media_player.salon
-              group: true
-              source: icon
-              info: short
-              hide:
-                volume: true
-                power: true
-                source: true
-            - type: custom:mini-media-player
-              entity: media_player.salon
-              group: true
-              hide:
-                controls: true
-                source: true
-                progress: true
-                info: true
-                power: true
-            - type: custom:mini-media-player
-              entity: media_player.cuisine
-              group: true
-              hide:
-                controls: true
-                source: true
-                progress: true
-                info: true
-                power: true
+            - type: custom:sonos-card
+              sections:
+                - player
+                - volumes
+                - grouping
+                - groups
+              showVolumeUpAndDownButtons: true
+              dynamicVolumeSlider: false
+              hideBrowseMediaButton: false
+              artworkAsBackground: true
+              adjustVolumeRelativeToMainPlayer: true
+
             - type: custom:hui-horizontal-stack-card
               cards:
                 - type: custom:button-card

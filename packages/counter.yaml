@@ -1,0 +1,10 @@
+counter:
+  session_workout:
+    initial: 0
+    step: 1
+  session_rockclimbing:
+    initial: 0
+    step: 1
+  session_velo:
+    initial: 0
+    step: 1

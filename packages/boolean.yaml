@@ -29,6 +29,10 @@ input_boolean:
     name: Mise en pause
     icon: mdi:timer-pause-outline
     initial: off
+  chauffageboost:
+    name: Forcer le chauffage
+    icon: mdi:heat-wave
+    initial: off
 
 input_datetime:
   enddate_chauffageoff:
