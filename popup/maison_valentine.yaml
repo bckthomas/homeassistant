@@ -4,7 +4,7 @@ browser_mod:
   data:
     title: Valentine
     style: >
-      --popup-max-width: calc(385px);
+      --popup-max-width: calc(440px);
       --ha-card-border-radius: 0;
     card_mod:
       style:
@@ -44,7 +44,7 @@ browser_mod:
       layout_type: custom:grid-layout
       layout:
         margin: 0
-        grid-template-columns: 385px
+        grid-template-columns: 440px
         grid-template-rows: 1fr
         grid-template-areas: |
           "timetable"
@@ -56,11 +56,137 @@ browser_mod:
             grid-template-areas: |
               "timetable"
       cards:
-        - type: entities
+        - type: vertical-stack
           view_layout:
             grid-area: timetable
           show_header_toggle: false
           card_mod:
             class: header
-          entities:
-            - entity: person.valentine
+          cards:
+            - type: entities
+              entities:
+                - entity: person.valentine
+
+            - type: custom:stack-in-card
+              card_mod:
+                style: |
+                  ha-card {
+                    {% set poids_valentine = states('sensor.valentine_poids') | float(0) %}
+                    {% set taille_valentine = states('sensor.valentine_height') | float(1.8) %}
+                    {% set imc_valentine = poids_valentine / (taille_valentine * taille_valentine) %}
+                    {% if imc_valentine | int > 21 %}
+                    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), url('/local/valentine/surpoids.jpg');
+                  {% elif imc_valentine | int < 11 %}
+                    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), url('/local/valentine/mince.jpg');
+                  {% else %}
+                    background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), url('/local/valentine/equilibre.jpg');
+                  {% endif %} background-position: center; background-size: cover;}
+              cards:
+                - type: custom:bar-card
+                  card_mod:
+                    style: |-
+                      ha-card {
+                        margin-top: 12px;
+                        --primary-text-color: white;
+                      }
+                      bar-card-name {
+                        margin-left: 12px;
+                        font-size: 11px;
+                        text-shadow: 1px 1px #0005;
+                        opacity: 1
+                      }
+                      bar-card-currentbar {
+                        border-radius: 50px !important;
+                      }
+                      bar-card-backgroundbar {
+                        border-radius: 50px !important;
+                        opacity: 0.7
+                      }
+                      bar-card-value {
+                        margin-right: 12px;
+                        font-size: 11px;
+                        text-shadow: 1px 1px #0005;
+                        opacity: .5
+                      }
+                  entities:
+                    - entity: sensor.valentine_hydration
+                      name: Masse hydrique
+                      color: teal
+                      height: 25px
+                      target: 55
+                      decimal: 0
+                      positions:
+                        icon: "off"
+                    - entity: sensor.valentine_taux_de_graisse
+                      name: Taux de graisse
+                      color: firebrick
+                      height: 25px
+                      target: 17
+                      decimal: 0
+                      positions:
+                        icon: "off"
+                    - entity: sensor.valentine_masse_musculaire
+                      name: Masse musculaire
+                      color: olivedrab
+                      height: 25px
+                      decimal: 0
+                      positions:
+                        icon: "off"
+                    - entity: sensor.valentine_bone_mass
+                      name: Masse osseuse
+                      color: grey
+                      height: 25px
+                      decimal: 0
+                      positions:
+                        icon: "off"
+                - type: custom:mini-graph-card
+                  hours_to_show: 720
+                  height: 200
+                  show:
+                    name: false
+                    icon: false
+                    state: false
+                    points: false
+                    labels: false
+                  color_thresholds:
+                    - value: 70
+                      color: "#16a5ef"
+                    - value: 75
+                      color: "#beef16"
+                    - value: 80
+                      color: "#ef164e"
+                  entities:
+                    - entity: sensor.valentine_poids
+                  card_mod:
+                    style: |
+                      ha-card {
+                        opacity: 0.8;
+                      }
+                - type: custom:mushroom-chips-card
+                  card_mod:
+                    style: |
+                      ha-card {
+                      margin-top: -40px;
+                      height: 10px!important;
+                      --primary-text-color: white;
+                      }
+                  alignment: center
+                  chips:
+                    - type: template
+                      tap_action:
+                        action: none
+                      content: |
+                        {{ states('sensor.valentine_poids') | round(1) }} kg
+                      icon_color: white
+                      icon: >
+                        {% if states('binary_sensor.evolution_poids_valentine') == "on"
+                        %}mdi:arrow-up-bold {% elif
+                        states('binary_sensor.evolution_poids_valentine') == "off"
+                        %}mdi:arrow-down-bold {% endif %}
+                      card_mod:
+                        style: |
+                          ha-card {
+                          background-color: black !important;
+                          opacity: 0.7;
+                          height: 30px!important;
+                          }

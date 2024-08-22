@@ -7,7 +7,7 @@ browser_mod:
     style:
       .: |
         :host .content {
-          width: calc(385px);
+          width: calc(400px);
           max-width: 90vw;
         }
     content:
@@ -38,6 +38,6 @@ browser_mod:
           temperature: sensor.piscine_temperature
           ph: sensor.piscine_ph
           orp: sensor.piscine_oxydo_reduction_potential
-          salinity: sensor.piscine_salt
+          salinity: sensor.piscine_sel
           show_names: false
           language: fr

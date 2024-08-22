@@ -8,3 +8,28 @@ counter:
   session_velo:
     initial: 0
     step: 1
+
+template:
+  - sensor:
+      - unique_id: tv_playing
+        name: Fire TV Youtube
+        state: "{{ states.media_player.fire_tv_192_168_1_128.attributes.source == 'YouTube (FireTV)' }}"
+      - unique_id: tv_salon_playing
+        name: TV Youtube
+        state: "{{ states.media_player.tv_ambilight.attributes.source == 'YouTube' }}"
+
+sensor:
+  - platform: history_stats
+    name: Fire tv Youtube
+    entity_id: sensor.fire_tv_youtube
+    state: "True"
+    type: time
+    start: "{{ today_at() }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: TV Youtube
+    entity_id: sensor.tv_youtube
+    state: "True"
+    type: time
+    start: "{{ today_at() }}"
+    end: "{{ now() }}"

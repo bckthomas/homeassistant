@@ -208,7 +208,4 @@ browser_mod:
                 color: #9da0a2 !important;
                 padding: 0.42em;
               }
-          show_state: true
-          show_name: true
-          camera_view: auto
-          entity: camera.wall_e_map
+          entity: image.wall_e_etage

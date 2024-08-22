@@ -4,7 +4,7 @@ browser_mod:
   data:
     title: Thomas
     style: >
-      --popup-max-width: calc(400px + 400px);
+      --popup-max-width: calc(400px + 400px + 400px);
       --ha-card-border-radius: 0;
     card_mod:
       style:
@@ -43,10 +43,10 @@ browser_mod:
       layout_type: custom:grid-layout
       layout:
         margin: 0
-        grid-template-columns: 400px 400px
+        grid-template-columns: 400px 400px 400px
         grid-template-rows: 1fr
         grid-template-areas: |
-          "person strava test"
+          "person strava forme"
         mediaquery:
           #portrait
           "(max-width: 1200px)":
@@ -55,7 +55,7 @@ browser_mod:
             grid-template-areas: |
               "person"
               "strava"
-              "test"
+              "forme"
       cards:
         - type: vertical-stack
           view_layout:
@@ -190,3 +190,129 @@ browser_mod:
                     template:
                       - base
                       - widget_sport
+
+        - type: custom:stack-in-card
+          view_layout:
+            grid-area: forme
+          card_mod:
+            style: |
+              ha-card {
+                {% set poids_thomas = states('sensor.thomas_poids') | float(0) %}
+                {% set taille_thomas = states('sensor.thomas_height') | float(1.8) %}
+                {% set imc_thomas = poids_thomas / (taille_thomas * taille_thomas) %}
+                {% if imc_thomas | int > 25 %}
+                background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), url('/local/thomas/surpoids.jpg');
+              {% elif imc_thomas | int < 18 %}
+                background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), url('/local/thomas/mince.jpg');
+              {% else %}
+                background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6)), url('/local/thomas/equilibre.jpg');
+              {% endif %} background-position: center; background-size: cover;}
+          cards:
+            - type: custom:bar-card
+              card_mod:
+                style: |-
+                  ha-card {
+                    margin-top: 12px;
+                    --primary-text-color: white;
+                  }
+                  bar-card-name {
+                    margin-left: 12px;
+                    font-size: 11px;
+                    text-shadow: 1px 1px #0005;
+                    opacity: 1
+                  }
+                  bar-card-currentbar {
+                    border-radius: 50px !important;
+                  }
+                  bar-card-backgroundbar {
+                    border-radius: 50px !important;
+                    opacity: 0.7
+                  }
+                  bar-card-value {
+                    margin-right: 12px;
+                    font-size: 11px;
+                    text-shadow: 1px 1px #0005;
+                    opacity: .5
+                  }
+              entities:
+                - entity: sensor.thomas_hydration
+                  name: Masse hydrique
+                  color: teal
+                  height: 25px
+                  target: 55
+                  decimal: 0
+                  positions:
+                    icon: "off"
+                - entity: sensor.thomas_taux_de_graisse
+                  name: Taux de graisse
+                  color: firebrick
+                  height: 25px
+                  target: 17
+                  decimal: 0
+                  positions:
+                    icon: "off"
+                - entity: sensor.thomas_masse_musculaire
+                  name: Masse musculaire
+                  color: olivedrab
+                  height: 25px
+                  decimal: 0
+                  positions:
+                    icon: "off"
+                - entity: sensor.thomas_bone_mass
+                  name: Masse osseuse
+                  color: grey
+                  height: 25px
+                  decimal: 0
+                  positions:
+                    icon: "off"
+            - type: custom:mini-graph-card
+              hours_to_show: 720
+              height: 200
+              show:
+                name: false
+                icon: false
+                state: false
+                points: false
+                labels: false
+              color_thresholds:
+                - value: 70
+                  color: "#16a5ef"
+                - value: 75
+                  color: "#beef16"
+                - value: 80
+                  color: "#ef164e"
+              entities:
+                - entity: sensor.thomas_poids
+              card_mod:
+                style: |
+                  ha-card {
+                    opacity: 0.8;
+                  }
+            - type: custom:mushroom-chips-card
+              card_mod:
+                style: |
+                  ha-card {
+                  margin-top: -40px;
+                  height: 10px!important;
+                  --primary-text-color: white;
+                  }
+              alignment: center
+              chips:
+                - type: template
+                  tap_action:
+                    action: none
+                  content: |
+                    {{ states('sensor.thomas_poids') | round(1) }} kg
+                  icon_color: white
+                  icon: >
+                    {% if states('binary_sensor.evolution_poids_thomas') == "on"
+                    %}mdi:arrow-up-bold {% elif
+                    states('binary_sensor.evolution_poids_thomas') == "off"
+                    %}mdi:arrow-down-bold {% endif %}
+                  card_mod:
+                    style: |
+                      ha-card {
+                      background-color: black !important;
+                      opacity: 0.7;
+                      height: 30px!important;
+                      }

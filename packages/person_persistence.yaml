@@ -1,16 +1,16 @@
 homeassistant:
   customize:
     person.thomas:
-      entity_picture: /local/thomas.jpg
+      entity_picture: /local/thomas/thomas.jpg
     person.benedicte:
-      entity_picture: /local/benedicte.jpg
+      entity_picture: /local/benedicte/benedicte.jpg
 
 template:
   - binary_sensor:
-    - name: home_occupied
-      unique_id: home_occupied
-      device_class: occupancy
-      state: "{{is_state('person.thomas', 'home') or is_state('person.benedicte', 'home')}}" 
+      - name: home_occupied
+        unique_id: home_occupied
+        device_class: occupancy
+        state: "{{is_state('person.thomas', 'home') or is_state('person.benedicte', 'home')}}"
 
 group:
   parents:

@@ -13,3 +13,13 @@
         }} en {{ trigger.event.data.data.subject }} :  {{ trigger.event.data.data.comment
         }} le {{ trigger.event.data.data.date.strftime(''%d/%m/%Y'') }}'
       title: Pronote {{ trigger.event.data.child_nickname }} note
+- id: '1715613334729'
+  alias: test
+  description: ''
+  trigger: []
+  condition: []
+  action:
+  - service: notify.mobile_app_mi_a2_lite
+    data:
+      message: test
+  mode: single

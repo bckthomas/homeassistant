@@ -61,26 +61,45 @@ browser_mod:
           entities:
             - type: custom:meteofrance-weather-card
               entity: weather.anse
-              number_of_forecasts: '6'
-              uvEntity: sensor.anse_uv
-              rainChanceEntity: sensor.anse_rain_chance
-              snowChanceEntity: sensor.anse_snow_chance
+              name: Anse
               alertEntity: sensor.69_weather_alert
-              rainForecastEntity: sensor.anse_next_rain
+              detailEntity: sensor.anse_rain_chance
               cloudCoverEntity: sensor.anse_cloud_cover
+              rainChanceEntity: sensor.anse_rain_chance
               freezeChanceEntity: sensor.anse_freeze_chance
+              snowChanceEntity: sensor.anse_snow_chance
+              uvEntity: sensor.anse_uv
+              rainForecastEntity: sensor.anse_next_rain
+              details: true
               current: true
-              # details: false
+              alert_forecast: true
+              hourly_forecast: false
+              humidity_forecast: false
+              animated_icons: true
               one_hour_forecast: true
-              # alert_forecast: false
-              forecast: true
-              hide_alertAvalanches: true
-              hide_alertVaguesSubmersion: true
-              name: Anse 
-
-        - type: iframe
+              daily_forecast: false
+              wind_forecast_icons: true
+        - type: entities
           view_layout:
             grid-area: pluie
-          url:
-            https://www.meteo-lyon.net/rain-map?zoom=9&lat=45.75&lon=4.85&showTitle=1
-          aspect_ratio: 120%
+          entities:
+            - type: custom:meteofrance-weather-card
+              entity: weather.anse
+              name: Anse
+              alertEntity: sensor.69_weather_alert
+              detailEntity: sensor.anse_rain_chance
+              cloudCoverEntity: sensor.anse_cloud_cover
+              rainChanceEntity: sensor.anse_rain_chance
+              freezeChanceEntity: sensor.anse_freeze_chance
+              snowChanceEntity: sensor.anse_snow_chance
+              uvEntity: sensor.anse_uv
+              rainForecastEntity: sensor.anse_next_rain
+              details: false
+              current: false
+              alert_forecast: false
+              hourly_forecast: true
+              humidity_forecast: false
+              animated_icons: true
+              one_hour_forecast: false
+              daily_forecast: true
+              wind_forecast_icons: true

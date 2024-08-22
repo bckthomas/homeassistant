@@ -29,7 +29,7 @@
 
           {% set devices = [
             states.switch.ampli,
-            states.media_player.fire_tv,
+            states.media_player.fire_tv_192_168_1_128,
             states.media_player.tv_ambilight
           ] %}
 

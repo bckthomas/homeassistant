@@ -156,7 +156,7 @@ views:
               - loader
 
           - type: custom:button-card
-            entity: media_player.fire_tv
+            entity: media_player.fire_tv_192_168_1_128
             name: Fire TV
             state_display: >
               [[[
@@ -167,7 +167,6 @@ views:
                     return variables.translate_unknown;
                 }
               ]]]
-            double_tap_action: !include popup/salon_tv.yaml
             template:
               - base
               - icon_tv
@@ -200,6 +199,44 @@ views:
                 - widget_weather
               view_layout:
                 grid-area: weather
+
+          - type: custom:button-card
+            entity: sensor.import_export_power
+            name: Solaire
+            show_name: false
+            show_state: false
+            custom_fields:
+              graph:
+                card:
+                  type: custom:mini-graph-card
+                  hours_to_show: 6
+                  animate: true
+                  hour24: true
+                  points_per_hour: 20
+                  height: 150
+                  line_width: 8
+                  font_size: 75
+                  points: false
+                  entities:
+                    - sensor.pv_power
+                    - sensor.import_export_power
+                    - sensor.consommation_2
+                  style: |
+                    ha-card {
+                      box-shadow: none;
+                    }
+                  show:
+                    name: false
+                    icon: false
+                    state: false
+                    points: false
+                    legend: false
+                  tap_action: !include popup/solar.yaml
+            tap_action: !include popup/solar.yaml
+            template:
+              - base
+              - icon_solar
+              - solar
 
           - type: custom:button-card
             entity: sensor.piscine_temperature
@@ -253,44 +290,6 @@ views:
             tap_action: !include popup/arrosage.yaml
             template:
               - base
-
-          - type: custom:button-card
-            entity: sensor.import_export_power
-            name: Solaire
-            show_name: false
-            show_state: false
-            custom_fields:
-              graph:
-                card:
-                  type: custom:mini-graph-card
-                  hours_to_show: 6
-                  animate: true
-                  hour24: true
-                  points_per_hour: 20
-                  height: 150
-                  line_width: 8
-                  font_size: 75
-                  points: false
-                  entities:
-                    - sensor.pv_power
-                    - sensor.import_export_power
-                    - sensor.consommation_2
-                  style: |
-                    ha-card {
-                      box-shadow: none;
-                    }
-                  show:
-                    name: false
-                    icon: false
-                    state: false
-                    points: false
-                    legend: false
-                  tap_action: !include popup/solar.yaml
-            tap_action: !include popup/solar.yaml
-            template:
-              - base
-              - icon_solar
-              - solar
 
       #################################################
       #                                               #
@@ -397,8 +396,6 @@ views:
                   entity: media_player.fire_tv_salle_de_jeux
                   artwork: full-cover
                   scale: "1.5"
-                  template:
-                    - custom_media
                   hide:
                     source: true
                     volume: true
@@ -695,8 +692,6 @@ views:
               - sensor.192_168_1_127_ram_used_percent
               - sensor.192_168_1_127_mnt_cache_used_percent
               - sensor.unraid_free_space
-              - sensor.current_version
-              - sensor.docker_hub
             variables:
               notify: >
                 [[[
@@ -705,8 +700,7 @@ views:
                       return parseFloat(states[id[0]].state) >= 50 ||
                             parseFloat(states[id[1]].state) >= 90 ||
                             parseFloat(states[id[2]].state) >= 70 ||
-                            parseFloat(states[id[3]].state) >= 75 ||
-                            states[id[4]].state != states[id[5]].state;
+                            parseFloat(states[id[3]].state) >= 75;
                 ]]]
             template: footer
 
