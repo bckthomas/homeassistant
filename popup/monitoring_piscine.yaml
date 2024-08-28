@@ -39,5 +39,6 @@ browser_mod:
           ph: sensor.piscine_ph
           orp: sensor.piscine_oxydo_reduction_potential
           salinity: sensor.piscine_sel
+          salinity_setpoint: 3500
           show_names: false
           language: fr

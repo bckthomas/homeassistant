@@ -3,6 +3,3 @@ template:
       - name: Dernière mise à jour de Pronote Romain
         unique_id: sensor.derniere_mise_a_jour_de_pronote_romain
         state: "{{ state_attr('sensor.pronote_beck_romain','updated_at').strftime('%d-%m-%Y à %H:%M') }}"
-
-
-        value_template: '{% if states.sensor.pronote_beck_romain.updated_at %}{{ states.remote.living_room.attributes.current_activity }}{% endif %}'

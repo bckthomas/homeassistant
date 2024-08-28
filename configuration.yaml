@@ -8,7 +8,7 @@ homeassistant:
   temperature_unit: C
   time_zone: Europe/Paris
   external_url: !secret homeassistant_external_url
-  internal_url: "http://192.168.1.114:8123"
+  internal_url: "http://192.168.1.105:8123"
   language: fr
   country: FR
   currency: EUR
