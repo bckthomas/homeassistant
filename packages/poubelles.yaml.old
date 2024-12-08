@@ -8,7 +8,7 @@ automation:
         entity_id: calendar.poubelles
     condition: []
     action:
-      - service: notify.mobile_app_mi_a2_lite
+      - service: notify.mobile_app_tel_thomas
         data:
           message: "{{ state_attr('calendar.poubelles', 'message')}} demain !"
     mode: single
@@ -22,7 +22,7 @@ automation:
         entity_id: calendar.tri
     condition: []
     action:
-      - service: notify.mobile_app_mi_a2_lite
+      - service: notify.mobile_app_tel_thomas
         data:
           message: |
             {{ state_attr('calendar.tri', 'message')}} demain !

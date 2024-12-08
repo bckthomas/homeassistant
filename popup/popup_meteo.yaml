@@ -79,6 +79,7 @@ browser_mod:
               one_hour_forecast: true
               daily_forecast: false
               wind_forecast_icons: true
+              number_of_hourly_forecasts: "4"
         - type: entities
           view_layout:
             grid-area: pluie
@@ -103,3 +104,4 @@ browser_mod:
               one_hour_forecast: false
               daily_forecast: true
               wind_forecast_icons: true
+              number_of_daily_forecasts: "4"
