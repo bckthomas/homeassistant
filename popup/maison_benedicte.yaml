@@ -252,7 +252,7 @@ browser_mod:
                   tap_action:
                     action: none
                   content: |
-                    {{ states('sensor.benedicte_poids') | round(1) }} kg
+                    {{ states('sensor.benedicte_poids') | float(0) | round(1) }} kg
                   icon_color: white
                   icon: >
                     {% if states('binary_sensor.evolution_poids_benedicte') == "on"

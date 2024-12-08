@@ -4,7 +4,7 @@ sensor:
     device_class: "power"
     state_class: "measurement"
     unit_of_measurement: "W"
-    resource: http://192.168.1.138/index.php/meter/old_meter_power_graph
+    resource: http://192.168.1.145/index.php/meter/old_meter_power_graph
     scan_interval: 60
     value_template: >
       {% if value_json is defined %}
@@ -25,7 +25,7 @@ sensor:
     device_class: "power"
     state_class: "measurement"
     unit_of_measurement: "W"
-    resource: http://192.168.1.138/index.php/meter/old_meter_power_graph
+    resource: http://192.168.1.145/index.php/meter/old_meter_power_graph
     scan_interval: 60
     value_template: >
       {% if value_json is defined %}

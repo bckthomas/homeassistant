@@ -1,25 +1,57 @@
 - id: '1686305498315'
   alias: Pronote notif nouvelle note
   description: ''
-  trigger:
-  - platform: event
-    event_type: pronote_event
+  triggers:
+  - event_type: pronote_event
     event_data:
       type: new_grade
-  action:
-  - service: notify.mobile_app_mi_a2_lite
-    data:
+    trigger: event
+  actions:
+  - data:
       message: '{{ trigger.event.data.child_nickname }} a eu {{  trigger.event.data.data.grade_out_of
         }} en {{ trigger.event.data.data.subject }} :  {{ trigger.event.data.data.comment
         }} le {{ trigger.event.data.data.date.strftime(''%d/%m/%Y'') }}'
       title: Pronote {{ trigger.event.data.child_nickname }} note
-- id: '1715613334729'
-  alias: test
-  description: ''
-  trigger: []
-  condition: []
-  action:
-  - service: notify.mobile_app_mi_a2_lite
-    data:
-      message: test
-  mode: single
+    action: notify.mobile_app_tel_thomas
+  - data:
+      message: '{{ trigger.event.data.child_nickname }} a eu {{  trigger.event.data.data.grade_out_of
+        }} en {{ trigger.event.data.data.subject }} :  {{ trigger.event.data.data.comment
+        }} le {{ trigger.event.data.data.date.strftime(''%d/%m/%Y'') }}'
+      title: Pronote {{ trigger.event.data.child_nickname }} note
+    action: notify.mobile_app_m2103k19pg
+- id: '1686305498317'
+  alias: 'Notification: modification emploi du temps'
+  description: Pronote notif emploi du temps
+  triggers:
+  - entity_id:
+    - sensor.pronote_beck_romain_timetable_period
+    attribute: canceled_lessons_counter
+    to:
+    trigger: state
+  conditions:
+  - condition: template
+    value_template: '{% set items = state_attr(''sensor.pronote_beck_romain_timetable_period'',
+      ''lessons'') %}
+
+      {{ true if items | selectattr(''canceled'', ''=='', true) | list or items |
+      selectattr(''canceled'', ''=='', false) | selectattr(''status'', ''!='', none)
+      | list else false }}
+
+      '
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: sensor.pronote_beck_romain_timetable_period
+      state: '0'
+  actions:
+  - data:
+      title: Pronote
+      message: "{% set items = state_attr('sensor.pronote_beck_romain_timetable_period','lessons')
+        %} {%- for item in items  -%}\n  {%- if item.canceled == True -%}\n    {{
+        item.lesson }} : {{ item.status }}, aujourd'hui de {{ item.start_time }} à
+        {{ item.end_time}}{{\"\\n\"}}\n  {%- endif -%}\n  {%- if item.canceled ==
+        false and item.status != None -%}\n    {{ item.lesson }} : {{ item.status
+        }} le {{as_timestamp(item.start_at) | int | timestamp_custom('%d/%m/%Y', true)}}
+        de {{ item.start_time }} à {{ item.end_time}}{{\"\\n\"}}\n  {%- endif -%}
+        \     \n{%- endfor -%}"
+    action: notify.mobile_app_tel_thomas

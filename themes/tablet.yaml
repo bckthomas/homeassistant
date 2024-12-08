@@ -93,6 +93,7 @@ tablet:
 
   #custom variables
   ha-card-background-color: rgba(34,38,39,0.9)
+  card-background-color: rgba(34,38,39,0.9)
   ha-card-header-background-color: rgba(48,52,52,0.8)
   custom-layout-card-padding: 3.3vw
 
@@ -150,8 +151,8 @@ tablet:
 
   card-mod-root: |
     #view {
-      background: url('/local/background.png');
-      background-size: cover;
+      background: url('/local/background.png') !important;
+      background-size: cover !important;
     }
 
   card-mod-view-yaml: |

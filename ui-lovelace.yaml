@@ -445,7 +445,7 @@ views:
                   autoHeight: true
                 cards:
                   - type: custom:button-card
-                    entity: sensor.derniers_ajouts
+                    entity: sensor.plex_plex_recently_added
                     name: " "
                     tap_action:
                       action: url
@@ -454,7 +454,7 @@ views:
                       - last_plex_1
                       - icon_plex
                   - type: custom:button-card
-                    entity: sensor.derniers_ajouts
+                    entity: sensor.plex_plex_recently_added
                     name: " "
                     tap_action:
                       action: url
@@ -463,7 +463,7 @@ views:
                       - last_plex_2
                       - icon_plex
                   - type: custom:button-card
-                    entity: sensor.derniers_ajouts
+                    entity: sensor.plex_plex_recently_added
                     name: " "
                     tap_action:
                       action: url
@@ -472,7 +472,7 @@ views:
                       - last_plex_3
                       - icon_plex
                   - type: custom:button-card
-                    entity: sensor.derniers_ajouts
+                    entity: sensor.plex_plex_recently_added
                     name: " "
                     tap_action:
                       action: url
@@ -481,7 +481,7 @@ views:
                       - last_plex_4
                       - icon_plex
                   - type: custom:button-card
-                    entity: sensor.derniers_ajouts
+                    entity: sensor.plex_plex_recently_added
                     name: " "
                     tap_action:
                       action: url
@@ -490,7 +490,7 @@ views:
                       - last_plex_5
                       - icon_plex
                   - type: custom:button-card
-                    entity: sensor.derniers_ajouts
+                    entity: sensor.plex_plex_recently_added
                     name: " "
                     tap_action:
                       action: url
@@ -499,7 +499,7 @@ views:
                       - last_plex_6
                       - icon_plex
                   - type: custom:button-card
-                    entity: sensor.derniers_ajouts
+                    entity: sensor.plex_plex_recently_added
                     name: " "
                     tap_action:
                       action: url
@@ -508,7 +508,7 @@ views:
                       - last_plex_7
                       - icon_plex
                   - type: custom:button-card
-                    entity: sensor.derniers_ajouts
+                    entity: sensor.plex_plex_recently_added
                     name: " "
                     tap_action:
                       action: url
@@ -580,13 +580,13 @@ views:
             card_mod:
               style: |
                 ha-card {
-                  margin-top: 30px;
+                  margin-top: 6px;
                 }
                 .card {
                   padding: 0;
                 }
                 .line, .pre-row1, .pre-row2, .pre-row3 {
-                  display: none;
+                  display: none !important;
                 }
                 .post-row1 {
                   font-size: 1em;
