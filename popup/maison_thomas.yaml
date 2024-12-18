@@ -103,7 +103,7 @@ browser_mod:
               default_zoom: 16
               dark_mode: true
               entities:
-                - device_tracker.mi_a2_lite
+                - device_tracker.2310fpca4g
               card_mod:
                 style:
                   .: |
@@ -163,7 +163,7 @@ browser_mod:
             - type: custom:mod-card
               style:
                 hui-horizontal-stack-card$: |
-                  #root { 
+                  #root {
                     padding: 0 16px;
                   }
               card:
