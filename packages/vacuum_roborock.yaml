@@ -14,7 +14,7 @@ template:
           {{ (states(entity_id) | int(default=0) / 5400) | int(default=0) }}
         attributes:
           friendly_name: Filtre
-          icon: cil:roborock-filter
+          icon: mdi:air-filter
           unit_of_measurement: "%"
 
       - unique_id: vacuum_mainbrush
@@ -23,7 +23,7 @@ template:
           {{ (states(entity_id) | int(default=0) / 10800) | int(default=0) }}
         attributes:
           friendly_name: Brosse
-          icon: cil:roborock-mainbrush
+          icon: mdi:brush-variant
           unit_of_measurement: "%"
 
       - unique_id: vacuum_sensors
@@ -32,7 +32,7 @@ template:
           {{ (states(entity_id) | int(default=0) / 1080) | int(default=0) }}
         attributes:
           friendly_name: Capteurs
-          icon: cil:roborock-sensor
+          icon: mdi:leak
           unit_of_measurement: "%"
 
       - unique_id: vacuum_sidebrush
@@ -41,5 +41,5 @@ template:
           {{ (states(entity_id) | int(default=0) / 7200) | int(default=0) }}
         attributes:
           friendly_name: Brosse latérale
-          icon: cil:roborock-sidebrush
+          icon: mdi:fan
           unit_of_measurement: "%"

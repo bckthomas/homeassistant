@@ -55,3 +55,58 @@
         de {{ item.start_time }} à {{ item.end_time}}{{\"\\n\"}}\n  {%- endif -%}
         \     \n{%- endfor -%}"
     action: notify.mobile_app_tel_thomas
+- id: '1734527631503'
+  alias: Update notifications
+  description: ''
+  use_blueprint:
+    path: mdegat01/update_notifications.yaml
+    input:
+      mobile_app_device_2: 7f1b5e5464c13e399f3a5e31c4b9a78f
+      mobile_app_device: 7f1b5e5464c13e399f3a5e31c4b9a78f
+      update_entities:
+      - update.advanced_ssh_web_terminal_update
+      - update.assist_microphone_update
+      - update.browser_mod_update
+      - update.card_mod_update
+      - update.atomic_calendar_revive_update
+      - update.auto_entities_update
+      - update.bar_card_update
+      - update.glances_update
+      - update.google_fit_update
+      - update.home_assistant_core_update
+      - update.home_assistant_operating_system_update
+      - update.hacs_update
+      - update.home_assistant_supervisor_update
+      - update.interrupteur
+      - update.linky_content_card_update
+      - update.graphite_theme_update
+      - update.guirlande
+      - update.lumiere_salle_a_manger
+      - update.mini_graph_card_update
+      - update.lovelace_meteofrance_weather_card_update
+      - update.music_assistant_server_update
+      - update.piper_update
+      - update.plex_media_server_tower
+      - update.plex_recently_added_update
+      - update.pool_monitor_card_update
+      - update.porcupine1_update
+      - update.openwakeword_update
+      - update.pronote_cards_update
+      - update.myelectricaldata_update
+      - update.node_red_companion_update
+      - update.pronote_for_home_assistant_update
+      - update.somfyprotect2mqtt_update
+      - update.samba_share_update
+      - update.stack_in_card_update
+      - update.studio_code_server_update
+      - update.scheduler_card_update
+      - update.team_tracker_card_update
+      - update.team_tracker_update
+      - update.terminal_ssh_update
+      - update.sonos_card_update
+      - update.time_picker_card_update
+      - update.whisper_update
+      - update.upcoming_media_card_update
+      only_after: 08:00:00
+      only_before: '20:00:00'
+      send_to_ha: true

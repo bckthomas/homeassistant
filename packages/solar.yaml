@@ -16,6 +16,7 @@ sensor:
   - platform: integration
     name: "PV Energy" # energie totale produite par les panneaux (depuis le debut)
     source: sensor.pv_power
+    unique_id: pv_power
     unit_prefix: "k"
     unit_time: "h"
     method: "left"
@@ -23,6 +24,7 @@ sensor:
   - platform: rest
     name: "Import Export Power" # puissance importé si + ou exporté si -
     device_class: "power"
+    unique_id: import_export_power
     state_class: "measurement"
     unit_of_measurement: "W"
     resource: http://192.168.1.145/index.php/meter/old_meter_power_graph
