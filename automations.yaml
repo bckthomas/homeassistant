@@ -110,3 +110,111 @@
       only_after: 08:00:00
       only_before: '20:00:00'
       send_to_ha: true
+- id: '1737362594438'
+  alias: Moyennes Romain
+  description: ''
+  triggers:
+  - entity_id:
+    - sensor.pronote_beck_romain_averages
+    trigger: state
+  conditions: []
+  actions:
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'FRANCAIS'
+        %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.francais_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'HISTOIRE-GEOGRAPHIE'
+        %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.histoire_geographie_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'PHYSIQUE-CHIMIE'
+        %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.physique_chimie_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'MATHEMATIQUES'
+        %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.mathematiques_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'ESPAGNOL
+        LV2' %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.espagnol_lv2_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'ANGLAIS LV1'
+        %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.anglais_lv1_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'ED.PHYSIQUE
+        & SPORT.' %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.ed_physique_sport_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'TECHNOLOGIE'
+        %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.technologie_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'ARTS PLASTIQUES'
+        %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.arts_plastiques_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'SCIENCES
+        VIE & TERRE' %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.sciences_vie_terre_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set ns = namespace(moyenne=0) %} {% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}\n
+        \ {% for i in range(0, items | count, 1) if items[i].subject == 'EDUCATION
+        MUSICALE' %}\n     {% set ns.moyenne = items[i].average | replace (',','.')|float(0)
+        %}\n  {% endfor %}\n  {{ ns.moyenne }}"
+    target:
+      entity_id: input_number.education_musicale_romain
+    action: input_number.set_value
+  - data:
+      value: "{% set items = state_attr('sensor.pronote_beck_romain_averages','averages')%}
+        {% set ns = namespace(nombre=0, moyenne_generale=0) %}\n  {% for i in range(0,
+        items | count, 1) %}\n     {% set ns.moyenne_generale = items[i].average |
+        replace (',','.') | float(0) + ns.moyenne_generale %}\n     {% set ns.nombre
+        = ns.nombre + 1 %}\n  {% endfor %}\n{% set ns.moyenne_generale = ns.moyenne_generale
+        / ns.nombre %}   {{ ns.moyenne_generale }}  "
+    target:
+      entity_id: input_number.moyenne_generale_romain
+    action: input_number.set_value
+  mode: single

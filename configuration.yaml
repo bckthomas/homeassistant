@@ -55,6 +55,7 @@ lovelace:
       { url: /hacsfiles/pool-monitor-card/pool-monitor-card.js, type: module },
       { url: /hacsfiles/lovelace-time-picker-card/time-picker-card.js, type: module },
       { url: /hacsfiles/bar-card/bar-card.js, type: module },
+      { url: /hacsfiles/lovelace-card-mod/card-mod.js, type: module }
     ]
 
 sensor:
