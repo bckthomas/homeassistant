@@ -1,0 +1,30 @@
+template:
+  - sensor:
+      - name: IMC Thomas
+        icon: "mdi:weight"
+        state: >
+          {% set poids_thomas = states('sensor.thomas_poids') | float(0) %}
+          {% set taille_thomas = states('sensor.thomas_height') | float(1.8) %}
+          {% set imc_thomas = poids_thomas / (taille_thomas * taille_thomas) %}
+          {{ imc_thomas | round(1) }}
+      - name: IMC Bénédicte
+        icon: "mdi:weight"
+        state: >
+          {% set poids_benedicte = states('sensor.benedicte_poids') | float(0) %}
+          {% set taille_benedicte = states('sensor.benedicte_height') | float(1.6) %}
+          {% set imc_benedicte = poids_benedicte / (taille_benedicte * taille_benedicte) %}
+          {{ imc_benedicte | round(1) }}
+      - name: IMC Romain
+        icon: "mdi:weight"
+        state: >
+          {% set poids_romain = states('sensor.withings_poids_2') | float(0) %}
+          {% set taille_romain = states('sensor.withings_height_2') | float(1.6) %}
+          {% set imc_romain = poids_romain / (taille_romain * taille_romain) %}
+          {{ imc_romain | round(1) }}
+      - name: IMC Valentine
+        icon: "mdi:weight"
+        state: >
+          {% set poids_valentine = states('sensor.valentine_poids') | float(0) %}
+          {% set taille_valentine = states('sensor.valentine_height') | float(1.5) %}
+          {% set imc_valentine = poids_valentine / (taille_valentine * taille_valentine) %}
+          {{ imc_valentine | round(1) }}

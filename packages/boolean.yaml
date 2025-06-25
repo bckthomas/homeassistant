@@ -20,7 +20,6 @@ input_boolean:
   chauffageoff:
     name: Couper le chauffage
     icon: mdi:radiator-off
-    initial: off
   chauffagevacances:
     name: Vacances scolaires
     icon: mdi:radiator

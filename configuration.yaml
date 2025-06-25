@@ -53,9 +53,10 @@ lovelace:
       { url: /hacsfiles/stack-in-card/stack-in-card.js, type: module },
       { url: /hacsfiles/lovelace-mushroom/mushroom.js, type: module },
       { url: /hacsfiles/pool-monitor-card/pool-monitor-card.js, type: module },
-      { url: /hacsfiles/lovelace-time-picker-card/time-picker-card.js, type: module },
       { url: /hacsfiles/bar-card/bar-card.js, type: module },
-      { url: /hacsfiles/lovelace-card-mod/card-mod.js, type: module }
+      { url: /hacsfiles/lovelace-card-mod/card-mod.js, type: module },
+      { url: /hacsfiles/scheduler-card/scheduler-card.js, type: module },
+      { url: /hacsfiles/apexcharts-card/apexcharts-card.js, type: module }
     ]
 
 sensor:
