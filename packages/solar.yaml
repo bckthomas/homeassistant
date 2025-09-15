@@ -102,6 +102,16 @@ template:
           {% set import_export_power =  states('sensor.ecu_215000029712_consumed_a') | float(0)%}
           {{ (import_export_power|float - pv_power|float) |round(0) }}
 
+      - name: Conso electrique
+        unique_id: power_conso
+        device_class: "power"
+        state_class: "measurement"
+        unit_of_measurement: "W"
+        state: >
+          {% set pv_power =  states('sensor.evse_192_168_1_139_energie_photovoltaique') | float(0)%}
+          {% set import_export_power =  states('sensor.evse_192_168_1_139_alimentation_de_la_maison') | float(0)%}
+          {{ (import_export_power|float - pv_power|float) |round(0) }}
+
 automation:
   - alias: Envoi BDPV
     description: ""

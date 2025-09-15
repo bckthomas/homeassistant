@@ -8,7 +8,7 @@ Graphite:
   # https://github.com/TilmanGriesel/graphite
 
   #------------------------------------------------------
-  # This file was generated at 2025-06-14 15:49:23
+  # This file was generated at 2025-08-25 20:00:18
   #------------------------------------------------------
 
   card-mod-theme: Graphite
@@ -82,6 +82,11 @@ Graphite:
   token-color-codemirror-keyword: rgb(140, 169, 255)
   token-color-codemirror-number: rgb(255, 91, 29)
   token-shadow-card-medium: 0 3px 8px 0 rgba(0, 0, 0, 0.12)
+  # ..............................................................................
+  # Font Weight
+  token-weight-font-body: 400
+  token-weight-font-title: 600
+  token-weight-font-title-card: var(--token-weight-font-title)
 
   # ------------------------------------------------------------------------------
   # Size tokens
@@ -109,7 +114,7 @@ Graphite:
   token-size-font-3xl: calc(28px * var(--ha-font-size-scale))
   token-size-font-4xl: calc(32px * var(--ha-font-size-scale))
   token-size-font-5xl: calc(40px * var(--ha-font-size-scale))
-  token-size-font-title: var(--token-size-font-l)
+  token-size-font-title: var(--token-size-font-3xl)
   token-size-font-title-card: var(--token-size-font-l)
   # ..............................................................................
   # Spacing
@@ -130,7 +135,6 @@ Graphite:
   # ..............................................................................
   # Font
   token-font-family-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
-  token-weight-font-title-card: 500
 
   # ------------------------------------------------------------------------------
   # Definitions
@@ -328,6 +332,20 @@ Graphite:
   # Note: Amber is not safe to be modified, causes history-graph rendering issues.
   # Potentially other color definitions could cause issues too.
   # Full list: https://github.com/TilmanGriesel/graphite/blob/77ac1271aaeca8775bb999c32e0921a6bdb47620/src/template.yaml#L191
+  # ------------------------------------------------
+  # HA Primary Color Scale
+  # ------------------------------------------------
+  ha-color-primary-05: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 0.15))
+  ha-color-primary-10: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 0.25))
+  ha-color-primary-20: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 0.40))
+  ha-color-primary-30: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 0.70))
+  ha-color-primary-40: rgb(var(--token-rgb-primary))
+  ha-color-primary-50: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 1.15))
+  ha-color-primary-60: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 1.30))
+  ha-color-primary-70: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 1.45))
+  ha-color-primary-80: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 1.60))
+  ha-color-primary-90: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 1.75))
+  ha-color-primary-95: hsl(from rgb(var(--token-rgb-primary)) h s calc(l * 1.90))
   # ------------------------------------------------
   # RGB Indicator Color Definitions
   # ------------------------------------------------
