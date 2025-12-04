@@ -49,27 +49,19 @@ sensor:
 
     #https://calendrier.api.gouv.fr/jours-feries/metropole.json
 
-binary_sensor:
-  - platform: template
-    sensors:
-      vacances_scolaires_aujourdhui:
-        friendly_name: "Vacances Scolaires aujourd'hui"
-        value_template: |-
-          {% set aujourdhui = now().strftime('%Y-%m-%d')%}
-          {% if aujourdhui < states.sensor.vacances_scolaires.attributes["start_date"] or aujourdhui > states.sensor.vacances_scolaires.attributes["end_date"] %}
-          false
-          {% else %} 
-          true
-          {% endif %}
 
-  - platform: template
-    sensors:
-      vacances_scolaires_demain:
-        friendly_name: "Vacances Scolaires demain"
-        value_template: |-
-          {% set demain = (as_timestamp(now()) + (24*3600)) | timestamp_custom('%Y-%m-%d', True) %}
-          {% if demain < states.sensor.vacances_scolaires.attributes["start_date"] or demain > states.sensor.vacances_scolaires.attributes["end_date"] %} 
-          false
-          {% else %} 
-          true
-          {% endif %}
+template:
+  - binary_sensor:
+    - default_entity_id: binary_sensor.vacances_scolaires_aujourdhui
+      name: Vacances Scolaires aujourd'hui
+      state: "{% set aujourdhui = now().strftime('%Y-%m-%d')%}\n{% if aujourdhui < states.sensor.vacances_scolaires.attributes[\"start_date\"]
+        or aujourdhui > states.sensor.vacances_scolaires.attributes[\"end_date\"] %}\nfalse\n{%
+        else %} \ntrue\n{% endif %}"
+        
+  - binary_sensor:
+    - default_entity_id: binary_sensor.vacances_scolaires_demain
+      name: Vacances Scolaires demain
+      state: "{% set demain = (as_timestamp(now()) + (24*3600)) | timestamp_custom('%Y-%m-%d',
+        True) %}\n{% if demain < states.sensor.vacances_scolaires.attributes[\"start_date\"]
+        or demain > states.sensor.vacances_scolaires.attributes[\"end_date\"] %} \nfalse\n{%
+        else %} \ntrue\n{% endif %}"

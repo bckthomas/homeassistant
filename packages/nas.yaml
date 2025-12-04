@@ -1,7 +1,8 @@
-sensor:
-  - platform: template
-    sensors:
-      unraid_free_space:
-        friendly_name: Stockage 12TB
-        unit_of_measurement: "%"
-        value_template: "{{ (100-(states('sensor.192_168_1_127_mnt_disk1_free')|float(0) + states('sensor.192_168_1_127_mnt_disk2_free')|float(0) + states('sensor.192_168_1_127_mnt_disk3_free')|float(0) ) /12 /1000 * 100)|round(2) }}"
+template:
+  - sensor:
+    - unit_of_measurement: '%'
+      default_entity_id: sensor.unraid_free_space
+      name: Stockage 12TB
+      state: '{{ (100-(states(''sensor.192_168_1_127_mnt_disk1_free'')|float(0) + states(''sensor.192_168_1_127_mnt_disk2_free'')|float(0)
+        + states(''sensor.192_168_1_127_mnt_disk3_free'')|float(0) ) /12 /1000 * 100)|round(2)
+        }}'

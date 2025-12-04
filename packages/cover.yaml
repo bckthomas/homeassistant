@@ -87,15 +87,15 @@ cover:
       - cover.volet_porte_cuisine
       - cover.volet_salle_a_manger
 
-sensor:
-  - platform: template
-    sensors:
-      sunelevation:
-        friendly_name: "Elevation du soleil"
-        value_template: "{{ state_attr('sun.sun', 'elevation') }}"
-      sunazimuth:
-        friendly_name: "Azimut du soleil"
-        value_template: "{{ state_attr('sun.sun', 'azimuth') }}"
+template:
+  - sensor:
+    - default_entity_id: sensor.sunelevation
+      name: Elevation du soleil
+      state: '{{ state_attr(''sun.sun'', ''elevation'') }}'      
+  - sensor:
+    - default_entity_id: sensor.sunazimuth
+      name: Azimut du soleil
+      state: '{{ state_attr(''sun.sun'', ''azimuth'') }}'
 
 binary_sensor:
   - platform: threshold

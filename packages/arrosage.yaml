@@ -1,42 +1,44 @@
-switch:
-  - platform: template
-    switches:
-      irrig_gazon:
-        friendly_name: "Gazon"
-        value_template: "{{ is_state('switch.gazon', 'on') }}"
-        turn_on:
-          service: rainbird.start_irrigation
-          data_template:
-            entity_id: switch.gazon
-            duration: "{{ states('input_number.irrigation_gazonduration') | int }}"
-        turn_off:
-          service: switch.turn_off
-          data:
-            entity_id: switch.potager
-      irrig_potager:
-        friendly_name: "Potager"
-        value_template: "{{ is_state('switch.potager', 'on') }}"
-        turn_on:
-          service: rainbird.start_irrigation
-          data_template:
-            entity_id: switch.potager
-            duration: "{{ states('input_number.irrigation_potagerduration') | int }}"
-        turn_off:
-          service: switch.turn_off
-          data:
-            entity_id: switch.gazon
-      irrig_cavefraise:
-        friendly_name: "Cave à vin / Fraisiers"
-        value_template: "{{ is_state('switch.fraisiers_cave_a_vin', 'on') }}"
-        turn_on:
-          service: rainbird.start_irrigation
-          data_template:
-            entity_id: switch.fraisiers_cave_a_vin
-            duration: "{{ states('input_number.irrigation_cavefraiseduration') | int }}"
-        turn_off:
-          service: switch.turn_off
-          data:
-            entity_id: switch.gazon
+template:
+  - switch:
+    - turn_on:
+      - data_template:
+          entity_id: switch.gazon
+          duration: '{{ states(''input_number.irrigation_gazonduration'') | int }}'
+        action: rainbird.start_irrigation
+      turn_off:
+      - data:
+          entity_id: switch.potager
+        action: switch.turn_off
+      default_entity_id: switch.irrig_gazon
+      name: Gazon
+      state: '{{ is_state(''switch.gazon'', ''on'') }}'
+  - switch:
+    - turn_on:
+      - data_template:
+          entity_id: switch.potager
+          duration: '{{ states(''input_number.irrigation_potagerduration'') | int }}'
+        action: rainbird.start_irrigation
+      turn_off:
+      - data:
+          entity_id: switch.gazon
+        action: switch.turn_off
+      default_entity_id: switch.irrig_potager
+      name: Potager
+      state: '{{ is_state(''switch.potager'', ''on'') }}'
+  - switch:
+    - turn_on:
+      - data_template:
+          entity_id: switch.fraisiers_cave_a_vin
+          duration: '{{ states(''input_number.irrigation_cavefraiseduration'') | int
+            }}'
+        action: rainbird.start_irrigation
+      turn_off:
+      - data:
+          entity_id: switch.gazon
+        action: switch.turn_off
+      default_entity_id: switch.irrig_cavefraise
+      name: Cave à vin / Fraisiers
+      state: '{{ is_state(''switch.fraisiers_cave_a_vin'', ''on'') }}'
 
 input_number:
   irrigation_rainthreshold:

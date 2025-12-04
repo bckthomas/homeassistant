@@ -36,16 +36,6 @@ sensor:
           {{ "None" }}
       {% endif %}
 
-  - platform: template
-    sensors:
-      export_power: # il est judicieux de separer la puissance exporté de importé
-        friendly_name: "Export Power"
-        unit_of_measurement: "W"
-        device_class: "power"
-        value_template: >
-          {% set p = states('sensor.import_export_power') | float(0) %}
-          {{ ((p | abs) - p) / 2 }}
-
   - platform: integration
     name: "Export Energy" # energie totale exporté (depuis le debut)
     source: sensor.export_power
@@ -66,6 +56,13 @@ utility_meter:
     cycle: daily
 
 template:
+  - sensor:
+    - unit_of_measurement: W
+      device_class: POWER
+      default_entity_id: sensor.export_power
+      name: Export Power
+      state: '{% set p = states(''sensor.import_export_power'') | float(0) %} {{ ((p
+        | abs) - p) / 2 }}'  
   - trigger:
       - platform: time_pattern
         minutes: "/1"
