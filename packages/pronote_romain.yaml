@@ -2,4 +2,9 @@ template:
   - sensor:
       - name: Dernière mise à jour de Pronote Romain
         unique_id: sensor.derniere_mise_a_jour_de_pronote_romain
-        state: "{{ state_attr('sensor.pronote_beck_romain','updated_at').strftime('%d-%m-%Y à %H:%M') }}"
+        state: >
+         {% if state_attr('sensor.pronote_beck_romain','updated_at') %}
+          {{ state_attr('sensor.pronote_beck_romain','updated_at').strftime('%d-%m-%Y à %H:%M') }}
+         {% else %}
+          Indisponible
+         {% endif %}

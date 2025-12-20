@@ -8,7 +8,7 @@ homeassistant:
   temperature_unit: C
   time_zone: Europe/Paris
   external_url: !secret homeassistant_external_url
-  internal_url: "http://192.168.1.115:8123"
+  internal_url: "http://192.168.1.127:8123"
   language: fr
   country: FR
   currency: EUR
@@ -31,6 +31,9 @@ http:
   use_x_forwarded_for: true
   trusted_proxies:
     - 192.168.1.127
+    - 172.17.0.12
+    
+    
 
 automation: !include automations.yaml
 script: !include scripts.yaml
@@ -71,6 +74,8 @@ sensor:
 recorder:
   purge_keep_days: 2
   exclude:
+    entities:
+      - sensor.plex_plex_recently_added  
     entity_globs:
       - sensor.browser_*
   db_url: !secret recorder_db_url
