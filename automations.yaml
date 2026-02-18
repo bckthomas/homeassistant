@@ -18,7 +18,7 @@
         }} en {{ trigger.event.data.data.subject }} :  {{ trigger.event.data.data.comment
         }} le {{ trigger.event.data.data.date.strftime(''%d/%m/%Y'') }}'
       title: Pronote {{ trigger.event.data.child_nickname }} note
-    action: notify.mobile_app_m2103k19pg
+    action: notify.mobile_app_benedicte
 - id: '1686305498317'
   alias: 'Notification: modification emploi du temps'
   description: Pronote notif emploi du temps
@@ -93,3 +93,21 @@
       only_after: 08:00:00
       only_before: '20:00:00'
       send_to_ha: true
+- id: '1767631398648'
+  alias: Test automatisation
+  description: ''
+  triggers: []
+  conditions: []
+  actions:
+  - action: notify.mobile_app_benedicte
+    metadata: {}
+    data:
+      message: test
+  - action: notify.mobile_app_tel_thomas
+    metadata: {}
+    data:
+      message: test
+  - action: notify.mobile_app_tel_romain
+    metadata: {}
+    data: {}
+  mode: single
